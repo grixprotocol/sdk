@@ -1,36 +1,39 @@
 import { GrixSDK } from "./src/index";
- describe("GrixSDK Initialization and Chatbot Interactions", () => {
+
+describe("GrixSDK Methods", () => {
 	let sdk: GrixSDK;
-	let timeOut = 50000;
-	const OPENAI_API_KEY = process.env.OPENAI_API_KEY || ''; // Set this in your AWS Lambda environment variables.
+	const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 
-
-	// Initialize the SDK once for all tests
 	beforeAll(async () => {
-		sdk = await GrixSDK.initialize({ openAIKey: OPENAI_API_KEY });
+		sdk = await GrixSDK.initialize();
 	});
 
- 	test(
-		"Retrieve chatbot response for a user message",
-		async () => {
-			// Mock user input
-			const userMessage = "What is the best offer for an option I can buy ?";
+	test("fetchAssetPrice should return a number", async () => {
+		const assetPrice = await sdk.fetchAssetPrice("bitcoin");
+		expect(typeof assetPrice).toBe("number");
+	});
 
-			// Retrieve chatbot context and enhanced user message
-			const { systemInstructions, chatbotContext, enhancedUserMessage } =
-				await sdk.chatBotGetContext(userMessage);
+	test("chatBotGetContext should return the correct structure", async () => {
+		const userMessage = "What is the best offer for an option I can buy ?";
+		const context = await sdk.chatBotGetContext({ userMessage });
+		
+		expect(context).toHaveProperty("systemInstructions");
+		expect(context).toHaveProperty("chatbotContext");
+		expect(context).toHaveProperty("enhancedUserMessage");
+	});
 
-			// Send chatbot request
-			const response = await sdk.sendChatbotRequest({
-				chatbotContext,
-				enhancedUserMessage,
-				systemInstructions,
-				userContext: [],
-			});
+	test("sendChatbotRequest should return a string response", async () => {
+		const userMessage = "What is the best offer for an option I can buy ?";
+		const { systemInstructions, chatbotContext, enhancedUserMessage } = await sdk.chatBotGetContext({ userMessage });
 
-			// Log the chatbot response for debugging
-			console.log("Chatbot Response:", response);
-		},
-		timeOut
-	);
+		const response = await sdk.sendChatbotRequest({
+			chatbotContext,
+			enhancedUserMessage,
+			systemInstructions,
+			userContext: [],
+			openAIKey: OPENAI_API_KEY,
+		});
+		
+		expect(typeof response).toBe("string");
+	});
 });
