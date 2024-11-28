@@ -1,4 +1,4 @@
-import { TradeboardData } from "@src/types";
+import { TradeboardData } from "@methods/chatbotGetContext/types";
 
 export const tradeboardData: TradeboardData = {
     "expirationBoard": [

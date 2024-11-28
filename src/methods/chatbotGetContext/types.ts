@@ -16,3 +16,15 @@ export type TradeboardData = {
 	optionBoard: { [key: string]: { [key: string]: OptionBoardData[] } };
 };
 
+
+
+export type ChatBotGetContextParams = {
+  userMessage: string;
+  tradeboardOverride?: TradeboardData;
+};
+
+export type ChatBotGetContextResponse = {
+  systemInstructions: string;
+  chatbotContext: { role: string; content: string }[];
+  enhancedUserMessage: string;
+};
