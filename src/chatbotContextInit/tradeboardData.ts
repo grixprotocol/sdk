@@ -1,4 +1,6 @@
-export const tradeboardData = {
+import { TradeboardData } from "@src/types";
+
+export const tradeboardData: TradeboardData = {
     "expirationBoard": [
         "1734076800",
         "1734681600",
