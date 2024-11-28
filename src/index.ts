@@ -5,21 +5,12 @@ import {
 } from "./chatbotContextInit/chatbotContextInit";
 import { tradeboardData } from "./chatbotContextInit/tradeboardData";
 import { OPENAI_API_URL } from "./config";
-
-export type GrixConfig = {
-	openAIKey: string; 
-};
+import { TradeboardData } from "./types";
 
 export class GrixSDK {
-	private openAIKey: string;
-
-	private constructor(config: GrixConfig) {
-		this.openAIKey = config.openAIKey;
-	}
-
 	// Initialize the SDK
-	static async initialize(config: GrixConfig): Promise<GrixSDK> {
-		return new GrixSDK(config);
+	static async initialize(): Promise<GrixSDK> {
+		return new GrixSDK();
 	}
 
 	// Fetch the price of a given asset (e.g., Bitcoin)
@@ -32,7 +23,11 @@ export class GrixSDK {
 	}
 
 	// Get chatbot context, enhanced user message, and system instructions
-	async chatBotGetContext(userMessage: string, tradeboardOverride?: any) {
+	async chatBotGetContext(userMessage: string, tradeboardOverride?: TradeboardData): Promise<{
+		systemInstructions: string;
+		chatbotContext: { role: string; content: string }[];
+		enhancedUserMessage: string;
+	}> {
 		// Use the override if provided, otherwise fallback to imported tradeboard data
 		const tradeboard = tradeboardOverride || tradeboardData;
 
@@ -62,12 +57,14 @@ export class GrixSDK {
 		enhancedUserMessage,
 		systemInstructions,
 		userContext = [],
+		openAIKey,
 	}: {
 		chatbotContext: { role: string; content: string }[];
 		enhancedUserMessage: string;
 		systemInstructions: string;
 		userContext?: any[];
-	}): Promise<any> {
+		openAIKey: string;
+	}): Promise<string> {
 		// Build the request body
 		const requestBody = {
 			model: "gpt-4",
@@ -87,7 +84,7 @@ export class GrixSDK {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${this.openAIKey}`,
+				Authorization: `Bearer ${openAIKey}`,
 			},
 			body: JSON.stringify(requestBody),
 		});
@@ -98,7 +95,7 @@ export class GrixSDK {
 
 		const responseData = await response.json();
 
-		const assistantResponse = responseData.choices[0].message.content;
+		const assistantResponse = responseData.choices[0].message.content as string;
 		return assistantResponse;
 	}
 }
