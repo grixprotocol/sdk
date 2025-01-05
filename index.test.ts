@@ -5,6 +5,10 @@ describe("GrixSDK Methods", () => {
 	const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 
 	beforeAll(async () => {
+		console.log('OPENAI_API_KEY:', OPENAI_API_KEY);
+		if (!OPENAI_API_KEY) {
+			console.warn('Warning: OPENAI_API_KEY is empty!');
+		}
 		sdk = await GrixSDK.initialize();
 	});
 
@@ -33,7 +37,7 @@ describe("GrixSDK Methods", () => {
 			userContext: [],
 			openAIKey: OPENAI_API_KEY,
 		});
-		
+
 		expect(typeof response).toBe("string");
 	});
 });
