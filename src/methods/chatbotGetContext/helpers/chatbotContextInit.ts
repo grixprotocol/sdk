@@ -1,24 +1,14 @@
+import { protocolsArrayData } from "@config";
 import { MarketData } from "../types";
 
-export const protocolInfo = {
-  Lyra: { name: "Lyra" },
-  Rysk: { name: "Rysk" },
-  Premia: { name: "Premia" },
-  Hegic: { name: "Hegic" },
-  Moby: { name: "Moby" },
-  Panoptic: { name: "Panoptic" },
-  SDX: { name: "SDX" },
-  Stryke: { name: "Stryke" },
-  Thetanuts: { name: "Thetanuts" },
-  OptionBlitz: { name: "OptionBlitz" },
-  Ithaca: { name: "Ithaca" },
-  Zomma: { name: "Zomma" },
-};
-
 export const chatbotContextInitHandler = async () => {
-  const supportedProtocolsData = Object.values(protocolInfo).map(
-    (protocol) => protocol.name
+  const supportedProtocolsData = protocolsArrayData.map(
+    (protocol) => protocol.protocolName
   );
+
+  const supportedProtocolsDataWithExecution = protocolsArrayData
+    .filter((protocol) => protocol.isExecution)
+    .map((protocol) => protocol.protocolName);
 
   const messages = [
     {
@@ -36,9 +26,7 @@ export const chatbotContextInitHandler = async () => {
     },
     {
       role: "assistant",
-      content: `Currently, Grix fetches DeFi options quotes from the following protocols: ${supportedProtocolsData}. Execution support is available for these protocols: ${JSON.stringify(
-        protocolInfo
-      )}.`,
+      content: `Currently, Grix fetches DeFi options quotes from the following protocols: ${supportedProtocolsData}. Execution support is available for these protocols: ${supportedProtocolsDataWithExecution}.`,
     },
     {
       role: "user",
