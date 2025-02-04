@@ -1,26 +1,30 @@
-import { chatbotContextInitHandler, createEnhancedUserMessage, getSystemInstructions } from "./helpers/chatbotContextInit";
-import { tradeboardData } from "./helpers/tradeboardData";
-import { fetchAssetPrice } from "../fetchAssetPrice";
+import {
+  chatbotContextInitHandler,
+  createEnhancedUserMessage,
+  getSystemInstructions,
+} from "./helpers/chatbotContextInit";
 import { ChatBotGetContextResponse } from "./types";
 import { ChatBotGetContextParams } from "./types";
 
 export async function chatBotGetContext({
   userMessage,
-  tradeboardOverride,
+  marketData,
+  underlyingAsset,
+  underlyingAssetUsdPrice,
+  appPageContext,
 }: ChatBotGetContextParams): Promise<ChatBotGetContextResponse> {
-  const tradeboard = tradeboardOverride || tradeboardData;
+  const systemInstructions = getSystemInstructions();
   const chatbotContext = await chatbotContextInitHandler();
   const unix = Math.floor(Date.now() / 1000);
-  const btcAssetPrice = await fetchAssetPrice("bitcoin");
 
   const enhancedUserMessage = createEnhancedUserMessage(
     unix,
-    tradeboard,
-    btcAssetPrice,
-    userMessage
+    marketData,
+    underlyingAsset,
+    underlyingAssetUsdPrice,
+    userMessage,
+    appPageContext
   );
 
-  const systemInstructions = getSystemInstructions();
-
-	return { systemInstructions, chatbotContext, enhancedUserMessage };
+  return { systemInstructions, chatbotContext, enhancedUserMessage };
 }
