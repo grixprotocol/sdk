@@ -10,7 +10,7 @@ type OptionBoardData = {
 	asset: string;
 };
 
-export type TradeboardData = {
+export type MarketData = {
     expirationBoard: string[];
 	strikeBoard: { [key: string]: string[] };
 	optionBoard: { [key: string]: { [key: string]: OptionBoardData[] } };
@@ -20,7 +20,10 @@ export type TradeboardData = {
 
 export type ChatBotGetContextParams = {
   userMessage: string;
-  tradeboardOverride?: TradeboardData;
+  marketData: MarketData;
+  underlyingAsset: string;
+  underlyingAssetUsdPrice: number;
+  appPageContext?: string | undefined;
 };
 
 export type ChatBotGetContextResponse = {
