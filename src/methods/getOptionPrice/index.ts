@@ -1,6 +1,6 @@
 import { OptionPriceGetParams, OptionPriceGetResponse } from './types';
 
-export async function optionPriceGet(
+export async function getOptionPrice(
   params: OptionPriceGetParams,
   config: { apiKey: string; baseUrl: string }
 ): Promise<OptionPriceGetResponse> {

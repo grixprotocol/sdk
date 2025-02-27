@@ -1,11 +1,18 @@
 import { fetchAssetPrice } from './methods/fetchAssetPrice';
 import { chatBotGetContext } from './methods/chatbotGetContext';
 import { sendChatbotRequest } from './methods/sendChatbotRequest';
-import { optionPriceGet } from './methods/optionPriceGet';
+import { getOptionPrice } from './methods/getOptionPrice';
+import { getAssetPriceHistory } from './methods/getAssetPriceHistory';
 import { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
-import { ChatBotGetContextParams } from './methods/chatbotGetContext/types';
-import { ChatBotGetContextResponse } from './methods/chatbotGetContext/types';
-import { OptionPriceGetParams, OptionPriceGetResponse } from './methods/optionPriceGet/types';
+import {
+  ChatBotGetContextParams,
+  ChatBotGetContextResponse,
+} from './methods/chatbotGetContext/types';
+import { OptionPriceGetParams, OptionPriceGetResponse } from './methods/getOptionPrice/types';
+import {
+  AssetPriceHistoryGetParams,
+  AssetPriceHistoryGetResponse,
+} from './methods/getAssetPriceHistory/types';
 
 export type InitializeConfig = {
   apiKey?: string;
@@ -25,12 +32,19 @@ export class GrixSDK {
     return new GrixSDK(config);
   }
 
+  // Consistent method declarations for all methods
   async fetchAssetPrice(asset: string): Promise<number> {
     return fetchAssetPrice(asset);
   }
 
-  async optionPriceGet(params: OptionPriceGetParams): Promise<OptionPriceGetResponse> {
-    return optionPriceGet(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  async getOptionPrice(params: OptionPriceGetParams): Promise<OptionPriceGetResponse> {
+    return getOptionPrice(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getAssetPriceHistory(
+    params: AssetPriceHistoryGetParams
+  ): Promise<AssetPriceHistoryGetResponse> {
+    return getAssetPriceHistory(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
   async chatBotGetContext(params: ChatBotGetContextParams): Promise<ChatBotGetContextResponse> {
@@ -41,10 +55,3 @@ export class GrixSDK {
     return sendChatbotRequest(params);
   }
 }
-
-// Export types for convenience
-export {
-  OptionPriceGetParams,
-  OptionPriceGetResponse,
-  PositionType,
-} from './methods/optionPriceGet/types';
