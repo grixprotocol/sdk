@@ -1,11 +1,9 @@
 import { fetchAssetPrice } from './methods/fetchAssetPrice';
 import { chatBotGetContext } from './methods/chatbotGetContext';
-import { sendChatbotRequest } from './methods/sendChatbotRequest';
 import { getOptionPrice } from './methods/getOptionPrice';
 import { getAssetPriceHistory } from './methods/getAssetPriceHistory';
 import { getOptionPriceHistory } from './methods/getOptionPriceHistory';
-
-// Import types needed for class methods
+import { sendChatbotRequest } from './methods/sendChatbotRequest';
 import type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
 import type {
   ChatBotGetContextParams,
@@ -19,26 +17,6 @@ import type {
 import type {
   OptionPriceHistoryGetParams,
   OptionPriceHistoryGetResponse,
-} from './methods/getOptionPriceHistory/types';
-
-// Export types explicitly with the 'type' keyword
-export type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
-export type {
-  ChatBotGetContextParams,
-  ChatBotGetContextResponse,
-} from './methods/chatbotGetContext/types';
-export type { OptionPriceGetParams, OptionPriceGetResponse } from './methods/getOptionPrice/types';
-export type {
-  AssetPriceHistoryGetParams,
-  AssetPriceHistoryGetResponse,
-} from './methods/getAssetPriceHistory/types';
-export type {
-  OptionPriceHistoryGetParams,
-  OptionPriceHistoryGetResponse,
-  Quote,
-  BidAskSnapshot,
-  ProcessedBidAskSnapshot,
-  ProcessedOptionPriceHistory,
 } from './methods/getOptionPriceHistory/types';
 
 export type InitializeConfig = {
