@@ -17,6 +17,10 @@ import {
 import {
   OptionPriceHistoryGetParams,
   OptionPriceHistoryGetResponse,
+  Quote,
+  BidAskSnapshot,
+  ProcessedBidAskSnapshot,
+  ProcessedOptionPriceHistory,
 } from './methods/getOptionPriceHistory/types';
 
 // Re-export all types from the type files
@@ -25,6 +29,16 @@ export * from './methods/chatbotGetContext/types';
 export * from './methods/getOptionPrice/types';
 export * from './methods/getAssetPriceHistory/types';
 export * from './methods/getOptionPriceHistory/types';
+
+// Explicitly re-export the nested types for better IDE support
+export type {
+  Quote,
+  BidAskSnapshot,
+  ProcessedBidAskSnapshot,
+  ProcessedOptionPriceHistory,
+  OptionPriceHistoryGetParams,
+  OptionPriceHistoryGetResponse,
+};
 
 export type InitializeConfig = {
   apiKey?: string;
