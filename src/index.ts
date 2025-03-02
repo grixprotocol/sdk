@@ -19,6 +19,13 @@ import {
   OptionPriceHistoryGetResponse,
 } from './methods/getOptionPriceHistory/types';
 
+// Re-export all types from the type files
+export * from './methods/sendChatbotRequest/types';
+export * from './methods/chatbotGetContext/types';
+export * from './methods/getOptionPrice/types';
+export * from './methods/getAssetPriceHistory/types';
+export * from './methods/getOptionPriceHistory/types';
+
 export type InitializeConfig = {
   apiKey?: string;
   baseUrl?: string;

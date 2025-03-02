@@ -14,7 +14,11 @@
     "publish:beta": "npm version prerelease --preid=beta && npm publish --tag beta",
     "publish:beta:patch": "npm version prepatch --preid=beta && npm publish --tag beta",
     "publish:beta:minor": "npm version preminor --preid=beta && npm publish --tag beta",
-    "publish:beta:major": "npm version premajor --preid=beta && npm publish --tag beta"
+    "publish:beta:major": "npm version premajor --preid=beta && npm publish --tag beta",
+    "publish:prod:patch": "npm version patch && npm publish",
+    "publish:prod:minor": "npm version minor && npm publish",
+    "publish:prod:major": "npm version major && npm publish",
+    "publish:prod": "npm publish --tag latest"
   },
   "keywords": [],
   "author": "",
