@@ -10,7 +10,11 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "format": "prettier --write \"src/**/*.{ts,json}\" && eslint --ext .ts ./src --fix",
     "format:check": "prettier --check \"src/**/*.{ts,json}\" && eslint --ext .ts ./src",
-    "prepare": "husky"
+    "prepare": "husky",
+    "publish:beta": "npm version prerelease --preid=beta && npm publish --tag beta",
+    "publish:beta:patch": "npm version prepatch --preid=beta && npm publish --tag beta",
+    "publish:beta:minor": "npm version preminor --preid=beta && npm publish --tag beta",
+    "publish:beta:major": "npm version premajor --preid=beta && npm publish --tag beta"
   },
   "keywords": [],
   "author": "",
