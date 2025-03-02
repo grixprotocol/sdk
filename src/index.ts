@@ -3,6 +3,7 @@ import { chatBotGetContext } from './methods/chatbotGetContext';
 import { sendChatbotRequest } from './methods/sendChatbotRequest';
 import { getOptionPrice } from './methods/getOptionPrice';
 import { getAssetPriceHistory } from './methods/getAssetPriceHistory';
+import { getOptionPriceHistory } from './methods/getOptionPriceHistory';
 import { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
 import {
   ChatBotGetContextParams,
@@ -13,6 +14,10 @@ import {
   AssetPriceHistoryGetParams,
   AssetPriceHistoryGetResponse,
 } from './methods/getAssetPriceHistory/types';
+import {
+  OptionPriceHistoryGetParams,
+  OptionPriceHistoryGetResponse,
+} from './methods/getOptionPriceHistory/types';
 
 export type InitializeConfig = {
   apiKey?: string;
@@ -45,6 +50,12 @@ export class GrixSDK {
     params: AssetPriceHistoryGetParams
   ): Promise<AssetPriceHistoryGetResponse> {
     return getAssetPriceHistory(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getOptionPriceHistory(
+    params: OptionPriceHistoryGetParams
+  ): Promise<OptionPriceHistoryGetResponse> {
+    return getOptionPriceHistory(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
   async chatBotGetContext(params: ChatBotGetContextParams): Promise<ChatBotGetContextResponse> {
