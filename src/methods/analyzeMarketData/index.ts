@@ -242,7 +242,9 @@ function processTradeSignals(
   try {
     const arrayMatch = content.match(/\[[\s\S]*\]/);
     if (!arrayMatch) {
-      throw new Error('No valid JSON array found in response');
+      throw new Error(
+        'No valid JSON array found in response. The response must be a JSON array starting with "[" and ending with "]" as specified in the system instructions.'
+      );
     }
 
     const rawSignals = JSON.parse(arrayMatch[0]);

@@ -176,11 +176,4 @@ export class GrixSDK {
   async generateTradingSignals(params: AIAnalysisParams): Promise<AIAnalysisResponse> {
     return analyzeMarketData(params, { apiKey: this.openAIApiKey });
   }
-
-  /**
-   * @deprecated Use generateTradingSignals instead
-   */
-  async analyzeMarketData(params: AIAnalysisParams): Promise<AIAnalysisResponse> {
-    return this.generateTradingSignals(params);
-  }
 }

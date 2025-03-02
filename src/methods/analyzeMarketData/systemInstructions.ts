@@ -57,16 +57,22 @@ If the instrument is an asset:
 - "open" action means buying the asset
 - "close" action means selling the asset
 
-Response Format example for a ${budgetUsd} USD budget: 
+CRITICAL RESPONSE FORMAT REQUIREMENTS:
+1. Your response MUST be a pure JSON array with NO other text, comments, or explanations
+2. Response MUST start with "[" and end with "]"
+3. Even if you only have ONE signal, it must still be wrapped in an array: [{ your single signal }]
+4. DO NOT return a JSON object, only a JSON array
+5. DO NOT include any markdown formatting, additional text, or any content outside the JSON array
+
+Example response format for a ${budgetUsd} USD budget: 
 ${JSON.stringify(exampleSignals)}
 
-Rules:
-1. Pure JSON array with NO other text
-2. Response MUST start with "[" and end with "]"
-3. CAUTION: Common failure modes to avoid:
-   - No markdown formatting
-   - No trailing commas
-   - No missing quotes`;
+CRITICAL WARNINGS:
+- NEVER return a single object without array brackets
+- NEVER include trailing commas in your JSON
+- NEVER omit quotes around property names
+- NEVER include any text outside the array brackets
+- Your ENTIRE response must be valid JSON that can be parsed with JSON.parse()`;
 
 export const getGeneralInstructions = (task: string, outputFormat?: unknown): string => {
   let instructions = `You are a financial analysis AI. Your task is to analyze market data and provide insights.
