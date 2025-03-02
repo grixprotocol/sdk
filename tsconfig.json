@@ -18,16 +18,17 @@
     "strictPropertyInitialization": false,
     "declaration": true,
     "declarationDir": "./dist/types",
+    "declarationMap": true,
     "baseUrl": ".",
     "paths": {
       "@methods/*": ["src/methods/*"],
       "@config": ["src/config.ts"],
-      "@src/*": ["src/*"],
+      "@src/*": ["src/*"]
     }
-	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules", "dist"],
-	"ts-node": {
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "ts-node": {
     "require": ["tsconfig-paths/register"]
   }
 }

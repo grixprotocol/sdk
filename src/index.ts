@@ -4,17 +4,35 @@ import { sendChatbotRequest } from './methods/sendChatbotRequest';
 import { getOptionPrice } from './methods/getOptionPrice';
 import { getAssetPriceHistory } from './methods/getAssetPriceHistory';
 import { getOptionPriceHistory } from './methods/getOptionPriceHistory';
-import { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
-import {
+
+// Import types needed for class methods
+import type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
+import type {
   ChatBotGetContextParams,
   ChatBotGetContextResponse,
 } from './methods/chatbotGetContext/types';
-import { OptionPriceGetParams, OptionPriceGetResponse } from './methods/getOptionPrice/types';
-import {
+import type { OptionPriceGetParams, OptionPriceGetResponse } from './methods/getOptionPrice/types';
+import type {
   AssetPriceHistoryGetParams,
   AssetPriceHistoryGetResponse,
 } from './methods/getAssetPriceHistory/types';
-import {
+import type {
+  OptionPriceHistoryGetParams,
+  OptionPriceHistoryGetResponse,
+} from './methods/getOptionPriceHistory/types';
+
+// Export types explicitly with the 'type' keyword
+export type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
+export type {
+  ChatBotGetContextParams,
+  ChatBotGetContextResponse,
+} from './methods/chatbotGetContext/types';
+export type { OptionPriceGetParams, OptionPriceGetResponse } from './methods/getOptionPrice/types';
+export type {
+  AssetPriceHistoryGetParams,
+  AssetPriceHistoryGetResponse,
+} from './methods/getAssetPriceHistory/types';
+export type {
   OptionPriceHistoryGetParams,
   OptionPriceHistoryGetResponse,
   Quote,
@@ -22,23 +40,6 @@ import {
   ProcessedBidAskSnapshot,
   ProcessedOptionPriceHistory,
 } from './methods/getOptionPriceHistory/types';
-
-// Re-export all types from the type files
-export * from './methods/sendChatbotRequest/types';
-export * from './methods/chatbotGetContext/types';
-export * from './methods/getOptionPrice/types';
-export * from './methods/getAssetPriceHistory/types';
-export * from './methods/getOptionPriceHistory/types';
-
-// Explicitly re-export the nested types for better IDE support
-export type {
-  Quote,
-  BidAskSnapshot,
-  ProcessedBidAskSnapshot,
-  ProcessedOptionPriceHistory,
-  OptionPriceHistoryGetParams,
-  OptionPriceHistoryGetResponse,
-};
 
 export type InitializeConfig = {
   apiKey?: string;
