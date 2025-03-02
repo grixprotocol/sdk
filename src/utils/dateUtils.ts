@@ -1,19 +1,20 @@
 /**
- * Formats a trade window milliseconds value into a human-readable string
- *
- * @param trade_window_ms - Time in milliseconds
- * @returns Formatted string like "3 days" or "4 hours"
+ * Format a time window in milliseconds into a human-readable string
  */
-export function formatTradeWindow(trade_window_ms: number): string {
-  const minutes = trade_window_ms / (1000 * 60);
-  const hours = minutes / 60;
-  const days = hours / 24;
+export function formatTradeWindow(ms: number): string {
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
 
-  if (days >= 1) {
-    return `${Math.round(days)} day${days !== 1 ? 's' : ''}`;
-  } else if (hours >= 1) {
-    return `${Math.round(hours)} hour${hours !== 1 ? 's' : ''}`;
-  } else {
-    return `${Math.round(minutes)} minute${minutes !== 1 ? 's' : ''}`;
+  if (days > 0) {
+    return days === 1 ? '1 day' : `${days} days`;
   }
+  if (hours > 0) {
+    return hours === 1 ? '1 hour' : `${hours} hours`;
+  }
+  if (minutes > 0) {
+    return minutes === 1 ? '1 minute' : `${minutes} minutes`;
+  }
+  return seconds === 1 ? '1 second' : `${seconds} seconds`;
 }

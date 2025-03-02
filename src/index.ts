@@ -1,27 +1,24 @@
-import { fetchAssetPrice } from './methods/fetchAssetPrice/index.js';
-import { chatBotGetContext } from './methods/chatbotGetContext/index.js';
-import { getOptionPrice } from './methods/getOptionPrice/index.js';
-import { getAssetPriceHistory } from './methods/getAssetPriceHistory/index.js';
-import { getOptionPriceHistory } from './methods/getOptionPriceHistory/index.js';
-import { sendChatbotRequest } from './methods/sendChatbotRequest/index.js';
-import { analyzeMarketData } from './methods/analyzeMarketData/index.js';
-import type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types.js';
+import { fetchAssetPrice } from './methods/fetchAssetPrice';
+import { chatBotGetContext } from './methods/chatbotGetContext';
+import { getOptionPrice } from './methods/getOptionPrice';
+import { getAssetPriceHistory } from './methods/getAssetPriceHistory';
+import { getOptionPriceHistory } from './methods/getOptionPriceHistory';
+import { sendChatbotRequest } from './methods/sendChatbotRequest';
+import { generateTradingSignals } from './methods/generateTradingSignals';
+import type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
 import type {
   ChatBotGetContextParams,
   ChatBotGetContextResponse,
-} from './methods/chatbotGetContext/types.js';
-import type {
-  OptionPriceGetParams,
-  OptionPriceGetResponse,
-} from './methods/getOptionPrice/types.js';
+} from './methods/chatbotGetContext/types';
+import type { OptionPriceGetParams, OptionPriceGetResponse } from './methods/getOptionPrice/types';
 import type {
   AssetPriceHistoryGetParams,
   AssetPriceHistoryGetResponse,
-} from './methods/getAssetPriceHistory/types.js';
+} from './methods/getAssetPriceHistory/types';
 import type {
   OptionPriceHistoryGetParams,
   OptionPriceHistoryGetResponse,
-} from './methods/getOptionPriceHistory/types.js';
+} from './methods/getOptionPriceHistory/types';
 import type {
   AIAnalysisParams,
   AIAnalysisResponse,
@@ -31,7 +28,7 @@ import type {
   ActionType,
   PositionType,
   InstrumentType,
-} from './methods/analyzeMarketData/types.js';
+} from './methods/generateTradingSignals/types';
 import {
   UnderlyingAsset,
   OptionType,
@@ -153,27 +150,19 @@ export class GrixSDK {
   }
 
   /**
-   * Analyzes market data using AI to generate insights or trading signals
-   * Supports two modes:
-   * 1. Trade signal generation - Creates actionable trade recommendations
-   * 2. General analysis - Provides custom analysis of market data
+   * Generate trading signals based on market data analysis
    *
-   * @param params - Parameters for the analysis request, either TradeAnalysisParams or general AIAnalysisParams
-   * @returns Analysis results, including trading signals or custom analysis
-   *
-   * @example
-   * // Generate trading signals
-   * const result = await sdk.generateTradingSignals({
-   *   dataPoints: [
-   *     { type: 'asset_price_history', description: 'BTC prices', data: btcPrices }
-   *   ],
-   *   tradeConfig: {
-   *     budget_usd: 1000,
-   *     trade_window_ms: 7 * 24 * 60 * 60 * 1000 // 7 days
-   *   }
-   * });
+   * @param params - The analysis parameters (either trade analysis or general analysis)
+   * @returns Trade signals or analysis results with metadata
    */
   async generateTradingSignals(params: AIAnalysisParams): Promise<AIAnalysisResponse> {
-    return analyzeMarketData(params, { apiKey: this.openAIApiKey });
+    return generateTradingSignals(params, { apiKey: this.openAIApiKey });
+  }
+
+  /**
+   * @deprecated Use generateTradingSignals instead
+   */
+  async analyzeMarketData(params: AIAnalysisParams): Promise<AIAnalysisResponse> {
+    return this.generateTradingSignals(params);
   }
 }

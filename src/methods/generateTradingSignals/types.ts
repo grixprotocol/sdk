@@ -38,6 +38,7 @@ export type Signal = {
   expected_instrument_price_usd: number;
   expected_total_price_usd: number;
   reason: string;
+  confidence_score: number;
 };
 
 export type TradeAnalysisParams = {
