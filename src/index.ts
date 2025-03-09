@@ -37,6 +37,11 @@ import {
   ExpiryType,
   PaymentToken,
 } from './globals/enums.js';
+import {
+  getOptionsMarketBoard,
+  TradeBoardGetParams,
+  TradeBoardGetResponse,
+} from '@methods/getOptionsMarketBoard';
 
 export {
   AIAnalysisParams,
@@ -164,5 +169,21 @@ export class GrixSDK {
    */
   async analyzeMarketData(params: AIAnalysisParams): Promise<AIAnalysisResponse> {
     return this.generateTradingSignals(params);
+  }
+
+  /**
+   * Retrieves available options quotes from multiple markets/protocols
+   *
+   * @param params - Parameters to filter options by asset, type, and position
+   * @returns Available options quotes matching the criteria
+   * @throws Error if API key is not provided
+   */
+  async getOptionsMarketBoard(params: TradeBoardGetParams): Promise<TradeBoardGetResponse> {
+    if (!this.apiKey) {
+      throw new Error(
+        'API key is required for getOptionsMarketBoard. Please provide an API key when initializing the SDK.'
+      );
+    }
+    return getOptionsMarketBoard(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 }
