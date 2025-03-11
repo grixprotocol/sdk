@@ -17,6 +17,7 @@ export async function requestTradeAgentSignals(
   try {
     const baseUrl = config.baseUrl;
     const url = `${baseUrl}/trade-agents/${tradeAgentId}/signals/request`;
+    console.log('url-log', url);
 
     const response = await axios.post<TradeAgentSignalResponse>(url, requestData, {
       headers: {
