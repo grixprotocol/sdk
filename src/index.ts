@@ -225,6 +225,9 @@ export class GrixSDK {
     tradeAgentId: number,
     request: TradeAgentSignalRequest
   ): Promise<TradeAgentSignalResponse> {
-    return requestTradeAgentSignals(tradeAgentId, request, { apiKey: this.apiKey });
+    return requestTradeAgentSignals(tradeAgentId, request, {
+      apiKey: this.apiKey,
+      baseUrl: this.baseUrl,
+    });
   }
 }
