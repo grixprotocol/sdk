@@ -42,6 +42,12 @@ import {
   TradeBoardGetParams,
   TradeBoardGetResponse,
 } from './methods/getOptionsMarketBoard';
+import { requestTradeAgentSignals } from './methods/requestTradeAgentSignals';
+import type {
+  TradeAgentSignalRequest,
+  TradeAgentSignalResponse,
+  TradeAgentSignalRequestConfig,
+} from './methods/requestTradeAgentSignals/types';
 
 export {
   AIAnalysisParams,
@@ -58,6 +64,9 @@ export {
   OrderType,
   ExpiryType,
   PaymentToken,
+  TradeAgentSignalRequest,
+  TradeAgentSignalResponse,
+  TradeAgentSignalRequestConfig,
 };
 
 export type InitializeConfig = {
@@ -185,5 +194,19 @@ export class GrixSDK {
       );
     }
     return getOptionsMarketBoard(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  /**
+   * Request trading signals from a specific trade agent
+   *
+   * @param tradeAgentId - ID of the trade agent to request signals from
+   * @param request - Configuration for the signal request
+   * @returns Trading signals from the trade agent
+   */
+  async requestTradeAgentSignals(
+    tradeAgentId: number,
+    request: TradeAgentSignalRequest
+  ): Promise<TradeAgentSignalResponse> {
+    return requestTradeAgentSignals(tradeAgentId, request, { apiKey: this.apiKey });
   }
 }
