@@ -1,4 +1,4 @@
-import { protocolsArrayData } from '@config';
+import { protocolsArrayData } from '../../../config';
 import { MarketData } from '../types';
 
 export const chatbotContextInitHandler = async () => {

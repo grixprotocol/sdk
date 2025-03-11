@@ -41,7 +41,7 @@ import {
   getOptionsMarketBoard,
   TradeBoardGetParams,
   TradeBoardGetResponse,
-} from '@methods/getOptionsMarketBoard';
+} from './methods/getOptionsMarketBoard';
 
 export {
   AIAnalysisParams,
@@ -179,7 +179,7 @@ export class GrixSDK {
    * @throws Error if API key is not provided
    */
   async getOptionsMarketBoard(params: TradeBoardGetParams): Promise<TradeBoardGetResponse> {
-    if (!this.apiKey) {
+    if (this.apiKey) {
       throw new Error(
         'API key is required for getOptionsMarketBoard. Please provide an API key when initializing the SDK.'
       );
