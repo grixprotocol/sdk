@@ -15,6 +15,7 @@ async function main() {
     console.log('Initializing Grix SDK...');
     const sdk = await GrixSDK.initialize({
       apiKey: 'YOUR_GRIX_API_KEY', // Replace with your actual API key
+      openAIApiKey: 'YOUR_OPENAI_API_KEY', // Replace with your actual OpenAI API key
     });
     console.log('SDK initialized successfully');
 

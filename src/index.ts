@@ -48,6 +48,12 @@ import type {
   TradeAgentSignalResponse,
   TradeAgentSignalRequestConfig,
 } from './methods/requestTradeAgentSignals/types';
+import { createTradeAgent } from './methods/createTradeAgent';
+import type {
+  CreateTradeAgentRequest,
+  CreateTradeAgentResponse,
+  TradeAgentConfig,
+} from './methods/createTradeAgent/types';
 
 export {
   AIAnalysisParams,
@@ -67,6 +73,9 @@ export {
   TradeAgentSignalRequest,
   TradeAgentSignalResponse,
   TradeAgentSignalRequestConfig,
+  CreateTradeAgentRequest,
+  CreateTradeAgentResponse,
+  TradeAgentConfig,
 };
 
 export type InitializeConfig = {
@@ -196,6 +205,15 @@ export class GrixSDK {
     return getOptionsMarketBoard(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
+  /**
+   * Create a new trade agent
+   *
+   * @param request - Configuration for the trade agent
+   * @returns Response containing the new agent's ID
+   */
+  async createTradeAgent(request: CreateTradeAgentRequest): Promise<CreateTradeAgentResponse> {
+    return createTradeAgent(request, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
   /**
    * Request trading signals from a specific trade agent
    *
