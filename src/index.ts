@@ -41,7 +41,24 @@ import {
   getOptionsMarketBoard,
   TradeBoardGetParams,
   TradeBoardGetResponse,
-} from '@methods/getOptionsMarketBoard';
+} from './methods/getOptionsMarketBoard';
+import { requestTradeAgentSignals } from './methods/requestTradeAgentSignals';
+import type {
+  TradeAgentSignalRequest,
+  TradeAgentSignalResponse,
+  TradeAgentSignalRequestConfig,
+} from './methods/requestTradeAgentSignals/types';
+import { createTradeAgent } from './methods/createTradeAgent';
+import type {
+  CreateTradeAgentRequest,
+  CreateTradeAgentResponse,
+  TradeAgentConfig,
+} from './methods/createTradeAgent/types';
+import { getTradeSignals } from './methods/getTradeSignals';
+import type {
+  GetTradeSignalsParams,
+  GetTradeSignalsResponse,
+} from './methods/getTradeSignals/types';
 
 export {
   AIAnalysisParams,
@@ -58,6 +75,14 @@ export {
   OrderType,
   ExpiryType,
   PaymentToken,
+  TradeAgentSignalRequest,
+  TradeAgentSignalResponse,
+  TradeAgentSignalRequestConfig,
+  CreateTradeAgentRequest,
+  CreateTradeAgentResponse,
+  TradeAgentConfig,
+  GetTradeSignalsParams,
+  GetTradeSignalsResponse,
 };
 
 export type InitializeConfig = {
@@ -185,5 +210,41 @@ export class GrixSDK {
       );
     }
     return getOptionsMarketBoard(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  /**
+   * Create a new trade agent
+   *
+   * @param request - Configuration for the trade agent
+   * @returns Response containing the new agent's ID
+   */
+  async createTradeAgent(request: CreateTradeAgentRequest): Promise<CreateTradeAgentResponse> {
+    return createTradeAgent(request, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+  /**
+   * Request trading signals from a specific trade agent
+   *
+   * @param tradeAgentId - ID of the trade agent to request signals from
+   * @param request - Configuration for the signal request
+   * @returns Trading signals from the trade agent
+   */
+  async requestTradeAgentSignals(
+    tradeAgentId: number,
+    request: TradeAgentSignalRequest
+  ): Promise<TradeAgentSignalResponse> {
+    return requestTradeAgentSignals(tradeAgentId, request, {
+      apiKey: this.apiKey,
+      baseUrl: this.baseUrl,
+    });
+  }
+
+  /**
+   * Get historical trade signals by agent ID or wallet address
+   *
+   * @param params - Query parameters (agentId or address)
+   * @returns List of trade signals with metadata
+   */
+  async getTradeSignals(params: GetTradeSignalsParams): Promise<GetTradeSignalsResponse> {
+    return getTradeSignals(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 }

@@ -19,12 +19,7 @@
     "declaration": true,
     "declarationDir": "./dist/types",
     "declarationMap": true,
-    "baseUrl": ".",
-    "paths": {
-      "@methods/*": ["src/methods/*"],
-      "@config": ["src/config.ts"],
-      "@src/*": ["src/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],

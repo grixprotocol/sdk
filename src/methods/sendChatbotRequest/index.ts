@@ -1,4 +1,4 @@
-import { OPENAI_API_URL } from '@config';
+import { OPENAI_API_URL } from '../../config';
 import { SendChatbotRequestParams } from './types';
 
 export async function sendChatbotRequest({
