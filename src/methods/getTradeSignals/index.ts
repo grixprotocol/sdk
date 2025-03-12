@@ -23,6 +23,7 @@ export async function getTradeSignals(
     }
 
     const url = `${config.baseUrl}/trade-agents?${queryParams.toString()}`;
+    console.log({ url: url });
 
     const response = await axios.get<GetTradeSignalsResponse>(url, {
       headers: {
