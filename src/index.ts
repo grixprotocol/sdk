@@ -54,6 +54,11 @@ import type {
   CreateTradeAgentResponse,
   TradeAgentConfig,
 } from './methods/createTradeAgent/types';
+import { getTradeSignals } from './methods/getTradeSignals';
+import type {
+  GetTradeSignalsParams,
+  GetTradeSignalsResponse,
+} from './methods/getTradeSignals/types';
 
 export {
   AIAnalysisParams,
@@ -76,6 +81,8 @@ export {
   CreateTradeAgentRequest,
   CreateTradeAgentResponse,
   TradeAgentConfig,
+  GetTradeSignalsParams,
+  GetTradeSignalsResponse,
 };
 
 export type InitializeConfig = {
@@ -229,5 +236,15 @@ export class GrixSDK {
       apiKey: this.apiKey,
       baseUrl: this.baseUrl,
     });
+  }
+
+  /**
+   * Get historical trade signals by agent ID or wallet address
+   *
+   * @param params - Query parameters (agentId or address)
+   * @returns List of trade signals with metadata
+   */
+  async getTradeSignals(params: GetTradeSignalsParams): Promise<GetTradeSignalsResponse> {
+    return getTradeSignals(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 }
