@@ -1,27 +1,24 @@
-import { fetchAssetPrice } from './methods/fetchAssetPrice/index.js';
-import { chatBotGetContext } from './methods/chatbotGetContext/index.js';
-import { getOptionPrice } from './methods/getOptionPrice/index.js';
-import { getAssetPriceHistory } from './methods/getAssetPriceHistory/index.js';
-import { getOptionPriceHistory } from './methods/getOptionPriceHistory/index.js';
-import { sendChatbotRequest } from './methods/sendChatbotRequest/index.js';
-import { generateTradingSignals } from './methods/generateTradingSignals/index.js';
-import type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types.js';
+import { fetchAssetPrice } from './methods/fetchAssetPrice/index';
+import { chatBotGetContext } from './methods/chatbotGetContext/index';
+import { getOptionPrice } from './methods/getOptionPrice/index';
+import { getAssetPriceHistory } from './methods/getAssetPriceHistory/index';
+import { getOptionPriceHistory } from './methods/getOptionPriceHistory/index';
+import { sendChatbotRequest } from './methods/sendChatbotRequest/index';
+import { generateTradingSignals } from './methods/generateTradingSignals/index';
+import type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
 import type {
   ChatBotGetContextParams,
   ChatBotGetContextResponse,
-} from './methods/chatbotGetContext/types.js';
-import type {
-  OptionPriceGetParams,
-  OptionPriceGetResponse,
-} from './methods/getOptionPrice/types.js';
+} from './methods/chatbotGetContext/types';
+import type { OptionPriceGetParams, OptionPriceGetResponse } from './methods/getOptionPrice/types';
 import type {
   AssetPriceHistoryGetParams,
   AssetPriceHistoryGetResponse,
-} from './methods/getAssetPriceHistory/types.js';
+} from './methods/getAssetPriceHistory/types';
 import type {
   OptionPriceHistoryGetParams,
   OptionPriceHistoryGetResponse,
-} from './methods/getOptionPriceHistory/types.js';
+} from './methods/getOptionPriceHistory/types';
 import type {
   AIAnalysisParams,
   AIAnalysisResponse,
@@ -31,7 +28,7 @@ import type {
   ActionType,
   PositionType,
   InstrumentType,
-} from './methods/generateTradingSignals/types.js';
+} from './methods/generateTradingSignals/types';
 import {
   UnderlyingAsset,
   OptionType,
@@ -40,32 +37,31 @@ import {
   ExpiryType,
   PaymentToken,
 } from './globals/enums.js';
-import { getOptionsMarketBoard } from './methods/getOptionsMarketBoard/index.js';
-
-import { requestTradeAgentSignals } from './methods/requestTradeAgentSignals/index.js';
+import {
+  getOptionsMarketBoard,
+  TradeBoardGetParams,
+  TradeBoardGetResponse,
+} from './methods/getOptionsMarketBoard';
+import { requestTradeAgentSignals } from './methods/requestTradeAgentSignals';
 import type {
   TradeAgentSignalRequest,
   TradeAgentSignalResponse,
   TradeAgentSignalRequestConfig,
-} from './methods/requestTradeAgentSignals/types.js';
-import { createTradeAgent } from './methods/createTradeAgent/index.js';
+} from './methods/requestTradeAgentSignals/types';
+import { createTradeAgent } from './methods/createTradeAgent';
 import type {
   CreateTradeAgentRequest,
   CreateTradeAgentResponse,
   TradeAgentConfig,
-} from './methods/createTradeAgent/types.js';
-import { getTradeSignals } from './methods/getTradeSignals/index.js';
+} from './methods/createTradeAgent/types';
+import { getTradeSignals } from './methods/getTradeSignals';
 import type {
   GetTradeSignalsParams,
   GetTradeSignalsResponse,
-} from './methods/getTradeSignals/types.js';
+} from './methods/getTradeSignals/types';
 
-import { getPairs } from './methods/perps/getPairs/index.js';
-import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types.js';
-import {
-  TradeBoardGetParams,
-  TradeBoardGetResponse,
-} from './methods/getOptionsMarketBoard/type.js';
+import { getPairs } from './methods/perps/getPairs';
+import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types';
 
 export {
   AIAnalysisParams,
