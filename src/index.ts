@@ -1,10 +1,10 @@
-import { fetchAssetPrice } from './methods/fetchAssetPrice';
-import { chatBotGetContext } from './methods/chatbotGetContext';
-import { getOptionPrice } from './methods/getOptionPrice';
-import { getAssetPriceHistory } from './methods/getAssetPriceHistory';
-import { getOptionPriceHistory } from './methods/getOptionPriceHistory';
-import { sendChatbotRequest } from './methods/sendChatbotRequest';
-import { generateTradingSignals } from './methods/generateTradingSignals';
+import { fetchAssetPrice } from './methods/fetchAssetPrice/index.ts';
+import { chatBotGetContext } from './methods/chatbotGetContext/index.ts';
+import { getOptionPrice } from './methods/getOptionPrice/index.ts';
+import { getAssetPriceHistory } from './methods/getAssetPriceHistory/index.ts';
+import { getOptionPriceHistory } from './methods/getOptionPriceHistory/index.ts';
+import { sendChatbotRequest } from './methods/sendChatbotRequest/index.ts';
+import { generateTradingSignals } from './methods/generateTradingSignals/index.ts';
 import type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
 import type {
   ChatBotGetContextParams,
@@ -36,31 +36,31 @@ import {
   OrderType,
   ExpiryType,
   PaymentToken,
-} from './globals/enums.js';
-import {
-  getOptionsMarketBoard,
+} from './globals/enums';
+import { getOptionsMarketBoard } from './methods/getOptionsMarketBoard/index';
+import type {
   TradeBoardGetParams,
   TradeBoardGetResponse,
-} from './methods/getOptionsMarketBoard';
-import { requestTradeAgentSignals } from './methods/requestTradeAgentSignals';
+} from './methods/getOptionsMarketBoard/type';
+import { requestTradeAgentSignals } from './methods/requestTradeAgentSignals/index';
 import type {
   TradeAgentSignalRequest,
   TradeAgentSignalResponse,
   TradeAgentSignalRequestConfig,
 } from './methods/requestTradeAgentSignals/types';
-import { createTradeAgent } from './methods/createTradeAgent';
+import { createTradeAgent } from './methods/createTradeAgent/index';
 import type {
   CreateTradeAgentRequest,
   CreateTradeAgentResponse,
   TradeAgentConfig,
 } from './methods/createTradeAgent/types';
-import { getTradeSignals } from './methods/getTradeSignals';
+import { getTradeSignals } from './methods/getTradeSignals/index';
 import type {
   GetTradeSignalsParams,
   GetTradeSignalsResponse,
 } from './methods/getTradeSignals/types';
 
-import { getPairs } from './methods/perps/getPairs';
+import { getPairs } from './methods/perps/getPairs/index';
 import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types';
 
 export {
