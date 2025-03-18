@@ -7,7 +7,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
-    "noEmit": false,
+    "noEmit": true,
     "skipLibCheck": true,
     "types": ["node", "jest"],
     "outDir": "./dist",
@@ -19,7 +19,8 @@
     "declaration": true,
     "declarationDir": "./dist/types",
     "declarationMap": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "allowImportingTsExtensions": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
