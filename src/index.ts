@@ -1,10 +1,10 @@
-import { fetchAssetPrice } from './methods/fetchAssetPrice/index.ts';
-import { chatBotGetContext } from './methods/chatbotGetContext/index.ts';
-import { getOptionPrice } from './methods/getOptionPrice/index.ts';
-import { getAssetPriceHistory } from './methods/getAssetPriceHistory/index.ts';
-import { getOptionPriceHistory } from './methods/getOptionPriceHistory/index.ts';
-import { sendChatbotRequest } from './methods/sendChatbotRequest/index.ts';
-import { generateTradingSignals } from './methods/generateTradingSignals/index.ts';
+import { fetchAssetPrice } from './methods/fetchAssetPrice/index';
+import { chatBotGetContext } from './methods/chatbotGetContext/index';
+import { getOptionPrice } from './methods/getOptionPrice/index';
+import { getAssetPriceHistory } from './methods/getAssetPriceHistory/index';
+import { getOptionPriceHistory } from './methods/getOptionPriceHistory/index';
+import { sendChatbotRequest } from './methods/sendChatbotRequest/index';
+import { generateTradingSignals } from './methods/generateTradingSignals/index';
 import type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types';
 import type {
   ChatBotGetContextParams,
