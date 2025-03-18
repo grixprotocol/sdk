@@ -60,6 +60,9 @@ import type {
   GetTradeSignalsResponse,
 } from './methods/getTradeSignals/types';
 
+import { getPairs } from './methods/perps/getPairs';
+import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types';
+
 export {
   AIAnalysisParams,
   AIAnalysisResponse,
@@ -83,6 +86,8 @@ export {
   TradeAgentConfig,
   GetTradeSignalsParams,
   GetTradeSignalsResponse,
+  GetPairsParams,
+  GetPairsResponse,
 };
 
 export type InitializeConfig = {
@@ -246,5 +251,15 @@ export class GrixSDK {
    */
   async getTradeSignals(params: GetTradeSignalsParams): Promise<GetTradeSignalsResponse> {
     return getTradeSignals(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  /**
+   * Get pairs by protocol and base asset
+   *
+   * @param params - Query parameters (protocol and baseAsset)
+   * @returns List of pairs matching the criteria
+   */
+  async getPerpsPairs(params: GetPairsParams): Promise<GetPairsResponse> {
+    return getPairs(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 }
