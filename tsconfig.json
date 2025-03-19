@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "NodeNext",
     "target": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
-    "noEmit": true,
+    "noEmit": false,
     "skipLibCheck": true,
     "types": ["node", "jest"],
     "outDir": "./dist",
@@ -20,7 +20,7 @@
     "declarationDir": "./dist/types",
     "declarationMap": true,
     "baseUrl": ".",
-    "allowImportingTsExtensions": true
+    "moduleDetection": "force"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
