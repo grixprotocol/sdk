@@ -4,13 +4,15 @@ import { getOptionPrice } from './methods/getOptionPrice/index.js';
 import { getAssetPriceHistory } from './methods/getAssetPriceHistory/index.js';
 import { getOptionPriceHistory } from './methods/getOptionPriceHistory/index.js';
 import { sendChatbotRequest } from './methods/sendChatbotRequest/index.js';
-import { generateTradingSignals } from './methods/generateTradingSignals/index.js';
 import type { SendChatbotRequestParams } from './methods/sendChatbotRequest/types.js';
 import type {
   ChatBotGetContextParams,
   ChatBotGetContextResponse,
 } from './methods/chatbotGetContext/types.js';
-import type { OptionPriceGetParams, OptionPriceGetResponse } from './methods/getOptionPrice/types.js';
+import type {
+  OptionPriceGetParams,
+  OptionPriceGetResponse,
+} from './methods/getOptionPrice/types.js';
 import type {
   AssetPriceHistoryGetParams,
   AssetPriceHistoryGetResponse,
@@ -92,18 +94,15 @@ export {
 export type InitializeConfig = {
   apiKey?: string;
   baseUrl?: string;
-  openAIApiKey?: string;
 };
 
 export class GrixSDK {
   private apiKey: string;
   private baseUrl: string;
-  private openAIApiKey: string;
 
   private constructor(config?: InitializeConfig) {
     this.apiKey = config?.apiKey || '';
     this.baseUrl = config?.baseUrl || 'https://internal-api-dev.grix.finance';
-    this.openAIApiKey = config?.openAIApiKey || '';
   }
 
   /**
@@ -112,7 +111,6 @@ export class GrixSDK {
    * @param config - Configuration options for the SDK
    * @param config.apiKey - API key for Grix APIs
    * @param config.baseUrl - Base URL for Grix APIs
-   * @param config.openAIApiKey - OpenAI API key for AI-powered features
    * @returns A new instance of the GrixSDK
    */
   static async initialize(config?: InitializeConfig): Promise<GrixSDK> {
@@ -181,23 +179,6 @@ export class GrixSDK {
    */
   async sendChatbotRequest(params: SendChatbotRequestParams): Promise<string> {
     return sendChatbotRequest(params);
-  }
-
-  /**
-   * Generate trading signals based on market data analysis
-   *
-   * @param params - The analysis parameters (either trade analysis or general analysis)
-   * @returns Trade signals or analysis results with metadata
-   */
-  async generateTradingSignals(params: AIAnalysisParams): Promise<AIAnalysisResponse> {
-    return generateTradingSignals(params, { apiKey: this.openAIApiKey });
-  }
-
-  /**
-   * @deprecated Use generateTradingSignals instead
-   */
-  async analyzeMarketData(params: AIAnalysisParams): Promise<AIAnalysisResponse> {
-    return this.generateTradingSignals(params);
   }
 
   /**
