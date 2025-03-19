@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CreateTradeAgentRequest, CreateTradeAgentResponse } from './types';
+import { CreateTradeAgentRequest, CreateTradeAgentResponse } from './types.js';
 
 /**
  * Create a new trade agent
@@ -9,13 +9,11 @@ import { CreateTradeAgentRequest, CreateTradeAgentResponse } from './types';
  * @returns Response containing the new agent's ID
  */
 export async function createTradeAgent(
-  request: CreateTradeAgentRequest,
+  params: CreateTradeAgentRequest,
   config: { apiKey: string; baseUrl: string }
 ): Promise<CreateTradeAgentResponse> {
   try {
-    const url = `${config.baseUrl}/trade-agents`;
-
-    const response = await axios.post<CreateTradeAgentResponse>(url, request, {
+    const response = await axios.post<CreateTradeAgentResponse>(`${config.baseUrl}/trade-agent/create`, params, {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': config.apiKey,
@@ -23,10 +21,11 @@ export async function createTradeAgent(
     });
 
     return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'response' in error) {
+      const axiosError = error as { response?: { status?: number; data?: unknown }; message?: string };
       throw new Error(
-        `Failed to create trade agent: ${error.response?.status} ${error.response?.data || error.message}`
+        `Failed to create trade agent: ${axiosError.response?.status} ${axiosError.response?.data || axiosError.message}`
       );
     }
     throw error;
@@ -34,4 +33,4 @@ export async function createTradeAgent(
 }
 
 // Export types
-export * from './types';
+export * from './types.js';

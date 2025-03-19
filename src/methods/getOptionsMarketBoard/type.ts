@@ -1,4 +1,4 @@
-import { UnderlyingAsset, OptionType, PositionType } from '../../globals';
+import { UnderlyingAsset, OptionType, PositionType } from '../../globals/enums.js';
 
 export type TradeBoardGetParams = {
   asset: UnderlyingAsset;

@@ -1,16 +1,15 @@
-import { UnderlyingAsset } from '../../globals';
+import { UnderlyingAsset } from '../../globals/enums.js';
 
 export type AssetPriceHistoryGetParams = {
   assets: UnderlyingAsset[];
-  granularityMs: number;
-  contextWindowMs: number;
+  startTime: number;
+  endTime: number;
 };
 
 export type AssetPriceHistoryGetResponse = {
-  assetPriceHistory: {
-    [asset: string]: {
-      timestamp: number;
-      price: number;
-    }[];
+  prices: {
+    [key: string]: {
+      [timestamp: string]: number;
+    };
   };
 };

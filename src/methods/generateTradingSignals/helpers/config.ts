@@ -1,4 +1,4 @@
-import type { AIAnalysisConfig } from '../types';
+import type { AIAnalysisConfig } from '../types.js';
 
 const DEFAULT_CONFIG = {
   model: 'gpt-4o',

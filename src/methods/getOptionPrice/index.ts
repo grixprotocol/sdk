@@ -1,4 +1,4 @@
-import { OptionPriceGetParams, OptionPriceGetResponse } from './types';
+import { OptionPriceGetParams, OptionPriceGetResponse } from './types.js';
 
 export async function getOptionPrice(
   params: OptionPriceGetParams,

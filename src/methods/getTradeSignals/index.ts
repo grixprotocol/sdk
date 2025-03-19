@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GetTradeSignalsParams, GetTradeSignalsResponse } from './types';
+import { GetTradeSignalsParams, GetTradeSignalsResponse } from './types.js';
 
 /**
  * Get trade signals by agent ID or wallet address
@@ -13,30 +13,19 @@ export async function getTradeSignals(
   config: { apiKey: string; baseUrl: string }
 ): Promise<GetTradeSignalsResponse> {
   try {
-    // Build query parameters
-    const queryParams = new URLSearchParams();
-    if (params.agentId) {
-      queryParams.append('agentId', params.agentId);
-    }
-    if (params.address) {
-      queryParams.append('address', params.address);
-    }
-
-    const url = `${config.baseUrl}/trade-agents?${queryParams.toString()}`;
-    console.log({ url: url });
-
-    const response = await axios.get<GetTradeSignalsResponse>(url, {
+    const response = await axios.get<GetTradeSignalsResponse>(`${config.baseUrl}/trade-signals`, {
+      params,
       headers: {
-        'Content-Type': 'application/json',
         'x-api-key': config.apiKey,
       },
     });
 
     return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'response' in error) {
+      const axiosError = error as { response?: { status?: number; data?: unknown }; message?: string };
       throw new Error(
-        `Failed to get trade signals: ${error.response?.status} ${error.response?.data || error.message}`
+        `Failed to get trade signals: ${axiosError.response?.status} ${axiosError.response?.data || axiosError.message}`
       );
     }
     throw error;
@@ -44,4 +33,4 @@ export async function getTradeSignals(
 }
 
 // Export types
-export * from './types';
+export * from './types.js';

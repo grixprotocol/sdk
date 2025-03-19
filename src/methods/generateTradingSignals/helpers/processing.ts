@@ -1,6 +1,6 @@
-import type { AIAnalysisParams, AIAnalysisResponse } from '../types';
-import { isTradeAnalysisParams, isObjectiveAnalysisParams } from './messaging';
-import { signalArraySchema, convertToSignalType } from './validation';
+import type { AIAnalysisParams, AIAnalysisResponse } from '../types.js';
+import { isTradeAnalysisParams, isObjectiveAnalysisParams } from './messaging.js';
+import { signalArraySchema, convertToSignalType } from './validation.js';
 
 /**
  * Process the API response based on the analysis type
@@ -42,7 +42,7 @@ export function processTradeSignals(
       // Don't attempt to extract arrays, just fail
       throw new Error(
         'No valid JSON found in response. The response must contain valid JSON data with trading signals.' +
-          (err instanceof Error ? `\nError: ${err.message}` : '')
+        (err instanceof Error ? `\nError: ${err.message}` : '')
       );
     }
 

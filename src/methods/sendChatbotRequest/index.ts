@@ -1,5 +1,5 @@
-import { OPENAI_API_URL } from '../../config';
-import { SendChatbotRequestParams } from './types';
+import { OPENAI_API_URL } from '../../config.js';
+import { SendChatbotRequestParams } from './types.js';
 
 export async function sendChatbotRequest({
   chatbotContext,

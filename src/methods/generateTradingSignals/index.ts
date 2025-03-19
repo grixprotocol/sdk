@@ -4,11 +4,11 @@ import type {
   AIAnalysisResponse,
   AIAnalysisConfig,
   MarketDataInput,
-} from './types';
-import { prepareApiConfig } from './helpers/config';
-import { buildMessages, isTradeAnalysisParams } from './helpers/messaging';
-import { processResponse } from './helpers/processing';
-import { callOpenAiApi } from './helpers/messaging';
+} from './types.js';
+import { prepareApiConfig } from './helpers/config.js';
+import { buildMessages, isTradeAnalysisParams } from './helpers/messaging.js';
+import { processResponse } from './helpers/processing.js';
+import { callOpenAiApi } from './helpers/messaging.js';
 
 type ObjectiveParams = {
   dataPoints: MarketDataInput[];

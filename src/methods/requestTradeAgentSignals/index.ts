@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TradeAgentSignalRequest, TradeAgentSignalResponse } from './types';
+import { TradeAgentSignalRequest, TradeAgentSignalResponse } from './types.js';
 
 /**
  * Request trading signals from a trade agent
@@ -27,10 +27,11 @@ export async function requestTradeAgentSignals(
     });
 
     return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'response' in error) {
+      const axiosError = error as { response?: { status?: number; data?: unknown }; message?: string };
       throw new Error(
-        `Failed to request trade agent signals: ${error.response?.status} ${error.response?.data || error.message}`
+        `Failed to request trade agent signals: ${axiosError.response?.status} ${axiosError.response?.data || axiosError.message}`
       );
     }
     throw error;
@@ -38,4 +39,4 @@ export async function requestTradeAgentSignals(
 }
 
 // Export types
-export * from './types';
+export * from './types.js';

@@ -1,4 +1,4 @@
-import { TradeAgentSignalRequestConfig } from '../requestTradeAgentSignals/types';
+import { TradeAgentSignalRequestConfig } from '../requestTradeAgentSignals/types.js';
 
 export type TradeAgentConfig = {
   agent_name: string;

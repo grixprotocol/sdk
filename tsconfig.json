@@ -9,7 +9,6 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": false,
     "skipLibCheck": true,
-    "types": ["node", "jest"],
     "outDir": "./dist",
     "rootDir": "./src",
     "resolveJsonModule": true,

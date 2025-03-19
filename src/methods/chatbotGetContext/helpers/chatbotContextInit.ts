@@ -1,5 +1,21 @@
-import { protocolsArrayData } from '../../../config';
-import { MarketData } from '../types';
+import { protocolsArrayData } from '../../../config.js';
+import { MarketData } from '../types.js';
+
+interface Protocol {
+  protocolName: string;
+  isExecution: boolean;
+}
+
+export function getSupportedProtocols(): string[] {
+  const protocols = protocolsArrayData as Protocol[];
+  return protocols
+    .filter((protocol) => protocol.isExecution)
+    .map((protocol) => protocol.protocolName);
+}
+
+export function getMarketData(): MarketData[] {
+  return [];
+}
 
 export const chatbotContextInitHandler = async () => {
   const supportedProtocolsData = protocolsArrayData.map((protocol) => protocol.protocolName);

@@ -1,5 +1,5 @@
-import { TradeAgentConfig } from '../createTradeAgent/types';
-import { Signal } from '../generateTradingSignals/types';
+import { TradeAgentConfig } from '../createTradeAgent/types.js';
+import { Signal } from '../generateTradingSignals/types.js';
 
 export type GetTradeSignalsParams = {
   agentId?: string;

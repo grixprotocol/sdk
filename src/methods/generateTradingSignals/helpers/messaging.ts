@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
-import type { AIAnalysisParams, TradeAnalysisParams, MarketDataInput } from '../types';
-import { getSystemInstructions, getGeneralInstructions } from '../systemInstructions';
-import { formatTradeWindow } from '../../../utils/dateUtils';
+import type { AIAnalysisParams, TradeAnalysisParams, MarketDataInput } from '../types.js';
+import { getSystemInstructions, getGeneralInstructions } from '../systemInstructions.js';
+import { formatTradeWindow } from '../../../utils/dateUtils.js';
 
 // Define type for non-trade analysis params
 export type ObjectiveAnalysisParams = {

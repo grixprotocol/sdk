@@ -2,9 +2,9 @@ import {
   chatbotContextInitHandler,
   createEnhancedUserMessage,
   getSystemInstructions,
-} from './helpers/chatbotContextInit';
-import { ChatBotGetContextResponse } from './types';
-import { ChatBotGetContextParams } from './types';
+} from './helpers/chatbotContextInit.js';
+import { ChatBotGetContextResponse } from './types.js';
+import { ChatBotGetContextParams } from './types.js';
 
 export async function chatBotGetContext({
   userMessage,

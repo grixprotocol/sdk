@@ -1,4 +1,4 @@
-import { PositionType } from '../../globals';
+import { PositionType } from '../../globals/enums.js';
 
 export type OptionPriceGetParams = {
   optionKey: string;

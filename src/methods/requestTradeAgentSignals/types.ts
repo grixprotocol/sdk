@@ -1,4 +1,4 @@
-import { Signal } from '../generateTradingSignals/types';
+import { Signal } from '../generateTradingSignals/types.js';
 
 export type TradeAgentSignalRequestConfig = {
   budget_usd: string;
