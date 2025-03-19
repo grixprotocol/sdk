@@ -11,21 +11,29 @@ export async function getOptionsMarketBoard(
   params: TradeBoardGetParams,
   config: { apiKey: string; baseUrl: string }
 ): Promise<TradeBoardGetResponse> {
+  const { asset, optionType, positionType } = params;
+
+  // Build query parameters
+  const queryParams = new URLSearchParams();
+  queryParams.append('asset', asset);
+  queryParams.append('optionType', optionType);
+  queryParams.append('positionType', positionType);
+
   try {
-    const response = await axios.get<TradeBoardGetResponse>(`${config.baseUrl}/options-market-board`, {
-      params,
+    const response = await axios.get<TradeBoardGetResponse>(`${config.baseUrl}/elizatradeboard`, {
+      params: queryParams,
       headers: {
+        'Content-Type': 'application/json',
         'x-api-key': config.apiKey,
       },
     });
 
     return response.data;
-  } catch (error: unknown) {
-    if (error && typeof error === 'object' && 'response' in error) {
-      const axiosError = error as { response?: { status?: number; data?: { message?: string } }; message?: string };
-      const status = axiosError.response?.status || 'unknown';
-      const message = axiosError.response?.data?.message || axiosError.message;
-      throw new Error(`Failed to get options market board: ${status} ${message}`);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status || 'unknown';
+      const message = error.response?.data?.message || error.message;
+      throw new Error(`Failed to get trade board: ${status} ${message}`);
     }
     throw error;
   }

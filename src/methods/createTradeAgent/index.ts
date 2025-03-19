@@ -9,11 +9,13 @@ import { CreateTradeAgentRequest, CreateTradeAgentResponse } from './types.js';
  * @returns Response containing the new agent's ID
  */
 export async function createTradeAgent(
-  params: CreateTradeAgentRequest,
+  request: CreateTradeAgentRequest,
   config: { apiKey: string; baseUrl: string }
 ): Promise<CreateTradeAgentResponse> {
   try {
-    const response = await axios.post<CreateTradeAgentResponse>(`${config.baseUrl}/trade-agent/create`, params, {
+    const url = `${config.baseUrl}/trade-agents`;
+
+    const response = await axios.post<CreateTradeAgentResponse>(url, request, {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': config.apiKey,
@@ -21,11 +23,10 @@ export async function createTradeAgent(
     });
 
     return response.data;
-  } catch (error: unknown) {
-    if (error && typeof error === 'object' && 'response' in error) {
-      const axiosError = error as { response?: { status?: number; data?: unknown }; message?: string };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
       throw new Error(
-        `Failed to create trade agent: ${axiosError.response?.status} ${axiosError.response?.data || axiosError.message}`
+        `Failed to create trade agent: ${error.response?.status} ${error.response?.data || error.message}`
       );
     }
     throw error;
