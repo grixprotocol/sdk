@@ -92,7 +92,7 @@ export {
 };
 
 export type InitializeConfig = {
-  apiKey?: string;
+  apiKey: string;
   baseUrl?: string;
 };
 
@@ -100,20 +100,24 @@ export class GrixSDK {
   private apiKey: string;
   private baseUrl: string;
 
-  private constructor(config?: InitializeConfig) {
-    this.apiKey = config?.apiKey || '';
-    this.baseUrl = config?.baseUrl || 'https://internal-api-dev.grix.finance';
+  private constructor(config: InitializeConfig) {
+    if (!config.apiKey) {
+      throw new Error('API key is required when initializing the SDK');
+    }
+    this.apiKey = config.apiKey;
+    this.baseUrl = config.baseUrl || 'https://internal-api-dev.grix.finance';
   }
 
   /**
    * Initialize a new instance of the GrixSDK
    *
    * @param config - Configuration options for the SDK
-   * @param config.apiKey - API key for Grix APIs
+   * @param config.apiKey - API key for Grix APIs (required)
    * @param config.baseUrl - Base URL for Grix APIs
    * @returns A new instance of the GrixSDK
+   * @throws Error if API key is not provided
    */
-  static async initialize(config?: InitializeConfig): Promise<GrixSDK> {
+  static async initialize(config: InitializeConfig): Promise<GrixSDK> {
     return new GrixSDK(config);
   }
 
