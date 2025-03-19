@@ -27,11 +27,10 @@ export async function requestTradeAgentSignals(
     });
 
     return response.data;
-  } catch (error: unknown) {
-    if (error && typeof error === 'object' && 'response' in error) {
-      const axiosError = error as { response?: { status?: number; data?: unknown }; message?: string };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
       throw new Error(
-        `Failed to request trade agent signals: ${axiosError.response?.status} ${axiosError.response?.data || axiosError.message}`
+        `Failed to request trade agent signals: ${error.response?.status} ${error.response?.data || error.message}`
       );
     }
     throw error;
