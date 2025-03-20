@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TradeBoardGetParams, TradeBoardGetResponse } from './type.js';
+import { TradeBoardData, TradeBoardGetParams } from './type.js';
 
 /**
  * Get trade board data with filtering options
@@ -10,7 +10,7 @@ import { TradeBoardGetParams, TradeBoardGetResponse } from './type.js';
 export async function getOptionsMarketBoard(
   params: TradeBoardGetParams,
   config: { apiKey: string; baseUrl: string }
-): Promise<TradeBoardGetResponse> {
+): Promise<TradeBoardData[]> {
   const { asset, optionType, positionType } = params;
 
   // Build query parameters
@@ -20,7 +20,7 @@ export async function getOptionsMarketBoard(
   queryParams.append('positionType', positionType);
 
   try {
-    const response = await axios.get<TradeBoardGetResponse>(`${config.baseUrl}/elizatradeboard`, {
+    const response = await axios.get<TradeBoardData[]>(`${config.baseUrl}/elizatradeboard`, {
       params: queryParams,
       headers: {
         'Content-Type': 'application/json',
