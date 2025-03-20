@@ -62,6 +62,8 @@ import { getPairs } from './methods/perps/getPairs/index.js';
 import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types.js';
 import { createMCPService } from './modelContextCore/mcp/index.js';
 import type { MCPService } from './modelContextCore/mcp/types/index.js';
+import { createElizaService } from './modelContextCore/eliza/index.js';
+import type { ElizaService } from './modelContextCore/eliza/types/index.js';
 
 export {
   AIAnalysisParams,
@@ -99,6 +101,7 @@ export class GrixSDK {
   private apiKey: string;
   private baseUrl: string;
   private _mcp: MCPService;
+  private _eliza: ElizaService;
 
   private constructor(config: InitializeConfig) {
     if (!config.apiKey) {
@@ -106,8 +109,9 @@ export class GrixSDK {
     }
     this.apiKey = config.apiKey;
     this.baseUrl = config.baseUrl || 'https://internal-api-dev.grix.finance';
-    // Initialize MCP
+    // Initialize services
     this._mcp = createMCPService(this);
+    this._eliza = createElizaService(this);
   }
 
   /**
@@ -253,5 +257,9 @@ export class GrixSDK {
 
   public get mcp(): MCPService {
     return this._mcp;
+  }
+
+  public get eliza(): ElizaService {
+    return this._eliza;
   }
 }
