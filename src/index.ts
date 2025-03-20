@@ -40,10 +40,7 @@ import {
   PaymentToken,
 } from './globals/enums.js';
 import { getOptionsMarketBoard } from './methods/getOptionsMarketBoard/index.js';
-import type {
-  TradeBoardGetParams,
-  TradeBoardGetResponse,
-} from './methods/getOptionsMarketBoard/type.js';
+import type { TradeBoardData, TradeBoardGetParams } from './methods/getOptionsMarketBoard/type.js';
 import { requestTradeAgentSignals } from './methods/requestTradeAgentSignals/index.js';
 import type {
   TradeAgentSignalRequest,
@@ -63,6 +60,8 @@ import type {
 } from './methods/getTradeSignals/types.js';
 import { getPairs } from './methods/perps/getPairs/index.js';
 import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types.js';
+import { createMCPService } from './modelContextCore/mcp/index.js';
+import type { MCPService } from './modelContextCore/mcp/types/index.js';
 
 export {
   AIAnalysisParams,
@@ -99,6 +98,7 @@ export type InitializeConfig = {
 export class GrixSDK {
   private apiKey: string;
   private baseUrl: string;
+  private _mcp: MCPService;
 
   private constructor(config: InitializeConfig) {
     if (!config.apiKey) {
@@ -106,6 +106,8 @@ export class GrixSDK {
     }
     this.apiKey = config.apiKey;
     this.baseUrl = config.baseUrl || 'https://internal-api-dev.grix.finance';
+    // Initialize MCP
+    this._mcp = createMCPService(this);
   }
 
   /**
@@ -118,7 +120,9 @@ export class GrixSDK {
    * @throws Error if API key is not provided
    */
   static async initialize(config: InitializeConfig): Promise<GrixSDK> {
-    return new GrixSDK(config);
+    const sdk = new GrixSDK(config);
+    // Any async initialization if needed
+    return sdk;
   }
 
   /**
@@ -192,7 +196,7 @@ export class GrixSDK {
    * @returns Available options quotes matching the criteria
    * @throws Error if API key is not provided
    */
-  async getOptionsMarketBoard(params: TradeBoardGetParams): Promise<TradeBoardGetResponse> {
+  async getOptionsMarketBoard(params: TradeBoardGetParams): Promise<TradeBoardData[]> {
     if (!this.apiKey) {
       throw new Error(
         'API key is required for getOptionsMarketBoard. Please provide an API key when initializing the SDK.'
@@ -245,5 +249,9 @@ export class GrixSDK {
    */
   async getPerpsPairs(params: GetPairsParams): Promise<GetPairsResponse> {
     return getPairs(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  public get mcp(): MCPService {
+    return this._mcp;
   }
 }
