@@ -9,6 +9,7 @@ A lightweight, extensible SDK for integrating with agent platforms like Model Co
 - **Consistent**: Uniform schema and response formats
 - **Type-Safe**: Full TypeScript support
 - **Auto-generating**: Creates Eliza actions automatically from SDK capabilities
+- **Self-adapting**: Generic services that adapt to SDK changes automatically
 
 ## Installation
 
@@ -74,9 +75,11 @@ const transport = new StdioServerTransport();
 await server.connect(transport);
 ```
 
-## Eliza Integration Example
+## Eliza Integration
 
-The SDK now makes Eliza integration even simpler with auto-generated actions:
+### Option 1: Auto-generated Plugin
+
+The simplest approach is to use the auto-generated plugin:
 
 ```typescript
 import type { Plugin } from "@elizaos/core";
@@ -98,30 +101,62 @@ export async function createGrixPlugin(): Promise<Plugin> {
 }
 ```
 
-### Using the Plugin
+### Option 2: Generic Eliza Service
+
+For more control, you can use the generic service that automatically adapts to SDK changes:
 
 ```typescript
-import { createGrixPlugin } from './grix-plugin';
+import { GrixSDK, GenericElizaService } from '@grixprotocol/sdk';
+import { elizaLogger } from "@elizaos/core";
 
-// In your Eliza setup code
-async function setupPlugins(runtime) {
-  const grixPlugin = await createGrixPlugin();
-  runtime.registerPlugin(grixPlugin);
+export class GrixService {
+  private service: GenericElizaService;
+  
+  constructor(apiKey: string) {
+    // Create the SDK
+    const sdk = new GrixSDK();
+    
+    // Create the generic service that auto-adapts to SDK changes
+    this.service = new GenericElizaService({
+      apiKey,
+      timeout: 60000
+    });
+  }
+  
+  // Standard methods that match the existing interface
+  async getPrice(request: { asset: string }) {
+    elizaLogger.info(`Getting price for ${request.asset}`);
+    return this.service.getPrice(request);
+  }
+  
+  async getOptions(request: any) {
+    elizaLogger.info(`Getting options for ${request.asset}`);
+    return this.service.getOptions(request);
+  }
+  
+  async generateSignals(request: any) {
+    elizaLogger.info(`Generating signals with budget ${request.budget_usd}`);
+    return this.service.generateSignals(request);
+  }
+  
+  // When new SDK methods are added, you can use them without changing the service code
+  async newSdkMethod(request: any) {
+    elizaLogger.info(`Using new SDK method`);
+    return this.service.call('newEndpoint', request);
+  }
 }
 ```
 
 ### How It Works
 
-The auto-generation works by:
+The auto-generation and generic service work by:
 
-1. Discovering all available tools in the SDK
-2. Creating Eliza actions for each tool with:
-   - Proper parameter extraction templates
-   - Standard validation logic
-   - Consistent error handling
-   - Pre-configured examples
+1. **Configuration-based Approach**: Each endpoint is defined with parameter and response transformers
+2. **Dynamic Method Handling**: New SDK methods can be called without writing new service implementations
+3. **Automatic Caching**: Built-in caching system with configurable durations
+4. **Consistent Error Handling**: Standardized error processing across all endpoints
 
-When you add new features to the SDK, they will automatically be available in your Eliza plugin without requiring any code changes!
+When you add new features to the SDK, they will automatically be available through these mechanisms without requiring code changes!
 
 ## Adding a Custom Platform
 

@@ -63,6 +63,7 @@ import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/
 import { createMCPService } from './modelContextCore/mcp/index.js';
 import { createElizaService, generateElizaPlugin } from './modelContextCore/eliza/index.js';
 import { PlatformAdapter } from './modelContextCore/types.js';
+import { GenericElizaService } from './adapters/elizaService.js';
 
 export {
   AIAnalysisParams,
@@ -180,6 +181,21 @@ export class GrixSDK {
    */
   async generateElizaPlugin(): Promise<any> {
     return generateElizaPlugin(this);
+  }
+
+  /**
+   * Create a generic Eliza service that can adapt to new SDK methods
+   * without requiring new service implementations
+   * 
+   * This is an alternative to the plugin approach, useful when you want
+   * to use the SDK directly in an Eliza plugin without the automatic
+   * action generation
+   */
+  createGenericElizaService(): GenericElizaService {
+    return new GenericElizaService({
+      apiKey: this.apiKey,
+      baseUrl: this.baseUrl
+    });
   }
 
   /**
@@ -308,3 +324,6 @@ export class GrixSDK {
     return getPairs(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 }
+
+// Export the GenericElizaService for direct usage
+export { GenericElizaService };
