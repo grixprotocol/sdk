@@ -11,5 +11,9 @@ export interface MCPService {
   getSignalsDataMcp: (
     args: Record<string, unknown>
   ) => Promise<{ content: { type: string; text: string }[] }>;
+  handleOperation: (
+    name: string,
+    args?: Record<string, unknown>
+  ) => Promise<{ content: { type: string; text: string }[] }>;
   schemas: MCPSchema[];
 }
