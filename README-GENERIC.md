@@ -75,42 +75,52 @@ await server.connect(transport);
 
 ## Eliza Integration Example
 
-```typescript
-import { GrixSDK, ElizaAction } from '@grixprotocol/sdk';
-import { elizaLogger, type IAgentRuntime, type Memory, type State, type HandlerCallback } from '@elizaos/core';
+The SDK includes ready-to-use actions that can be easily integrated with Eliza:
 
-// Register Grix actions with Eliza
-export async function registerGrixActions(runtime: IAgentRuntime): Promise<void> {
+```typescript
+import type { Plugin } from "@elizaos/core";
+import { elizaLogger, generateObjectDeprecated, ModelClass } from '@elizaos/core';
+import { GrixSDK, ElizaAction } from '@grixprotocol/sdk';
+
+/**
+ * Registers Grix actions with Eliza
+ */
+export async function createGrixPlugin(): Promise<Plugin> {
   // Initialize the SDK
   const grixSdk = await GrixSDK.initialize({
     apiKey: process.env.GRIX_API_KEY || ""
   });
 
-  // Get pre-defined Eliza actions
+  // Get pre-defined Eliza actions with templates
   const actions = grixSdk.getElizaActions();
   
-  // Register each action with Eliza
-  for (const [key, action] of Object.entries(actions)) {
-    runtime.registerAction({
+  // Create Eliza Action objects
+  const elizaActions = Object.entries(actions).map(([key, action]) => {
+    return {
       name: action.name,
       similes: action.similes,
       description: action.description,
       examples: action.examples,
       
-      // Action handler
-      handler: async (
-        runtime: IAgentRuntime,
-        message: Memory,
-        state?: State,
-        options?: { [key: string]: unknown },
-        callback?: HandlerCallback
-      ): Promise<boolean> => {
+      // Validate method to check if API keys are available
+      validate: async (runtime) => {
         try {
-          // Map action name to corresponding tool name
-          const toolMap: Record<string, string> = {
+          const apiKey = runtime.getSetting("GRIX_API_KEY");
+          return !!apiKey;
+        } catch {
+          return false;
+        }
+      },
+      
+      // Action handler
+      handler: async (runtime, message, state, options, callback) => {
+        try {
+          // Map action name to tool name
+          const toolMap = {
             'GET_ASSET_PRICE': 'asset_price',
             'GET_OPTION_PRICE': 'option_price',
-            'GET_TRADING_SIGNAL': 'trading_signal'
+            'GET_TRADING_SIGNAL': 'trading_signal',
+            'GET_PERPS_PAIRS': 'perps_pairs'
           };
           
           const toolName = toolMap[action.name];
@@ -118,18 +128,35 @@ export async function registerGrixActions(runtime: IAgentRuntime): Promise<void>
             throw new Error(`Unknown action: ${action.name}`);
           }
           
-          // Extract parameters from user message using Eliza's tools
-          // This step depends on your Eliza implementation
-          const params = extractParamsFromMessage(message, action);
+          // Extract parameters from user message using the LLM and template
+          const template = action.template?.replace("{{recentMessages}}", message.content.text);
+          
+          if (!template) {
+            throw new Error(`No template found for action: ${action.name}`);
+          }
+          
+          const extractedParams = await generateObjectDeprecated({
+            runtime,
+            context: template,
+            modelClass: ModelClass.SMALL
+          });
           
           // Call the SDK operation
-          const response = await grixSdk.eliza.handleOperation(toolName, params);
+          const response = await grixSdk.eliza.handleOperation(toolName, extractedParams);
           
-          // Handle the response via callback
+          // Handle the response
           if (callback && response.content.length > 0) {
             await callback({
               text: response.content[0].text
             });
+          }
+          
+          // Update state if needed
+          if (state) {
+            state.responseData = { 
+              text: response.content[0].text, 
+              action: action.name 
+            };
           }
           
           return true;
@@ -137,21 +164,35 @@ export async function registerGrixActions(runtime: IAgentRuntime): Promise<void>
           elizaLogger.error(`Error in ${action.name} handler:`, error);
           if (callback) {
             await callback({
-              text: `Sorry, there was an error: ${error}`
+              text: `Sorry, there was an error: ${error instanceof Error ? error.message : String(error)}`
             });
           }
           return false;
         }
       }
-    });
-  }
-}
+    };
+  });
 
-// Helper function to extract parameters from a message
-function extractParamsFromMessage(message: Memory, action: ElizaAction): Record<string, unknown> {
-  // This implementation would depend on your Eliza setup
-  // Typically involves using an LLM to extract parameters from the message
-  return { asset: 'BTC' }; // Placeholder implementation
+  // Create the plugin
+  return {
+    name: "grix",
+    description: "Grix Finance Plugin - Cryptocurrency prices, options data, and trading signals",
+    actions: elizaActions,
+    evaluators: [],
+    providers: []
+  };
+}
+```
+
+### Using the Plugin
+
+```typescript
+import { createGrixPlugin } from './grix-plugin';
+
+// In your Eliza setup code
+async function setupPlugins(runtime) {
+  const grixPlugin = await createGrixPlugin();
+  runtime.registerPlugin(grixPlugin);
 }
 ```
 
@@ -198,42 +239,6 @@ grixSdk.registerPlatform('myPlatform', myPlatform);
 // Use your platform
 const platform = grixSdk.platform('myPlatform');
 const result = await platform.handleOperation('myTool', { input: 'test' });
-```
-
-## Template Implementation
-
-For more complex platforms, you can use our template pattern:
-
-```typescript
-import { GrixSDK } from '@grixprotocol/sdk';
-import { PlatformAdapter, ToolSchema } from '@grixprotocol/sdk/lib/modelContextCore/types';
-
-export const createMyPlatform = (sdk: GrixSDK): PlatformAdapter => {
-  // Define schemas
-  const schemas: ToolSchema[] = [
-    {
-      name: 'toolName',
-      schema: { /* your JSON schema */ },
-      description: 'Tool description'
-    }
-  ];
-
-  // Handle operations
-  const handleOperation = async (name, args) => {
-    if (name === 'toolName') {
-      // Implement your tool
-      return {
-        content: [{ type: 'text', text: 'Result' }]
-      };
-    }
-    throw new Error(`Unknown tool: ${name}`);
-  };
-
-  return {
-    getSchemas: () => schemas,
-    handleOperation
-  };
-};
 ```
 
 ## License
