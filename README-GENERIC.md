@@ -73,6 +73,88 @@ const transport = new StdioServerTransport();
 await server.connect(transport);
 ```
 
+## Eliza Integration Example
+
+```typescript
+import { GrixSDK, ElizaAction } from '@grixprotocol/sdk';
+import { elizaLogger, type IAgentRuntime, type Memory, type State, type HandlerCallback } from '@elizaos/core';
+
+// Register Grix actions with Eliza
+export async function registerGrixActions(runtime: IAgentRuntime): Promise<void> {
+  // Initialize the SDK
+  const grixSdk = await GrixSDK.initialize({
+    apiKey: process.env.GRIX_API_KEY || ""
+  });
+
+  // Get pre-defined Eliza actions
+  const actions = grixSdk.getElizaActions();
+  
+  // Register each action with Eliza
+  for (const [key, action] of Object.entries(actions)) {
+    runtime.registerAction({
+      name: action.name,
+      similes: action.similes,
+      description: action.description,
+      examples: action.examples,
+      
+      // Action handler
+      handler: async (
+        runtime: IAgentRuntime,
+        message: Memory,
+        state?: State,
+        options?: { [key: string]: unknown },
+        callback?: HandlerCallback
+      ): Promise<boolean> => {
+        try {
+          // Map action name to corresponding tool name
+          const toolMap: Record<string, string> = {
+            'GET_ASSET_PRICE': 'asset_price',
+            'GET_OPTION_PRICE': 'option_price',
+            'GET_TRADING_SIGNAL': 'trading_signal'
+          };
+          
+          const toolName = toolMap[action.name];
+          if (!toolName) {
+            throw new Error(`Unknown action: ${action.name}`);
+          }
+          
+          // Extract parameters from user message using Eliza's tools
+          // This step depends on your Eliza implementation
+          const params = extractParamsFromMessage(message, action);
+          
+          // Call the SDK operation
+          const response = await grixSdk.eliza.handleOperation(toolName, params);
+          
+          // Handle the response via callback
+          if (callback && response.content.length > 0) {
+            await callback({
+              text: response.content[0].text
+            });
+          }
+          
+          return true;
+        } catch (error) {
+          elizaLogger.error(`Error in ${action.name} handler:`, error);
+          if (callback) {
+            await callback({
+              text: `Sorry, there was an error: ${error}`
+            });
+          }
+          return false;
+        }
+      }
+    });
+  }
+}
+
+// Helper function to extract parameters from a message
+function extractParamsFromMessage(message: Memory, action: ElizaAction): Record<string, unknown> {
+  // This implementation would depend on your Eliza setup
+  // Typically involves using an LLM to extract parameters from the message
+  return { asset: 'BTC' }; // Placeholder implementation
+}
+```
+
 ## Adding a Custom Platform
 
 Creating a new platform adapter is straightforward:

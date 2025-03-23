@@ -91,6 +91,14 @@ export {
   GetPairsResponse,
 };
 
+export type ElizaAction = {
+  name: string;
+  similes: string[];
+  description: string;
+  examples: any[][];
+  template?: string;
+};
+
 export type InitializeConfig = {
   apiKey: string;
   baseUrl?: string;
@@ -151,6 +159,18 @@ export class GrixSDK {
    */
   get eliza(): PlatformAdapter {
     return this.platform('eliza');
+  }
+
+  /**
+   * Get all available Eliza actions
+   * Convenience method for Eliza integration
+   */
+  getElizaActions(): Record<string, ElizaAction> {
+    const elizaPlatform = this.platform('eliza');
+    if (typeof elizaPlatform.getActions !== 'function') {
+      return {};
+    }
+    return elizaPlatform.getActions();
   }
 
   /**

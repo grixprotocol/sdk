@@ -15,7 +15,7 @@ export interface AgentResponse {
 }
 
 /**
- * A simple platform adapter interface
+ * Base interface for platform adapters
  */
 export interface PlatformAdapter {
     /** Get all tool schemas for this platform */
@@ -23,6 +23,11 @@ export interface PlatformAdapter {
 
     /** Handle an operation for this platform */
     handleOperation(name: string, args?: Record<string, unknown>): Promise<AgentResponse>;
+
+    /** 
+     * Optional methods that might be implemented by specific platforms 
+     */
+    [key: string]: any;
 }
 
 /**
