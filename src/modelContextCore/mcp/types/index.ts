@@ -1,19 +1,16 @@
-export interface MCPSchema {
-  name: string;
-  schema: Record<string, unknown>;
-  description: string;
+import { AgentPlatformService, ToolSchema, AgentResponse } from '../../types';
+
+export interface MCPSchema extends ToolSchema {
+  // Add MCP-specific schema properties if needed
 }
 
-export interface MCPService {
+export interface MCPService extends AgentPlatformService<MCPSchema> {
+  // MCP-specific methods
   getOptionsDataMcp: (
     args: Record<string, unknown>
-  ) => Promise<{ content: { type: string; text: string }[] }>;
+  ) => Promise<AgentResponse>;
   getSignalsDataMcp: (
     args: Record<string, unknown>
-  ) => Promise<{ content: { type: string; text: string }[] }>;
-  handleOperation: (
-    name: string,
-    args?: Record<string, unknown>
-  ) => Promise<{ content: { type: string; text: string }[] }>;
+  ) => Promise<AgentResponse>;
   schemas: MCPSchema[];
 }

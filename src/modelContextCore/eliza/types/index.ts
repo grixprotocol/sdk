@@ -1,3 +1,5 @@
+import { AgentPlatformService, ToolSchema, AgentResponse } from '../../types';
+
 export interface ElizaExample {
   user: string;
   content: {
@@ -14,7 +16,11 @@ export interface ElizaAction {
   examples: ElizaExample[][];
 }
 
-export interface ElizaService {
+export interface ElizaSchema extends ToolSchema {
+  action: ElizaAction;
+}
+
+export interface ElizaService extends AgentPlatformService<ElizaSchema> {
   actions: {
     options: ElizaAction;
     // Add more action types as needed

@@ -61,9 +61,8 @@ import type {
 import { getPairs } from './methods/perps/getPairs/index.js';
 import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types.js';
 import { createMCPService } from './modelContextCore/mcp/index.js';
-import type { MCPService } from './modelContextCore/mcp/types/index.js';
 import { createElizaService } from './modelContextCore/eliza/index.js';
-import type { ElizaService } from './modelContextCore/eliza/types/index.js';
+import { PlatformAdapter } from './modelContextCore/types.js';
 
 export {
   AIAnalysisParams,
@@ -100,8 +99,7 @@ export type InitializeConfig = {
 export class GrixSDK {
   private apiKey: string;
   private baseUrl: string;
-  private _mcp: MCPService;
-  private _eliza: ElizaService;
+  private platforms: Map<string, PlatformAdapter> = new Map();
 
   private constructor(config: InitializeConfig) {
     if (!config.apiKey) {
@@ -109,24 +107,50 @@ export class GrixSDK {
     }
     this.apiKey = config.apiKey;
     this.baseUrl = config.baseUrl || 'https://internal-api-dev.grix.finance';
-    // Initialize services
-    this._mcp = createMCPService(this);
-    this._eliza = createElizaService(this);
+
+    // Register default platforms
+    this.platforms.set('mcp', createMCPService(this));
+    this.platforms.set('eliza', createElizaService(this));
   }
 
   /**
    * Initialize a new instance of the GrixSDK
-   *
-   * @param config - Configuration options for the SDK
-   * @param config.apiKey - API key for Grix APIs (required)
-   * @param config.baseUrl - Base URL for Grix APIs
-   * @returns A new instance of the GrixSDK
-   * @throws Error if API key is not provided
    */
   static async initialize(config: InitializeConfig): Promise<GrixSDK> {
-    const sdk = new GrixSDK(config);
-    // Any async initialization if needed
-    return sdk;
+    return new GrixSDK(config);
+  }
+
+  /**
+   * Get a platform adapter by name
+   */
+  platform(name: string): PlatformAdapter {
+    const platform = this.platforms.get(name);
+    if (!platform) {
+      throw new Error(`Platform '${name}' not found`);
+    }
+    return platform;
+  }
+
+  /**
+   * Register a new platform adapter
+   */
+  registerPlatform(name: string, adapter: PlatformAdapter): this {
+    this.platforms.set(name, adapter);
+    return this;
+  }
+
+  /**
+   * Get the MCP platform
+   */
+  get mcp(): PlatformAdapter {
+    return this.platform('mcp');
+  }
+
+  /**
+   * Get the Eliza platform
+   */
+  get eliza(): PlatformAdapter {
+    return this.platform('eliza');
   }
 
   /**
@@ -253,13 +277,5 @@ export class GrixSDK {
    */
   async getPerpsPairs(params: GetPairsParams): Promise<GetPairsResponse> {
     return getPairs(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
-  }
-
-  public get mcp(): MCPService {
-    return this._mcp;
-  }
-
-  public get eliza(): ElizaService {
-    return this._eliza;
   }
 }
