@@ -61,7 +61,7 @@ import type {
 import { getPairs } from './methods/perps/getPairs/index.js';
 import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types.js';
 import { createMCPService } from './modelContextCore/mcp/index.js';
-import { createElizaService } from './modelContextCore/eliza/index.js';
+import { createElizaService, generateElizaPlugin } from './modelContextCore/eliza/index.js';
 import { PlatformAdapter } from './modelContextCore/types.js';
 
 export {
@@ -171,6 +171,15 @@ export class GrixSDK {
       return {};
     }
     return elizaPlatform.getActions();
+  }
+
+  /**
+   * Generate a complete Eliza plugin
+   * This provides a fully functional plugin ready to use with Eliza
+   * without writing any custom action code
+   */
+  async generateElizaPlugin(): Promise<any> {
+    return generateElizaPlugin(this);
   }
 
   /**

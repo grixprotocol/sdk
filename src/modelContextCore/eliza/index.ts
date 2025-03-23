@@ -522,3 +522,6 @@ Return ONLY a JSON object with the parameters:
     getTemplates: () => TEMPLATES
   };
 };
+
+// Export the action generator
+export * from './actionGenerator';

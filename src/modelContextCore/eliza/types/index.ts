@@ -1,5 +1,8 @@
-import { AgentPlatformService, ToolSchema, AgentResponse } from '../../types';
+import { AgentPlatformService, ToolSchema } from '../../types';
 
+/**
+ * Example format for Eliza
+ */
 export interface ElizaExample {
   user: string;
   content: {
@@ -8,21 +11,36 @@ export interface ElizaExample {
   };
 }
 
+/**
+ * Action template for Eliza platform
+ */
 export interface ElizaAction {
-  template: string;
   name: string;
   similes: string[];
   description: string;
   examples: ElizaExample[][];
+  template?: string;
 }
 
+/**
+ * Schema definition for Eliza tools
+ */
 export interface ElizaSchema extends ToolSchema {
-  action: ElizaAction;
+  // Optional action-specific properties
+  action?: ElizaAction;
 }
 
+/**
+ * Eliza platform service interface
+ */
 export interface ElizaService extends AgentPlatformService<ElizaSchema> {
-  actions: {
-    options: ElizaAction;
-    // Add more action types as needed
-  };
+  /**
+   * Get all available actions for Eliza
+   */
+  getActions(): Record<string, ElizaAction>;
+
+  /**
+   * Get parameter extraction templates
+   */
+  getTemplates(): Record<string, string>;
 }

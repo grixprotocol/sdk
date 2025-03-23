@@ -8,6 +8,7 @@ A lightweight, extensible SDK for integrating with agent platforms like Model Co
 - **Extensible**: Easily add new platform adapters
 - **Consistent**: Uniform schema and response formats
 - **Type-Safe**: Full TypeScript support
+- **Auto-generating**: Creates Eliza actions automatically from SDK capabilities
 
 ## Installation
 
@@ -75,15 +76,15 @@ await server.connect(transport);
 
 ## Eliza Integration Example
 
-The SDK includes ready-to-use actions that can be easily integrated with Eliza:
+The SDK now makes Eliza integration even simpler with auto-generated actions:
 
 ```typescript
 import type { Plugin } from "@elizaos/core";
-import { elizaLogger, generateObjectDeprecated, ModelClass } from '@elizaos/core';
-import { GrixSDK, ElizaAction } from '@grixprotocol/sdk';
+import { GrixSDK } from '@grixprotocol/sdk';
 
 /**
- * Registers Grix actions with Eliza
+ * Create a fully functional Grix plugin for Eliza
+ * with just a few lines of code
  */
 export async function createGrixPlugin(): Promise<Plugin> {
   // Initialize the SDK
@@ -91,96 +92,9 @@ export async function createGrixPlugin(): Promise<Plugin> {
     apiKey: process.env.GRIX_API_KEY || ""
   });
 
-  // Get pre-defined Eliza actions with templates
-  const actions = grixSdk.getElizaActions();
-  
-  // Create Eliza Action objects
-  const elizaActions = Object.entries(actions).map(([key, action]) => {
-    return {
-      name: action.name,
-      similes: action.similes,
-      description: action.description,
-      examples: action.examples,
-      
-      // Validate method to check if API keys are available
-      validate: async (runtime) => {
-        try {
-          const apiKey = runtime.getSetting("GRIX_API_KEY");
-          return !!apiKey;
-        } catch {
-          return false;
-        }
-      },
-      
-      // Action handler
-      handler: async (runtime, message, state, options, callback) => {
-        try {
-          // Map action name to tool name
-          const toolMap = {
-            'GET_ASSET_PRICE': 'asset_price',
-            'GET_OPTION_PRICE': 'option_price',
-            'GET_TRADING_SIGNAL': 'trading_signal',
-            'GET_PERPS_PAIRS': 'perps_pairs'
-          };
-          
-          const toolName = toolMap[action.name];
-          if (!toolName) {
-            throw new Error(`Unknown action: ${action.name}`);
-          }
-          
-          // Extract parameters from user message using the LLM and template
-          const template = action.template?.replace("{{recentMessages}}", message.content.text);
-          
-          if (!template) {
-            throw new Error(`No template found for action: ${action.name}`);
-          }
-          
-          const extractedParams = await generateObjectDeprecated({
-            runtime,
-            context: template,
-            modelClass: ModelClass.SMALL
-          });
-          
-          // Call the SDK operation
-          const response = await grixSdk.eliza.handleOperation(toolName, extractedParams);
-          
-          // Handle the response
-          if (callback && response.content.length > 0) {
-            await callback({
-              text: response.content[0].text
-            });
-          }
-          
-          // Update state if needed
-          if (state) {
-            state.responseData = { 
-              text: response.content[0].text, 
-              action: action.name 
-            };
-          }
-          
-          return true;
-        } catch (error) {
-          elizaLogger.error(`Error in ${action.name} handler:`, error);
-          if (callback) {
-            await callback({
-              text: `Sorry, there was an error: ${error instanceof Error ? error.message : String(error)}`
-            });
-          }
-          return false;
-        }
-      }
-    };
-  });
-
-  // Create the plugin
-  return {
-    name: "grix",
-    description: "Grix Finance Plugin - Cryptocurrency prices, options data, and trading signals",
-    actions: elizaActions,
-    evaluators: [],
-    providers: []
-  };
+  // Generate a complete Eliza plugin with all available actions
+  // No need to manually create actions!
+  return await grixSdk.generateElizaPlugin();
 }
 ```
 
@@ -195,6 +109,19 @@ async function setupPlugins(runtime) {
   runtime.registerPlugin(grixPlugin);
 }
 ```
+
+### How It Works
+
+The auto-generation works by:
+
+1. Discovering all available tools in the SDK
+2. Creating Eliza actions for each tool with:
+   - Proper parameter extraction templates
+   - Standard validation logic
+   - Consistent error handling
+   - Pre-configured examples
+
+When you add new features to the SDK, they will automatically be available in your Eliza plugin without requiring any code changes!
 
 ## Adding a Custom Platform
 
