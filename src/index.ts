@@ -59,11 +59,37 @@ import type {
   GetTradeSignalsResponse,
 } from './methods/getTradeSignals/types.js';
 import { getPairs } from './methods/perps/getPairs/index.js';
+import { getOpenInterestCaps } from './methods/perps/getOpenInterestCaps/index.js';
+import { getAssetContexts } from './methods/perps/getAssetContexts/index.js';
+import { getHistoricalFundingRates } from './methods/perps/getHistoricalFundingRates/index.js';
+import { getPredictedFundings } from './methods/perps/getPredictedFundingRate/index.js';
+import { getTradingIndicators } from './methods/tradingIndicators/index.js';
+
 import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types.js';
 import { createMCPService } from './modelContextCore/mcp/index.js';
 import type { MCPService } from './modelContextCore/mcp/types/index.js';
 import { createElizaService } from './modelContextCore/eliza/index.js';
 import type { ElizaService } from './modelContextCore/eliza/types/index.js';
+import {
+  GetOpenInterestCapsRequest,
+  GetOpenInterestCapsResponse,
+} from './methods/perps/getOpenInterestCaps/types.js';
+import {
+  GetAssetContextsRequest,
+  GetAssetContextsResponse,
+} from './methods/perps/getAssetContexts/types.js';
+import {
+  GetHistoricalFundingRatesRequest,
+  GetHistoricalFundingRatesResponse,
+} from './methods/perps/getHistoricalFundingRates/types.js';
+import {
+  GetPredictedFundingsRequest,
+  GetPredictedFundingsResponse,
+} from './methods/perps/getPredictedFundingRate/types.js';
+import {
+  GetTradingIndicatorsRequest,
+  GetTradingIndicatorsResponse,
+} from './methods/tradingIndicators/types.js';
 
 export {
   AIAnalysisParams,
@@ -253,6 +279,40 @@ export class GrixSDK {
    */
   async getPerpsPairs(params: GetPairsParams): Promise<GetPairsResponse> {
     return getPairs(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getPerpsOpenInterestCaps(
+    params: GetOpenInterestCapsRequest
+  ): Promise<GetOpenInterestCapsResponse> {
+    return getOpenInterestCaps(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getPerpsAssetContexts(params: GetAssetContextsRequest): Promise<GetAssetContextsResponse> {
+    return getAssetContexts(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getPerpsHistoricalFundingRates(
+    params: GetHistoricalFundingRatesRequest
+  ): Promise<GetHistoricalFundingRatesResponse> {
+    return getHistoricalFundingRates(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getPerpsPredictedFundings(
+    params: GetPredictedFundingsRequest
+  ): Promise<GetPredictedFundingsResponse> {
+    return getPredictedFundings(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getPerpsTradingIndicators(
+    params: GetTradingIndicatorsRequest
+  ): Promise<GetTradingIndicatorsResponse> {
+    return getTradingIndicators(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getTradingIndicators(
+    params: GetTradingIndicatorsRequest
+  ): Promise<GetTradingIndicatorsResponse> {
+    return getTradingIndicators(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
   public get mcp(): MCPService {
