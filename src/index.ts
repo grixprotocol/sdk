@@ -116,6 +116,16 @@ export {
   GetTradeSignalsResponse,
   GetPairsParams,
   GetPairsResponse,
+  GetOpenInterestCapsRequest,
+  GetOpenInterestCapsResponse,
+  GetAssetContextsRequest,
+  GetAssetContextsResponse,
+  GetHistoricalFundingRatesRequest,
+  GetHistoricalFundingRatesResponse,
+  GetPredictedFundingsRequest,
+  GetPredictedFundingsResponse,
+  GetTradingIndicatorsRequest,
+  GetTradingIndicatorsResponse,
 };
 
 export type InitializeConfig = {
@@ -301,12 +311,6 @@ export class GrixSDK {
     params: GetPredictedFundingsRequest
   ): Promise<GetPredictedFundingsResponse> {
     return getPredictedFundings(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
-  }
-
-  async getPerpsTradingIndicators(
-    params: GetTradingIndicatorsRequest
-  ): Promise<GetTradingIndicatorsResponse> {
-    return getTradingIndicators(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
   async getTradingIndicators(
