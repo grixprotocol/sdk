@@ -5,11 +5,12 @@ export interface GetPredictedFundingsRequest {
 export interface PredictedFundingRate {
   fundingRate: string;
   nextFundingTime: number;
+  fundingIntervalHours?: number;
 }
 
 export interface VenuePredictedFunding {
-  venue: string;
-  prediction: PredictedFundingRate | null;
+  name: string;
+  rate: PredictedFundingRate | null;
 }
 
 export interface AssetPredictedFunding {

@@ -29,9 +29,10 @@ export const getPerpsPredictedFundingsMcp = async (
           prediction.venues
             .map(
               (venue) =>
-                `    ${venue.venue}:\n` +
-                `      Funding Rate: ${venue.prediction?.fundingRate ?? 'N/A'}\n` +
-                `      Next Funding Time: ${venue.prediction?.nextFundingTime ?? 'N/A'}\n`
+                `    ${venue.name}:\n` +
+                `      Funding Rate: ${venue.rate?.fundingRate ?? 'N/A'}\n` +
+                `      Next Funding Time: ${venue.rate?.nextFundingTime ?? 'N/A'}\n` +
+                `      ${venue.rate?.fundingIntervalHours ? `Funding Interval Hours: ${venue.rate.fundingIntervalHours}\n` : ''}`
             )
             .join('')
       )
