@@ -25,7 +25,7 @@ export interface MCPService {
   getPerpsAssetContextsMcp: (args: Record<string, unknown>) => Promise<MCPResponse>;
   getPerpsPairsMcp: (args: Record<string, unknown>) => Promise<MCPResponse>;
   getPerpsHistoricalFundingRateMcp: (args: Record<string, unknown>) => Promise<MCPResponse>;
-
+  getAssetPricePredictionsMcp: (args: Record<string, unknown>) => Promise<MCPResponse>;
   schemas: MCPSchema[];
 }
 

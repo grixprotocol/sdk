@@ -64,6 +64,7 @@ import { getAssetContexts } from './methods/perps/getAssetContexts/index.js';
 import { getHistoricalFundingRates } from './methods/perps/getHistoricalFundingRates/index.js';
 import { getPredictedFundings } from './methods/perps/getPredictedFundingRate/index.js';
 import { getTradingIndicators } from './methods/tradingIndicators/index.js';
+import { getAssetPricePrediction } from './methods/prediction/getAssetPricePrediction/alloraNetwork/index.js';
 
 import type { GetPairsParams, GetPairsResponse } from './methods/perps/getPairs/types.js';
 import { createMCPService } from './modelContextCore/mcp/index.js';
@@ -90,6 +91,10 @@ import {
   GetTradingIndicatorsRequest,
   GetTradingIndicatorsResponse,
 } from './methods/tradingIndicators/types.js';
+import {
+  GetAssetPricePredictionResponse,
+  GetAssetPricePredictionParams,
+} from './methods/prediction/getAssetPricePrediction/alloraNetwork/types.js';
 
 export {
   AIAnalysisParams,
@@ -126,6 +131,8 @@ export {
   GetPredictedFundingsResponse,
   GetTradingIndicatorsRequest,
   GetTradingIndicatorsResponse,
+  GetAssetPricePredictionParams,
+  GetAssetPricePredictionResponse,
 };
 
 export type InitializeConfig = {
@@ -317,6 +324,12 @@ export class GrixSDK {
     params: GetTradingIndicatorsRequest
   ): Promise<GetTradingIndicatorsResponse> {
     return getTradingIndicators(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getAssetPricePrediction(
+    params: GetAssetPricePredictionParams
+  ): Promise<GetAssetPricePredictionResponse> {
+    return getAssetPricePrediction(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
   public get mcp(): MCPService {

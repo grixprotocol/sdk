@@ -1,5 +1,5 @@
 export const optionSchemaMcp = {
-  name: 'options',
+  name: 'getDefiOptions',
   description: 'Get options data from Grix',
   inputSchema: {
     type: 'object',
