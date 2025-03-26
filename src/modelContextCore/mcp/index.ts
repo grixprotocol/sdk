@@ -11,6 +11,7 @@ import {
   GetPairsParams,
   GrixSDK,
   GetHistoricalFundingRatesRequest,
+  GetAssetPricePredictionParams,
 } from 'src/index.js';
 import { getTradingIndicatorsSchemaMcp } from './tools/trading-indicators/schema.js';
 import { getPerpsPredictedFundingsSchemaMcp } from './tools/perps/getPerpsPredictedFundings/schema.js';
@@ -23,6 +24,8 @@ import { getPerpsAssetContextsMcp } from './tools/perps/getPerpsAssetContexts/ha
 import { getPerpsPairsMcp } from './tools/perps/getPairs/handler.js';
 import { perpsPairsSchemaMcp } from './tools/perps/getPairs/schema.js';
 import { getPerpsHistoricalFundingRateMcp } from './tools/perps/getPerpsHistoricalFundingRates/handler.js';
+import { getAssetPricePredictionsSchemaMcp } from './tools/assetPricePredictions/schema.js';
+import { getAssetPricePredictionsMcp } from './tools/assetPricePredictions/handler.js';
 
 export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
   getOptionsDataMcp: (args) => getOptionsDataMcp(grixSdkInstance, args),
@@ -41,6 +44,9 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
       grixSdkInstance,
       args as unknown as GetHistoricalFundingRatesRequest
     ),
+  getAssetPricePredictionsMcp: (args) =>
+    getAssetPricePredictionsMcp(grixSdkInstance, args as unknown as GetAssetPricePredictionParams),
+
   schemas: [
     {
       name: 'options',
@@ -82,6 +88,11 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
       name: 'perpsAssetContexts',
       schema: getPerpsAssetContextsSchemaMcp,
       description: 'Schema for perps asset contexts retrieval',
+    },
+    {
+      name: 'assetPricePredictions',
+      schema: getAssetPricePredictionsSchemaMcp,
+      description: 'Schema for asset price predictions retrieval',
     },
   ],
 });

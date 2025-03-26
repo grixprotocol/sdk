@@ -6,6 +6,7 @@ import {
   GetAssetContextsRequest,
   GetPairsParams,
   GetHistoricalFundingRatesRequest,
+  GetAssetPricePredictionParams,
 } from 'src/index.js';
 import { getOptionsDataMcp } from '../options/handler.js';
 import { getSignalsDataMcp } from '../signals/handler.js';
@@ -15,12 +16,14 @@ import { getPerpsOpenInterestCapsMcp } from '../perps/getPerpsOpenInterestCaps/h
 import { getPerpsAssetContextsMcp } from '../perps/getPerpsAssetContexts/handler.js';
 import { getPerpsPairsMcp } from '../perps/getPairs/handler.js';
 import { getPerpsHistoricalFundingRateMcp } from '../perps/getPerpsHistoricalFundingRates/handler.js';
+import { getAssetPricePredictionsMcp } from '../assetPricePredictions/handler.js';
+
 export const handleOperation = async (
   grixSdkInstance: GrixSDK,
   name: string,
   args?: Record<string, unknown>
 ): Promise<{ content: { type: string; text: string }[] }> => {
-  if (name === 'options') {
+  if (name === 'getDefiOptions') {
     if (!args) {
       throw new Error('Missing required parameters: asset, optionType, or positionType');
     }
@@ -88,6 +91,14 @@ export const handleOperation = async (
     return await getPerpsHistoricalFundingRateMcp(
       grixSdkInstance,
       args as unknown as GetHistoricalFundingRatesRequest
+    );
+  } else if (name === 'getAssetPricePredictions') {
+    if (!args) {
+      throw new Error('getAssetPricePredictions: Missing required parameters');
+    }
+    return await getAssetPricePredictionsMcp(
+      grixSdkInstance,
+      args as unknown as GetAssetPricePredictionParams
     );
   }
 
