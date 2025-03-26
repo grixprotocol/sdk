@@ -14,6 +14,6 @@ export const perpsPairsSchemaMcp = {
         description: 'The base asset to get pairs for',
       },
     },
-    required: ['protocol', 'baseAsset'],
+    required: ['protocol'],
   },
 };

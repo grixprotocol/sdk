@@ -63,11 +63,6 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
       description: 'Schema for trading indicators retrieval',
     },
     {
-      name: 'tradingIndicators',
-      schema: getTradingIndicatorsSchemaMcp,
-      description: 'Schema for trading indicators retrieval',
-    },
-    {
       name: 'perpsGetPairs',
       schema: perpsPairsSchemaMcp,
       description: 'Schema for perps pairs retrieval',
