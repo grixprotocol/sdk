@@ -44,9 +44,9 @@ export const handleOperation = async (
       throw new Error('generateSignals: Missing required parameters');
     }
     return await getSignalsDataMcp(grixSdkInstance, args);
-  } else if (name === 'tradingIndicators') {
+  } else if (name === 'getTradingIndicators') {
     if (!args) {
-      throw new Error('tradingIndicators: Missing required parameters');
+      throw new Error('getTradingIndicators: Missing required parameters');
     }
     return await getTradingIndicatorsMcp(
       grixSdkInstance,
