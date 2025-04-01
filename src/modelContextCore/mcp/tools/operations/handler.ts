@@ -17,6 +17,12 @@ import { getPerpsAssetContextsMcp } from '../perps/getPerpsAssetContexts/handler
 import { getPerpsPairsMcp } from '../perps/getPairs/handler.js';
 import { getPerpsHistoricalFundingRateMcp } from '../perps/getPerpsHistoricalFundingRates/handler.js';
 import { getAssetPricePredictionsMcp } from '../assetPricePredictions/handler.js';
+import { GetAssetPriceParams } from '../perps/getAssetPrice/handler.js';
+import { GetTradingFeeParams } from '../perps/getTradingFee/handler.js';
+import { getPerpsAssetPriceMcp } from '../perps/getAssetPrice/handler.js';
+import { GetNextFundingRateParams } from '../perps/getNextFundingRate/handler.js';
+import { getPerpsTradingFeeMcp } from '../perps/getTradingFee/handler.js';
+import { getPerpsNextFundingRateMcp } from '../perps/getNextFundingRate/handler.js';
 
 export const handleOperation = async (
   grixSdkInstance: GrixSDK,
@@ -99,6 +105,24 @@ export const handleOperation = async (
     return await getAssetPricePredictionsMcp(
       grixSdkInstance,
       args as unknown as GetAssetPricePredictionParams
+    );
+  } else if (name === 'getPerpsAssetPrice') {
+    if (!args) {
+      throw new Error('getPerpsAssetPrice: Missing required parameters');
+    }
+    return await getPerpsAssetPriceMcp(grixSdkInstance, args as unknown as GetAssetPriceParams);
+  } else if (name === 'getPerpsTradingFee') {
+    if (!args) {
+      throw new Error('getPerpsTradingFee: Missing required parameters');
+    }
+    return await getPerpsTradingFeeMcp(grixSdkInstance, args as unknown as GetTradingFeeParams);
+  } else if (name === 'getPerpsNextFundingRate') {
+    if (!args) {
+      throw new Error('getPerpsNextFundingRate: Missing required parameters');
+    }
+    return await getPerpsNextFundingRateMcp(
+      grixSdkInstance,
+      args as unknown as GetNextFundingRateParams
     );
   }
 

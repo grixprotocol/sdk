@@ -26,6 +26,15 @@ import { perpsPairsSchemaMcp } from './tools/perps/getPairs/schema.js';
 import { getPerpsHistoricalFundingRateMcp } from './tools/perps/getPerpsHistoricalFundingRates/handler.js';
 import { getAssetPricePredictionsSchemaMcp } from './tools/assetPricePredictions/schema.js';
 import { getAssetPricePredictionsMcp } from './tools/assetPricePredictions/handler.js';
+import { GetAssetPriceParams, getPerpsAssetPriceMcp } from './tools/perps/getAssetPrice/handler.js';
+import { getPerpsTradingFeeMcp, GetTradingFeeParams } from './tools/perps/getTradingFee/handler.js';
+import {
+  GetNextFundingRateParams,
+  getPerpsNextFundingRateMcp,
+} from './tools/perps/getNextFundingRate/handler.js';
+import { perpsAssetPriceSchemaMcp } from './tools/perps/getAssetPrice/schema.js';
+import { perpsTradingFeeSchemaMcp } from './tools/perps/getTradingFee/schema.js';
+import { perpsNextFundingRateSchemaMcp } from './tools/perps/getNextFundingRate/schema.js';
 
 export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
   getOptionsDataMcp: (args) => getOptionsDataMcp(grixSdkInstance, args),
@@ -46,6 +55,12 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
     ),
   getAssetPricePredictionsMcp: (args) =>
     getAssetPricePredictionsMcp(grixSdkInstance, args as unknown as GetAssetPricePredictionParams),
+  getPerpsAssetPriceMcp: (args) =>
+    getPerpsAssetPriceMcp(grixSdkInstance, args as unknown as GetAssetPriceParams),
+  getPerpsTradingFeeMcp: (args) =>
+    getPerpsTradingFeeMcp(grixSdkInstance, args as unknown as GetTradingFeeParams),
+  getPerpsNextFundingRateMcp: (args) =>
+    getPerpsNextFundingRateMcp(grixSdkInstance, args as unknown as GetNextFundingRateParams),
 
   schemas: [
     {
@@ -93,6 +108,21 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
       name: 'assetPricePredictions',
       schema: getAssetPricePredictionsSchemaMcp,
       description: 'Schema for asset price predictions retrieval',
+    },
+    {
+      name: 'perpsAssetPrice',
+      schema: perpsAssetPriceSchemaMcp,
+      description: 'Schema for perps asset price retrieval',
+    },
+    {
+      name: 'perpsTradingFee',
+      schema: perpsTradingFeeSchemaMcp,
+      description: 'Schema for perps trading fee retrieval',
+    },
+    {
+      name: 'perpsNextFundingRate',
+      schema: perpsNextFundingRateSchemaMcp,
+      description: 'Schema for perps next funding rate retrieval',
     },
   ],
 });

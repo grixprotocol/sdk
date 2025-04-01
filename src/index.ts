@@ -95,6 +95,15 @@ import {
   GetAssetPricePredictionResponse,
   GetAssetPricePredictionParams,
 } from './methods/prediction/getAssetPricePrediction/alloraNetwork/types.js';
+import { GetNextFundingRateRequest } from './methods/perps/getNextFundingRate/types.js';
+import { GetNextFundingRateResponse } from './methods/perps/getNextFundingRate/types.js';
+import { getNextFundingRate } from './methods/perps/getNextFundingRate/index.js';
+import { GetTradingFeeRequest } from './methods/perps/getTradingFee/types.js';
+import { GetTradingFeeResponse } from './methods/perps/getTradingFee/types.js';
+import { getTradingFee } from './methods/perps/getTradingFee/index.js';
+import { GetAssetPriceResponse } from './methods/perps/getAssetPrice/types.js';
+import { GetAssetPriceRequest } from './methods/perps/getAssetPrice/types.js';
+import { getAssetPrice } from './methods/perps/getAssetPrice/index.js';
 
 export {
   AIAnalysisParams,
@@ -133,6 +142,12 @@ export {
   GetTradingIndicatorsResponse,
   GetAssetPricePredictionParams,
   GetAssetPricePredictionResponse,
+  GetNextFundingRateRequest,
+  GetNextFundingRateResponse,
+  GetTradingFeeRequest,
+  GetTradingFeeResponse,
+  GetAssetPriceRequest,
+  GetAssetPriceResponse,
 };
 
 export type InitializeConfig = {
@@ -330,6 +345,18 @@ export class GrixSDK {
     params: GetAssetPricePredictionParams
   ): Promise<GetAssetPricePredictionResponse> {
     return getAssetPricePrediction(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getNextFundingRate(params: GetNextFundingRateRequest): Promise<GetNextFundingRateResponse> {
+    return getNextFundingRate(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getTradingFee(params: GetTradingFeeRequest): Promise<GetTradingFeeResponse[]> {
+    return getTradingFee(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getAssetPrice(params: GetAssetPriceRequest): Promise<GetAssetPriceResponse> {
+    return getAssetPrice(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
   public get mcp(): MCPService {
