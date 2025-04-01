@@ -30,11 +30,7 @@ export async function getOptionsMarketBoard(
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const status = error.response?.status || 'unknown';
-      const message = error.response?.data?.message || error.message;
-      throw new Error(`Failed to get trade board: ${status} ${message}`);
-    }
+    console.error('Failed to get trade board:', error);
     throw error;
   }
 }

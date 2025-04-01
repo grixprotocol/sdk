@@ -42,7 +42,7 @@ export function processTradeSignals(
       // Don't attempt to extract arrays, just fail
       throw new Error(
         'No valid JSON found in response. The response must contain valid JSON data with trading signals.' +
-        (err instanceof Error ? `\nError: ${err.message}` : '')
+          (err instanceof Error ? `\nError: ${err.message}` : '')
       );
     }
 

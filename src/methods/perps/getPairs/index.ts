@@ -16,7 +16,7 @@ export async function getPairs(
   }
 
   try {
-    const response = await axios.get(`${config.baseUrl}/perps/getPairs`, {
+    const response = await axios.get<GetPairsResponse>(`${config.baseUrl}/perps/getPairs`, {
       params: queryParams,
       headers: {
         'Content-Type': 'application/json',
@@ -26,11 +26,7 @@ export async function getPairs(
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get pairs: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to get pairs:', error);
     throw error;
   }
 }
