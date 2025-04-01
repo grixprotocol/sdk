@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "pnpm run build",
+    "prepublishOnly": "pnpm run check",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "format": "prettier --write \"src/**/*.{ts,json}\" && eslint --ext .ts ./src --fix",
     "format:check": "prettier --check \"src/**/*.{ts,json}\" && eslint --ext .ts ./src",
