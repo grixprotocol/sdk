@@ -4,6 +4,8 @@ import { GetTradingFeeParams } from 'src/modelContextCore/mcp/tools/perps/getTra
 import { GetNextFundingRateParams } from 'src/modelContextCore/mcp/tools/perps/getNextFundingRate/handler.js';
 import { GetTradingFeeResponse } from 'src/methods/perps/getTradingFee/types.js';
 import { GetNextFundingRateResponse } from 'src/methods/perps/getNextFundingRate/types.js';
+import { GetCurrentFundingRateParams } from '../tools/perps/getCurrentFundingRate/handler.js';
+import { GetCurrentFundingRateResponse } from 'src/methods/perps/getCurrentFundingRate/types.js';
 
 export interface MCPSchema {
   name: string;
@@ -47,6 +49,12 @@ export interface MCPService {
   ) => Promise<
     | { content: { type: string; text: string }[] }
     | { content: { type: string; text: GetNextFundingRateResponse }[] }
+  >;
+  getPerpsCurrentFundingRateMcp: (
+    args: GetCurrentFundingRateParams
+  ) => Promise<
+    | { content: { type: string; text: string }[] }
+    | { content: { type: string; text: GetCurrentFundingRateResponse }[] }
   >;
   schemas: MCPSchema[];
 }

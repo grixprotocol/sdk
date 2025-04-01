@@ -1,37 +1,37 @@
 import { GrixSDK } from 'src/index.js';
-import { formatNextFundingRateResponse } from './helpers.js';
 
-export interface GetNextFundingRateParams {
+export interface GetCurrentFundingRateParams {
   protocol: string;
+  pair: string;
 }
 
-export const getPerpsNextFundingRateMcp = async (
+export const getPerpsCurrentFundingRateMcp = async (
   grixSdkInstance: GrixSDK,
-  args: GetNextFundingRateParams
+  args: GetCurrentFundingRateParams
 ) => {
   console.log({ grixSdkInstance, args });
 
   try {
-    const response = await grixSdkInstance.getNextFundingRate(args);
+    const response = await grixSdkInstance.getCurrentFundingRate(args);
 
     if (!response) {
       return {
         content: [
           {
             type: 'text',
-            text: 'No next funding rate available for the specified parameters.',
+            text: 'No current funding rate available for the specified parameters.',
           },
         ],
       };
     }
 
-    const formattedOutput = formatNextFundingRateResponse(response as unknown, args.protocol);
+    const formattedOutput = response;
 
     return {
       content: [
         {
           type: 'text',
-          text: formattedOutput,
+          text: formattedOutput.toString(),
         },
       ],
     };

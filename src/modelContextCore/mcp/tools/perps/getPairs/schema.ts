@@ -8,6 +8,7 @@ export const perpsPairsSchemaMcp = {
         type: 'string',
         description: 'The protocol to get pairs for',
         default: 'hyperliquid',
+        enum: ['hyperliquid', 'lode'],
       },
       baseAsset: {
         type: 'string',
