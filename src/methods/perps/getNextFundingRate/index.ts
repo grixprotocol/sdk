@@ -12,21 +12,20 @@ export async function getNextFundingRate(
   queryParams.append('protocol', protocol);
 
   try {
-    const response = await axios.get(`${config.baseUrl}/perps/getNextFundingRate`, {
-      params: queryParams,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': config.apiKey,
-      },
-    });
+    const response = await axios.get<GetNextFundingRateResponse>(
+      `${config.baseUrl}/perps/getNextFundingRate`,
+      {
+        params: queryParams,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': config.apiKey,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get next funding rate: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to get next funding rate:', error);
     throw error;
   }
 }

@@ -12,21 +12,20 @@ export async function getAssetPrice(
   queryParams.append('protocol', protocol);
   queryParams.append('symbol', symbol);
   try {
-    const response = await axios.get(`${config.baseUrl}/perps/getAssetPrice`, {
-      params: queryParams,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': config.apiKey,
-      },
-    });
+    const response = await axios.get<GetAssetPriceResponse>(
+      `${config.baseUrl}/perps/getAssetPrice`,
+      {
+        params: queryParams,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': config.apiKey,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get asset price: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to get asset price:', error);
     throw error;
   }
 }

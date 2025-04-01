@@ -19,21 +19,20 @@ export async function getAssetPriceHistory(
   queryParams.append('contextWindowMs', contextWindowMs.toString());
 
   try {
-    const response = await axios.get(`${config.baseUrl}/asset-price-history`, {
-      params: queryParams,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': config.apiKey,
-      },
-    });
+    const response = await axios.get<AssetPriceHistoryGetResponse>(
+      `${config.baseUrl}/asset-price-history`,
+      {
+        params: queryParams,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': config.apiKey,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get asset price history: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to get asset price history:', error);
     throw error;
   }
 }

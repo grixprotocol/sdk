@@ -30,21 +30,20 @@ export async function getAssetPricePrediction(
   queryParams.append('timeframe', timeframe);
 
   try {
-    const response = await axios.get(`${config.baseUrl}/assetpriceprediction`, {
-      params: queryParams,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': config.apiKey,
-      },
-    });
+    const response = await axios.get<GetAssetPricePredictionResponse>(
+      `${config.baseUrl}/assetpriceprediction`,
+      {
+        params: queryParams,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': config.apiKey,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get pairs: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to get asset price prediction:', error);
     throw error;
   }
 }

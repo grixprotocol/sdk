@@ -28,11 +28,7 @@ export async function requestTradeAgentSignals(
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to request trade agent signals: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to request trade agent signals:', error);
     throw error;
   }
 }

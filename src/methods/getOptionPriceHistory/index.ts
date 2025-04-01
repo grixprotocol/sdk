@@ -71,11 +71,7 @@ export async function getOptionPriceHistory(
     // Return the response data which should match OptionPriceHistoryGetResponse
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const status = error.response?.status || 'unknown';
-      const message = error.response?.data?.message || error.message;
-      throw new Error(`Failed to get option price history: ${status} ${message}`);
-    }
+    console.error('Failed to get option price history:', error);
     throw error;
   }
 }

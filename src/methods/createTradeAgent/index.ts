@@ -24,11 +24,7 @@ export async function createTradeAgent(
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to create trade agent: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to create trade agent:', error);
     throw error;
   }
 }

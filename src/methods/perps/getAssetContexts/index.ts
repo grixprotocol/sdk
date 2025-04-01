@@ -18,21 +18,20 @@ export async function getAssetContexts(
   }
 
   try {
-    const response = await axios.get(`${config.baseUrl}/perps/getAssetContexts`, {
-      params: queryParams,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': config.apiKey,
-      },
-    });
+    const response = await axios.get<GetAssetContextsResponse>(
+      `${config.baseUrl}/perps/getAssetContexts`,
+      {
+        params: queryParams,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': config.apiKey,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get pairs: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to get asset contexts:', error);
     throw error;
   }
 }

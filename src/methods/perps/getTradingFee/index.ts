@@ -13,21 +13,20 @@ export async function getTradingFee(
   queryParams.append('protocol', protocol);
 
   try {
-    const response = await axios.get(`${config.baseUrl}/perps/getTradingFees`, {
-      params: queryParams,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': config.apiKey,
-      },
-    });
+    const response = await axios.get<GetTradingFeeResponse[]>(
+      `${config.baseUrl}/perps/getTradingFees`,
+      {
+        params: queryParams,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': config.apiKey,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get trading fees: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to get trading fees:', error);
     throw error;
   }
 }

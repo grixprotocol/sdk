@@ -24,21 +24,20 @@ export async function getHistoricalFundingRates(
   }
 
   try {
-    const response = await axios.get(`${config.baseUrl}/perps/getHistoricalFundingRates`, {
-      params: queryParams,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': config.apiKey,
-      },
-    });
+    const response = await axios.get<GetHistoricalFundingRatesResponse>(
+      `${config.baseUrl}/perps/getHistoricalFundingRates`,
+      {
+        params: queryParams,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': config.apiKey,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get historical funding rates: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to get historical funding rates:', error);
     throw error;
   }
 }

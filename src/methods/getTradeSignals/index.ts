@@ -34,11 +34,7 @@ export async function getTradeSignals(
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get trade signals: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
+    console.error('Failed to get trade signals:', error);
     throw error;
   }
 }
