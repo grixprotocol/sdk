@@ -104,7 +104,9 @@ import { getTradingFee } from './methods/perps/getTradingFee/index.js';
 import { GetAssetPriceResponse } from './methods/perps/getAssetPrice/types.js';
 import { GetAssetPriceRequest } from './methods/perps/getAssetPrice/types.js';
 import { getAssetPrice } from './methods/perps/getAssetPrice/index.js';
-
+import { GetCurrentFundingRateRequest } from './methods/perps/getCurrentFundingRate/types.js';
+import { GetCurrentFundingRateResponse } from './methods/perps/getCurrentFundingRate/types.js';
+import { getCurrentFundingRate } from './methods/perps/getCurrentFundingRate/index.js';
 export {
   AIAnalysisParams,
   AIAnalysisResponse,
@@ -148,6 +150,8 @@ export {
   GetTradingFeeResponse,
   GetAssetPriceRequest,
   GetAssetPriceResponse,
+  GetCurrentFundingRateRequest,
+  GetCurrentFundingRateResponse,
 };
 
 export type InitializeConfig = {
@@ -357,6 +361,12 @@ export class GrixSDK {
 
   async getAssetPrice(params: GetAssetPriceRequest): Promise<GetAssetPriceResponse> {
     return getAssetPrice(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getCurrentFundingRate(
+    params: GetCurrentFundingRateRequest
+  ): Promise<GetCurrentFundingRateResponse> {
+    return getCurrentFundingRate(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
   public get mcp(): MCPService {

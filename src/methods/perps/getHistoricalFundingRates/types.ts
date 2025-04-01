@@ -1,8 +1,7 @@
 export interface GetHistoricalFundingRatesRequest {
   protocol?: string;
   pair?: string;
-  startTime?: number;
-  endTime?: number;
+  daysBack?: number;
 }
 
 export interface HistoricalFundingRate {

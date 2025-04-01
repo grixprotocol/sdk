@@ -23,6 +23,10 @@ import { getPerpsAssetPriceMcp } from '../perps/getAssetPrice/handler.js';
 import { GetNextFundingRateParams } from '../perps/getNextFundingRate/handler.js';
 import { getPerpsTradingFeeMcp } from '../perps/getTradingFee/handler.js';
 import { getPerpsNextFundingRateMcp } from '../perps/getNextFundingRate/handler.js';
+import {
+  GetCurrentFundingRateParams,
+  getPerpsCurrentFundingRateMcp,
+} from '../perps/getCurrentFundingRate/handler.js';
 
 export const handleOperation = async (
   grixSdkInstance: GrixSDK,
@@ -123,6 +127,14 @@ export const handleOperation = async (
     return await getPerpsNextFundingRateMcp(
       grixSdkInstance,
       args as unknown as GetNextFundingRateParams
+    );
+  } else if (name === 'getPerpsCurrentFundingRate') {
+    if (!args) {
+      throw new Error('getPerpsCurrentFundingRate: Missing required parameters');
+    }
+    return await getPerpsCurrentFundingRateMcp(
+      grixSdkInstance,
+      args as unknown as GetCurrentFundingRateParams
     );
   }
 

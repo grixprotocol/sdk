@@ -6,12 +6,12 @@ export const getHistoricalFundingRateSchemaMcp = {
     properties: {
       protocol: { type: 'string', description: 'The protocol to get historical funding rates for' },
       pair: { type: 'string', description: 'The pair to get historical funding rates for' },
-      startTime: {
+      daysBack: {
         type: 'number',
-        description: 'The start time to get historical funding rates for',
+        description: 'The number of days back to get historical funding rates for',
+        default: 7,
       },
-      endTime: { type: 'number', description: 'The end time to get historical funding rates for' },
     },
-    required: ['protocol', 'pair', 'startTime', 'endTime'],
+    required: ['protocol', 'pair'],
   },
 };

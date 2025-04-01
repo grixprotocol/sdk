@@ -5,23 +5,17 @@ export async function getHistoricalFundingRates(
   params: GetHistoricalFundingRatesRequest,
   config: { apiKey: string; baseUrl: string }
 ): Promise<GetHistoricalFundingRatesResponse> {
-  const { protocol, pair, startTime, endTime } = params;
+  const { protocol, pair, daysBack } = params;
 
+  if (!protocol || !pair || !daysBack) {
+    throw new Error('Protocol, pair and daysBack are required');
+  }
   // Build query parameters
   const queryParams = new URLSearchParams();
 
-  if (protocol) {
-    queryParams.append('protocol', protocol);
-  }
-  if (pair) {
-    queryParams.append('pair', pair);
-  }
-  if (startTime) {
-    queryParams.append('startTime', startTime.toString());
-  }
-  if (endTime) {
-    queryParams.append('endTime', endTime.toString());
-  }
+  queryParams.append('protocol', protocol);
+  queryParams.append('pair', pair);
+  queryParams.append('daysBack', daysBack.toString());
 
   try {
     const response = await axios.get(`${config.baseUrl}/perps/getHistoricalFundingRates`, {
