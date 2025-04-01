@@ -35,7 +35,9 @@ import {
 import { perpsAssetPriceSchemaMcp } from './tools/perps/getAssetPrice/schema.js';
 import { perpsTradingFeeSchemaMcp } from './tools/perps/getTradingFee/schema.js';
 import { perpsNextFundingRateSchemaMcp } from './tools/perps/getNextFundingRate/schema.js';
-
+import { GetCurrentFundingRateParams } from './tools/perps/getCurrentFundingRate/handler.js';
+import { getPerpsCurrentFundingRateMcp } from './tools/perps/getCurrentFundingRate/handler.js';
+import { perpsCurrentFundingRateSchemaMcp } from './tools/perps/getCurrentFundingRate/schema.js';
 export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
   getOptionsDataMcp: (args) => getOptionsDataMcp(grixSdkInstance, args),
   getSignalsDataMcp: (args) => getSignalsDataMcp(grixSdkInstance, args),
@@ -61,6 +63,8 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
     getPerpsTradingFeeMcp(grixSdkInstance, args as unknown as GetTradingFeeParams),
   getPerpsNextFundingRateMcp: (args) =>
     getPerpsNextFundingRateMcp(grixSdkInstance, args as unknown as GetNextFundingRateParams),
+  getPerpsCurrentFundingRateMcp: (args) =>
+    getPerpsCurrentFundingRateMcp(grixSdkInstance, args as unknown as GetCurrentFundingRateParams),
 
   schemas: [
     {
@@ -123,6 +127,11 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
       name: 'perpsNextFundingRate',
       schema: perpsNextFundingRateSchemaMcp,
       description: 'Schema for perps next funding rate retrieval',
+    },
+    {
+      name: 'perpsCurrentFundingRate',
+      schema: perpsCurrentFundingRateSchemaMcp,
+      description: 'Schema for perps current funding rate retrieval',
     },
   ],
 });
