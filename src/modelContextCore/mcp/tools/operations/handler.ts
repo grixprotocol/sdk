@@ -27,6 +27,12 @@ import {
   GetCurrentFundingRateParams,
   getPerpsCurrentFundingRateMcp,
 } from '../perps/getCurrentFundingRate/handler.js';
+import { getPowerTradeTradableEntitiesMcp } from '../altcoinsDerivatives/protocols/powerTrade/getPowerTradeTradableEntities/handler.js';
+import { getPowerTradeCurrenciesTradingStatisticsMcp } from '../altcoinsDerivatives/protocols/powerTrade/getPowerTradeCurrenciesTradingStatistics/handler.js';
+import { getPowerTradeExpiriesPerSymbolMcp } from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeExpiriesPerSymbol/handler.js';
+import { GetPowerTradeExpiriesPerSymbolMcpArgs } from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeExpiriesPerSymbol/handler.js';
+import { getPowerTradeStrikesPerSymbolMcp } from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
+import { GetPowerTradeStrikesPerSymbolMcpArgs } from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
 
 export const handleOperation = async (
   grixSdkInstance: GrixSDK,
@@ -135,6 +141,32 @@ export const handleOperation = async (
     return await getPerpsCurrentFundingRateMcp(
       grixSdkInstance,
       args as unknown as GetCurrentFundingRateParams
+    );
+  } else if (name === 'getPowerTradeTradableEntities') {
+    if (!args) {
+      throw new Error('getPowerTradeTradableEntities: Missing required parameters');
+    }
+    return await getPowerTradeTradableEntitiesMcp(grixSdkInstance);
+  } else if (name === 'getPowerTradeCurrenciesTradingStatistics') {
+    if (!args) {
+      throw new Error('getPowerTradeCurrenciesTradingStatistics: Missing required parameters');
+    }
+    return await getPowerTradeCurrenciesTradingStatisticsMcp(grixSdkInstance);
+  } else if (name === 'getPowerTradeExpiriesPerSymbol') {
+    if (!args) {
+      throw new Error('getPowerTradeExpiriesPerSymbol: Missing required parameters');
+    }
+    return await getPowerTradeExpiriesPerSymbolMcp(
+      grixSdkInstance,
+      args as unknown as GetPowerTradeExpiriesPerSymbolMcpArgs
+    );
+  } else if (name === 'getPowerTradeStrikesPerSymbol') {
+    if (!args) {
+      throw new Error('getPowerTradeStrikesPerSymbol: Missing required parameters');
+    }
+    return await getPowerTradeStrikesPerSymbolMcp(
+      grixSdkInstance,
+      args as unknown as GetPowerTradeStrikesPerSymbolMcpArgs
     );
   }
 

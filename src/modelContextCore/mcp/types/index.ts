@@ -6,7 +6,6 @@ import { GetTradingFeeResponse } from 'src/methods/perps/getTradingFee/types.js'
 import { GetNextFundingRateResponse } from 'src/methods/perps/getNextFundingRate/types.js';
 import { GetCurrentFundingRateParams } from '../tools/perps/getCurrentFundingRate/handler.js';
 import { GetCurrentFundingRateResponse } from 'src/methods/perps/getCurrentFundingRate/types.js';
-
 export interface MCPSchema {
   name: string;
   schema: Record<string, unknown>;
@@ -56,6 +55,16 @@ export interface MCPService {
     | { content: { type: string; text: string }[] }
     | { content: { type: string; text: GetCurrentFundingRateResponse }[] }
   >;
+  getPowerTradeTradableEntitiesMcp: () => Promise<{ content: { type: string; text: string }[] }>;
+  getPowerTradeCurrenciesTradingStatisticsMcp: () => Promise<{
+    content: { type: string; text: string }[];
+  }>;
+  getPowerTradeExpiriesPerSymbolMcp: (
+    args: Record<string, unknown>
+  ) => Promise<{ content: { type: string; text: string }[] }>;
+  getPowerTradeStrikesPerSymbolMcp: (
+    args: Record<string, unknown>
+  ) => Promise<{ content: { type: string; text: string }[] }>;
   schemas: MCPSchema[];
 }
 
