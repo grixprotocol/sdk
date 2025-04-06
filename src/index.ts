@@ -107,6 +107,19 @@ import { getAssetPrice } from './methods/perps/getAssetPrice/index.js';
 import { GetCurrentFundingRateRequest } from './methods/perps/getCurrentFundingRate/types.js';
 import { GetCurrentFundingRateResponse } from './methods/perps/getCurrentFundingRate/types.js';
 import { getCurrentFundingRate } from './methods/perps/getCurrentFundingRate/index.js';
+import { getExpiriesPerSymbol } from './methods/altcoinsDerivatives/protocols/powerTrade/options/getExpiriesPerSymbol/index.js';
+import { getStrikesPerSymbol } from './methods/altcoinsDerivatives/protocols/powerTrade/options/getStrikesPerSymbol/index.js';
+import { getTradableEntities } from './methods/altcoinsDerivatives/protocols/powerTrade/getTradableEntities/index.js';
+import { getCurrenciesTradingStatistics } from './methods/altcoinsDerivatives/protocols/powerTrade/getCurrenciesTradingStatistics/index.js';
+import { TradableEntitiesGetResponse } from './methods/altcoinsDerivatives/protocols/powerTrade/getTradableEntities/types.js';
+import { ExpiriesPerSymbolGetResponse } from './methods/altcoinsDerivatives/protocols/powerTrade/options/getExpiriesPerSymbol/types.js';
+import { CurrenciesTradingStatisticsGetResponse } from './methods/altcoinsDerivatives/protocols/powerTrade/getCurrenciesTradingStatistics/types.js';
+import { ExpiriesPerSymbolGetParams } from './methods/altcoinsDerivatives/protocols/powerTrade/options/getExpiriesPerSymbol/types.js';
+import {
+  StrikesPerSymbolGetParams,
+  StrikesPerSymbolGetResponse,
+} from './methods/altcoinsDerivatives/protocols/powerTrade/options/getStrikesPerSymbol/types.js';
+
 export {
   AIAnalysisParams,
   AIAnalysisResponse,
@@ -152,6 +165,12 @@ export {
   GetAssetPriceResponse,
   GetCurrentFundingRateRequest,
   GetCurrentFundingRateResponse,
+  ExpiriesPerSymbolGetParams,
+  ExpiriesPerSymbolGetResponse,
+  StrikesPerSymbolGetParams,
+  StrikesPerSymbolGetResponse,
+  TradableEntitiesGetResponse,
+  CurrenciesTradingStatisticsGetResponse,
 };
 
 export type InitializeConfig = {
@@ -367,6 +386,26 @@ export class GrixSDK {
     params: GetCurrentFundingRateRequest
   ): Promise<GetCurrentFundingRateResponse> {
     return getCurrentFundingRate(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getPowerTradeExpiriesPerSymbol(
+    params: ExpiriesPerSymbolGetParams
+  ): Promise<ExpiriesPerSymbolGetResponse> {
+    return getExpiriesPerSymbol({ apiKey: this.apiKey, baseUrl: this.baseUrl }, params);
+  }
+
+  async getPowerTradeStrikesPerSymbol(
+    params: StrikesPerSymbolGetParams
+  ): Promise<StrikesPerSymbolGetResponse> {
+    return getStrikesPerSymbol({ apiKey: this.apiKey, baseUrl: this.baseUrl }, params);
+  }
+
+  async getPowerTradeTradableEntities(): Promise<TradableEntitiesGetResponse> {
+    return getTradableEntities({ apiKey: this.apiKey, baseUrl: this.baseUrl });
+  }
+
+  async getPowerTradeCurrenciesTradingStatistics(): Promise<CurrenciesTradingStatisticsGetResponse> {
+    return getCurrenciesTradingStatistics({ apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
   public get mcp(): MCPService {
