@@ -2,9 +2,7 @@ export interface ExpiriesPerSymbolGetParams {
   symbol: string;
 }
 
-export interface ExpiriesPerSymbolGetResponse {
-  expiries: ExpiryDate[];
-}
+export type ExpiriesPerSymbolGetResponse = ExpiryDate[];
 
 export interface ExpiryDate {
   expiry: string;

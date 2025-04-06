@@ -20,7 +20,7 @@ export async function getCurrenciesTradingStatistics(config: {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(
-        `Failed to get asset price history: ${error.response?.status} ${error.response?.data || error.message}`
+        `Failed to get currencies trading statistics: ${error.response?.status} ${error.response?.data || error.message}`
       );
     }
     throw error;

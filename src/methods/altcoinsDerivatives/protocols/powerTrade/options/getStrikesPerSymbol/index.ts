@@ -22,7 +22,7 @@ export async function getStrikesPerSymbol(
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(
-        `Failed to get asset price history: ${error.response?.status} ${error.response?.data || error.message}`
+        `Failed to get strikes per symbol: ${error.response?.status} ${error.response?.data || error.message}`
       );
     }
     throw error;

@@ -13,11 +13,12 @@ export async function getTradableEntities(config: {
       },
     });
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(
-        `Failed to get asset price history: ${error.response?.status} ${error.response?.data || error.message}`
+        `Failed to get tradable entities: ${error.response?.data} ${error.response?.status} ${error.response?.statusText}
+        ${error.message}`
       );
     }
     throw error;
