@@ -7,18 +7,15 @@ import type { MCPService, MCPSchema } from './types/index.js';
 import {
   GetAssetContextsRequest,
   GetOpenInterestCapsRequest,
-  GetPredictedFundingsRequest,
   GetPairsParams,
   GrixSDK,
   GetHistoricalFundingRatesRequest,
   GetAssetPricePredictionParams,
 } from 'src/index.js';
 import { getTradingIndicatorsSchemaMcp } from './tools/trading-indicators/schema.js';
-import { getPerpsPredictedFundingsSchemaMcp } from './tools/perps/getPerpsPredictedFundings/schema.js';
 import { getPerpsOpenInterestCapsSchemaMcp } from './tools/perps/getPerpsOpenInterestCaps/schema.js';
 import { getPerpsAssetContextsSchemaMcp } from './tools/perps/getPerpsAssetContexts/schema.js';
 import { getTradingIndicatorsMcp } from './tools/trading-indicators/handler.js';
-import { getPerpsPredictedFundingsMcp } from './tools/perps/getPerpsPredictedFundings/handler.js';
 import { getPerpsOpenInterestCapsMcp } from './tools/perps/getPerpsOpenInterestCaps/handler.js';
 import { getPerpsAssetContextsMcp } from './tools/perps/getPerpsAssetContexts/handler.js';
 import { getPerpsPairsMcp } from './tools/perps/getPairs/handler.js';
@@ -39,24 +36,22 @@ import { GetCurrentFundingRateParams } from './tools/perps/getCurrentFundingRate
 import { getPerpsCurrentFundingRateMcp } from './tools/perps/getCurrentFundingRate/handler.js';
 import { perpsCurrentFundingRateSchemaMcp } from './tools/perps/getCurrentFundingRate/schema.js';
 import {
-  getPowerTradeExpiriesPerSymbolMcp,
-  GetPowerTradeExpiriesPerSymbolMcpArgs,
+  getAltcoinsOptionsExpiriesPerSymbolMcp,
+  GetAltcoinsOptionsExpiriesPerSymbolMcpArgs,
 } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeExpiriesPerSymbol/handler.js';
-import { getPowerTradeCurrenciesTradingStatisticsMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/getPowerTradeCurrenciesTradingStatistics/handler.js';
-import { getPowerTradeTradableEntitiesMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/getPowerTradeTradableEntities/handler.js';
-import { GetPowerTradeStrikesPerSymbolMcpArgs } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
-import { getPowerTradeStrikesPerSymbolMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
-import { getPowerTradeTradableEntitiesSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/getPowerTradeTradableEntities/schema.js';
-import { getPowerTradeCurrenciesTradingStatisticsSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/getPowerTradeCurrenciesTradingStatistics/schema.js';
-import { getPowerTradeExpiriesPerSymbolSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeExpiriesPerSymbol/schema.js';
-import { getPowerTradeStrikesPerSymbolSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/schema.js';
+import { getAltcoinsOptionsCurrenciesTradingStatisticsMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/getPowerTradeCurrenciesTradingStatistics/handler.js';
+import { getAltcoinsOptionsTradableEntitiesMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/getPowerTradeTradableEntities/handler.js';
+import { GetAltcoinsOptionsStrikesPerSymbolMcpArgs } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
+import { getAltcoinsOptionsStrikesPerSymbolMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
+import { getAltcoinsOptionsTradableEntitiesSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/getPowerTradeTradableEntities/schema.js';
+import { getAltcoinsOptionsCurrenciesTradingStatisticsSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/getPowerTradeCurrenciesTradingStatistics/schema.js';
+import { getAltcoinsOptionsExpiriesPerSymbolSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeExpiriesPerSymbol/schema.js';
+import { getAltcoinsOptionsStrikesPerSymbolSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/schema.js';
 
 export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
   handleOperation: (name, args) => handleOperation(grixSdkInstance, name, args),
   getOptionsDataMcp: (args) => getOptionsDataMcp(grixSdkInstance, args),
   getSignalsDataMcp: (args) => getSignalsDataMcp(grixSdkInstance, args),
-  getPerpsPredictedFundingsMcp: (args) =>
-    getPerpsPredictedFundingsMcp(grixSdkInstance, args as unknown as GetPredictedFundingsRequest),
   getTradingIndicatorsMcp: (args) => getTradingIndicatorsMcp(grixSdkInstance, args),
   getPerpsOpenInterestCapsMcp: (args) =>
     getPerpsOpenInterestCapsMcp(grixSdkInstance, args as unknown as GetOpenInterestCapsRequest),
@@ -78,110 +73,96 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
     getPerpsNextFundingRateMcp(grixSdkInstance, args as unknown as GetNextFundingRateParams),
   getPerpsCurrentFundingRateMcp: (args) =>
     getPerpsCurrentFundingRateMcp(grixSdkInstance, args as unknown as GetCurrentFundingRateParams),
-  getPowerTradeTradableEntitiesMcp: () => getPowerTradeTradableEntitiesMcp(grixSdkInstance),
-  getPowerTradeCurrenciesTradingStatisticsMcp: () =>
-    getPowerTradeCurrenciesTradingStatisticsMcp(grixSdkInstance),
-  getPowerTradeExpiriesPerSymbolMcp: (args) =>
-    getPowerTradeExpiriesPerSymbolMcp(
+  getAltcoinsOptionsTradableEntitiesMcp: () =>
+    getAltcoinsOptionsTradableEntitiesMcp(grixSdkInstance),
+  getAltcoinsOptionsCurrenciesTradingStatisticsMcp: () =>
+    getAltcoinsOptionsCurrenciesTradingStatisticsMcp(grixSdkInstance),
+  getAltcoinsOptionsExpiriesPerSymbolMcp: (args) =>
+    getAltcoinsOptionsExpiriesPerSymbolMcp(
       grixSdkInstance,
-      args as unknown as GetPowerTradeExpiriesPerSymbolMcpArgs
+      args as unknown as GetAltcoinsOptionsExpiriesPerSymbolMcpArgs
     ),
-  getPowerTradeStrikesPerSymbolMcp: (args) =>
-    getPowerTradeStrikesPerSymbolMcp(
+  getAltcoinsOptionsStrikesPerSymbolMcp: (args) =>
+    getAltcoinsOptionsStrikesPerSymbolMcp(
       grixSdkInstance,
-      args as unknown as GetPowerTradeStrikesPerSymbolMcpArgs
+      args as unknown as GetAltcoinsOptionsStrikesPerSymbolMcpArgs
     ),
 
   schemas: [
     {
-      name: 'options',
+      name: optionSchemaMcp.name,
       schema: optionSchemaMcp,
-      description: 'Schema for options data retrieval',
+      description: optionSchemaMcp.description,
     },
     {
-      name: 'signals',
+      name: signalSchemaMcp.name,
       schema: signalSchemaMcp,
-      description: 'Schema for trading signals generation',
+      description: signalSchemaMcp.description,
     },
     {
-      name: 'perpsPredictedFundings',
-      schema: getPerpsPredictedFundingsSchemaMcp,
-      description: 'Schema for perps predicted fundings retrieval',
-    },
-    {
-      name: 'tradingIndicators',
+      name: getTradingIndicatorsSchemaMcp.name,
       schema: getTradingIndicatorsSchemaMcp,
-      description: 'Schema for trading indicators retrieval',
+      description: getTradingIndicatorsSchemaMcp.description,
     },
     {
-      name: 'perpsGetPairs',
+      name: perpsPairsSchemaMcp.name,
       schema: perpsPairsSchemaMcp,
-      description: 'Schema for perps pairs retrieval',
+      description: perpsPairsSchemaMcp.description,
     },
     {
-      name: 'perpsAssetContexts',
+      name: getPerpsAssetContextsSchemaMcp.name,
       schema: getPerpsAssetContextsSchemaMcp,
-      description: 'Schema for perps asset contexts retrieval',
+      description: getPerpsAssetContextsSchemaMcp.description,
     },
-
     {
-      name: 'perpsOpenInterestCaps',
+      name: getPerpsOpenInterestCapsSchemaMcp.name,
       schema: getPerpsOpenInterestCapsSchemaMcp,
-      description: 'Schema for perps open interest caps retrieval',
+      description: getPerpsOpenInterestCapsSchemaMcp.description,
     },
     {
-      name: 'perpsAssetContexts',
-      schema: getPerpsAssetContextsSchemaMcp,
-      description: 'Schema for perps asset contexts retrieval',
-    },
-    {
-      name: 'assetPricePredictions',
+      name: getAssetPricePredictionsSchemaMcp.name,
       schema: getAssetPricePredictionsSchemaMcp,
-      description: 'Schema for asset price predictions retrieval',
+      description: getAssetPricePredictionsSchemaMcp.description,
     },
     {
-      name: 'perpsAssetPrice',
+      name: perpsAssetPriceSchemaMcp.name,
       schema: perpsAssetPriceSchemaMcp,
-      description: 'Schema for perps asset price retrieval',
+      description: perpsAssetPriceSchemaMcp.description,
     },
     {
-      name: 'perpsTradingFee',
+      name: perpsTradingFeeSchemaMcp.name,
       schema: perpsTradingFeeSchemaMcp,
-      description: 'Schema for perps trading fee retrieval',
+      description: perpsTradingFeeSchemaMcp.description,
     },
     {
-      name: 'perpsNextFundingRate',
+      name: perpsNextFundingRateSchemaMcp.name,
       schema: perpsNextFundingRateSchemaMcp,
-      description: 'Schema for perps next funding rate retrieval',
+      description: perpsNextFundingRateSchemaMcp.description,
     },
     {
-      name: 'perpsCurrentFundingRate',
+      name: perpsCurrentFundingRateSchemaMcp.name,
       schema: perpsCurrentFundingRateSchemaMcp,
-      description: 'Schema for perps current funding rate retrieval',
+      description: perpsCurrentFundingRateSchemaMcp.description,
     },
     {
-      name: 'powerTradeTradableEntities',
-      schema: getPowerTradeTradableEntitiesSchemaMcp,
-      description:
-        'Schema for altcoins derivatives tradable entities retrieval from the powerTrade protocol',
+      name: getAltcoinsOptionsTradableEntitiesSchemaMcp.name,
+      schema: getAltcoinsOptionsTradableEntitiesSchemaMcp,
+      description: getAltcoinsOptionsTradableEntitiesSchemaMcp.description,
     },
     {
-      name: 'powerTradeCurrenciesTradingStatistics',
-      schema: getPowerTradeCurrenciesTradingStatisticsSchemaMcp,
-      description:
-        'Schema for altcoins derivatives currencies trading statistics retrieval from the powerTrade protocol',
+      name: getAltcoinsOptionsCurrenciesTradingStatisticsSchemaMcp.name,
+      schema: getAltcoinsOptionsCurrenciesTradingStatisticsSchemaMcp,
+      description: getAltcoinsOptionsCurrenciesTradingStatisticsSchemaMcp.description,
     },
     {
-      name: 'powerTradeExpiriesPerSymbol',
-      schema: getPowerTradeExpiriesPerSymbolSchemaMcp,
-      description:
-        'Schema for altcoins derivatives expiries per symbol retrieval from the powerTrade protocol',
+      name: getAltcoinsOptionsExpiriesPerSymbolSchemaMcp.name,
+      schema: getAltcoinsOptionsExpiriesPerSymbolSchemaMcp,
+      description: getAltcoinsOptionsExpiriesPerSymbolSchemaMcp.description,
     },
     {
-      name: 'powerTradeStrikesPerSymbol',
-      schema: getPowerTradeStrikesPerSymbolSchemaMcp,
-      description:
-        'Schema for altcoins derivatives strikes per symbol retrieval from the powerTrade protocol',
+      name: getAltcoinsOptionsStrikesPerSymbolSchemaMcp.name,
+      schema: getAltcoinsOptionsStrikesPerSymbolSchemaMcp,
+      description: getAltcoinsOptionsStrikesPerSymbolSchemaMcp.description,
     },
   ],
 });

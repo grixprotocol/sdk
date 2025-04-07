@@ -1,6 +1,6 @@
 export const perpsPairsSchemaMcp = {
   name: 'getPerpsPairs',
-  description: 'Get perps pairs based on protocol and base asset',
+  description: 'Get perpetual (perps) trading pairs based on protocol and base asset',
   inputSchema: {
     type: 'object',
     properties: {
