@@ -1,6 +1,6 @@
 export const getPerpsAssetContextsSchemaMcp = {
   name: 'getPerpsAssetContexts',
-  description: 'Get asset contexts for a given protocol and pair',
+  description: 'Get perpetual (perps) asset contexts for a given protocol and pair',
   inputSchema: {
     type: 'object',
     properties: {

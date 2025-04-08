@@ -1,6 +1,6 @@
-export const getPowerTradeTradableEntitiesSchemaMcp = {
-  name: 'getPowerTradeTradableEntities',
-  description: 'Get power trade altcoins derivatives tradable entities',
+export const getAltcoinsOptionsTradableEntitiesSchemaMcp = {
+  name: 'getAltcoinsOptionsTradableEntities',
+  description: 'Get altcoins options tradable entities',
   inputSchema: {
     type: 'object',
   },

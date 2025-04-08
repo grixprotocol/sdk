@@ -1,5 +1,7 @@
+import { PerpsPairsProtocol } from 'src/modelContextCore/mcp/tools/perps/getPairs/schema.js';
+
 export interface GetPairsParams {
-  protocol: string;
+  protocol: PerpsPairsProtocol;
   baseAsset?: string;
 }
 

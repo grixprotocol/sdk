@@ -62,7 +62,6 @@ import { getPairs } from './methods/perps/getPairs/index.js';
 import { getOpenInterestCaps } from './methods/perps/getOpenInterestCaps/index.js';
 import { getAssetContexts } from './methods/perps/getAssetContexts/index.js';
 import { getHistoricalFundingRates } from './methods/perps/getHistoricalFundingRates/index.js';
-import { getPredictedFundings } from './methods/perps/getPredictedFundingRate/index.js';
 import { getTradingIndicators } from './methods/tradingIndicators/index.js';
 import { getAssetPricePrediction } from './methods/prediction/getAssetPricePrediction/alloraNetwork/index.js';
 
@@ -83,10 +82,6 @@ import {
   GetHistoricalFundingRatesRequest,
   GetHistoricalFundingRatesResponse,
 } from './methods/perps/getHistoricalFundingRates/types.js';
-import {
-  GetPredictedFundingsRequest,
-  GetPredictedFundingsResponse,
-} from './methods/perps/getPredictedFundingRate/types.js';
 import {
   GetTradingIndicatorsRequest,
   GetTradingIndicatorsResponse,
@@ -151,8 +146,6 @@ export {
   GetAssetContextsResponse,
   GetHistoricalFundingRatesRequest,
   GetHistoricalFundingRatesResponse,
-  GetPredictedFundingsRequest,
-  GetPredictedFundingsResponse,
   GetTradingIndicatorsRequest,
   GetTradingIndicatorsResponse,
   GetAssetPricePredictionParams,
@@ -350,12 +343,6 @@ export class GrixSDK {
     params: GetHistoricalFundingRatesRequest
   ): Promise<GetHistoricalFundingRatesResponse> {
     return getHistoricalFundingRates(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
-  }
-
-  async getPerpsPredictedFundings(
-    params: GetPredictedFundingsRequest
-  ): Promise<GetPredictedFundingsResponse> {
-    return getPredictedFundings(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
   async getTradingIndicators(

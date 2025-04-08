@@ -1,6 +1,6 @@
 export const getPerpsOpenInterestCapsSchemaMcp = {
   name: 'getPerpsOpenInterestCaps',
-  description: 'Get open interest caps for a given protocol',
+  description: 'Get perpetual (perps) open interest caps for a given protocol',
   inputSchema: {
     type: 'object',
     properties: {

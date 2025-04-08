@@ -26,7 +26,6 @@ export interface MCPService {
   getTradingIndicatorsMcp: (
     args: GetTradingIndicatorsRequest
   ) => Promise<{ content: { type: string; text: string }[] }>;
-  getPerpsPredictedFundingsMcp: (args: Record<string, unknown>) => Promise<MCPResponse>;
   getPerpsOpenInterestCapsMcp: (args: Record<string, unknown>) => Promise<MCPResponse>;
   getPerpsAssetContextsMcp: (args: Record<string, unknown>) => Promise<MCPResponse>;
   getPerpsPairsMcp: (args: Record<string, unknown>) => Promise<MCPResponse>;
@@ -55,14 +54,16 @@ export interface MCPService {
     | { content: { type: string; text: string }[] }
     | { content: { type: string; text: GetCurrentFundingRateResponse }[] }
   >;
-  getPowerTradeTradableEntitiesMcp: () => Promise<{ content: { type: string; text: string }[] }>;
-  getPowerTradeCurrenciesTradingStatisticsMcp: () => Promise<{
+  getAltcoinsOptionsTradableEntitiesMcp: () => Promise<{
     content: { type: string; text: string }[];
   }>;
-  getPowerTradeExpiriesPerSymbolMcp: (
+  getAltcoinsOptionsCurrenciesTradingStatisticsMcp: () => Promise<{
+    content: { type: string; text: string }[];
+  }>;
+  getAltcoinsOptionsExpiriesPerSymbolMcp: (
     args: Record<string, unknown>
   ) => Promise<{ content: { type: string; text: string }[] }>;
-  getPowerTradeStrikesPerSymbolMcp: (
+  getAltcoinsOptionsStrikesPerSymbolMcp: (
     args: Record<string, unknown>
   ) => Promise<{ content: { type: string; text: string }[] }>;
   schemas: MCPSchema[];
