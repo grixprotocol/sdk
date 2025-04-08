@@ -1,3 +1,8 @@
+export enum PerpsPairsProtocol {
+  HYPERLIQUID = 'hyperliquid',
+  LODE = 'lode',
+}
+
 export const perpsPairsSchemaMcp = {
   name: 'getPerpsPairs',
   description: 'Get perpetual (perps) trading pairs based on protocol and base asset',
@@ -7,8 +12,8 @@ export const perpsPairsSchemaMcp = {
       protocol: {
         type: 'string',
         description: 'The protocol to get pairs for',
-        default: 'hyperliquid',
-        enum: ['hyperliquid', 'lode'],
+        default: PerpsPairsProtocol.HYPERLIQUID,
+        enum: Object.values(PerpsPairsProtocol),
       },
       baseAsset: {
         type: 'string',

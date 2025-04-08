@@ -1,4 +1,5 @@
 import { GrixSDK } from 'src/index.js';
+import { PerpsCurrentFundingRateProtocol } from './schema.js';
 
 export interface GetCurrentFundingRateParams {
   protocol: string;
@@ -9,7 +10,7 @@ export const getPerpsCurrentFundingRateMcp = async (
   grixSdkInstance: GrixSDK,
   args: GetCurrentFundingRateParams
 ) => {
-  console.log({ grixSdkInstance, args });
+  validatePerpsCurrentFundingRateArgs(args);
 
   try {
     const response = await grixSdkInstance.getCurrentFundingRate(args);
@@ -44,5 +45,30 @@ export const getPerpsCurrentFundingRateMcp = async (
         },
       ],
     };
+  }
+};
+
+const validatePerpsCurrentFundingRateArgs = (args: GetCurrentFundingRateParams) => {
+  const { protocol, pair } = args;
+
+  if (!protocol || !pair) {
+    throw new Error('Protocol and pair are required parameters.');
+  }
+
+  if (
+    !Object.values(PerpsCurrentFundingRateProtocol).includes(
+      protocol as PerpsCurrentFundingRateProtocol
+    )
+  ) {
+    throw new Error(
+      'Invalid protocol. Valid protocols are: ' +
+        Object.values(PerpsCurrentFundingRateProtocol).join(', ')
+    );
+  }
+
+  if (pair.split('-').length !== 2) {
+    throw new Error(
+      'Invalid pair. Trading pair must be in the format "BASE-QUOTE" (e.g., "BTC-USD")'
+    );
   }
 };
