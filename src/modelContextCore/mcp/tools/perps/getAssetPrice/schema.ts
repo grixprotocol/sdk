@@ -1,3 +1,7 @@
+export enum PerpsAssetPriceProtocol {
+  HYPERLIQUID = 'hyperliquid',
+}
+
 export const perpsAssetPriceSchemaMcp = {
   name: 'getPerpsAssetPrice',
   description: 'Get perps asset price based on protocol and symbol',
@@ -7,8 +11,8 @@ export const perpsAssetPriceSchemaMcp = {
       protocol: {
         type: 'string',
         description: 'The protocol to get asset price for',
-        default: 'hyperliquid',
-        enum: ['hyperliquid'],
+        default: PerpsAssetPriceProtocol.HYPERLIQUID,
+        enum: Object.values(PerpsAssetPriceProtocol),
       },
       symbol: {
         type: 'string',
