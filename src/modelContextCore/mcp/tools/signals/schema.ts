@@ -12,7 +12,8 @@ export const signalSchemaMcp = {
       },
       userPrompt: {
         type: 'string',
-        default: 'Generate moderate growth strategies',
+        default:
+          'As an experienced trader, analyze current market conditions and provide actionable trading signals. Consider market trends, volatility, and risk management. Focus on identifying high-probability setups with clear entry/exit points.',
       },
     },
   },

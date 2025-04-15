@@ -1,7 +1,6 @@
 import {
   GrixSDK,
   GetTradingIndicatorsRequest,
-  GetPredictedFundingsRequest,
   GetOpenInterestCapsRequest,
   GetAssetContextsRequest,
   GetPairsParams,
@@ -11,7 +10,6 @@ import {
 import { getOptionsDataMcp } from '../options/handler.js';
 import { getSignalsDataMcp } from '../signals/handler.js';
 import { getTradingIndicatorsMcp } from '../trading-indicators/handler.js';
-import { getPerpsPredictedFundingsMcp } from '../perps/getPerpsPredictedFundings/handler.js';
 import { getPerpsOpenInterestCapsMcp } from '../perps/getPerpsOpenInterestCaps/handler.js';
 import { getPerpsAssetContextsMcp } from '../perps/getPerpsAssetContexts/handler.js';
 import { getPerpsPairsMcp } from '../perps/getPairs/handler.js';
@@ -27,12 +25,16 @@ import {
   GetCurrentFundingRateParams,
   getPerpsCurrentFundingRateMcp,
 } from '../perps/getCurrentFundingRate/handler.js';
-import { getPowerTradeTradableEntitiesMcp } from '../altcoinsDerivatives/protocols/powerTrade/getPowerTradeTradableEntities/handler.js';
-import { getPowerTradeCurrenciesTradingStatisticsMcp } from '../altcoinsDerivatives/protocols/powerTrade/getPowerTradeCurrenciesTradingStatistics/handler.js';
-import { getPowerTradeExpiriesPerSymbolMcp } from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeExpiriesPerSymbol/handler.js';
-import { GetPowerTradeExpiriesPerSymbolMcpArgs } from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeExpiriesPerSymbol/handler.js';
-import { getPowerTradeStrikesPerSymbolMcp } from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
-import { GetPowerTradeStrikesPerSymbolMcpArgs } from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
+import { getAltcoinsOptionsTradableEntitiesMcp } from '../altcoinsDerivatives/protocols/powerTrade/getPowerTradeTradableEntities/handler.js';
+import { getAltcoinsOptionsCurrenciesTradingStatisticsMcp } from '../altcoinsDerivatives/protocols/powerTrade/getPowerTradeCurrenciesTradingStatistics/handler.js';
+import {
+  getAltcoinsOptionsExpiriesPerSymbolMcp,
+  GetAltcoinsOptionsExpiriesPerSymbolMcpArgs,
+} from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeExpiriesPerSymbol/handler.js';
+import {
+  getAltcoinsOptionsStrikesPerSymbolMcp,
+  GetAltcoinsOptionsStrikesPerSymbolMcpArgs,
+} from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
 
 export const handleOperation = async (
   grixSdkInstance: GrixSDK,
@@ -70,14 +72,6 @@ export const handleOperation = async (
     return await getTradingIndicatorsMcp(
       grixSdkInstance,
       args as unknown as GetTradingIndicatorsRequest
-    );
-  } else if (name === 'getPerpsPredictedFundings') {
-    if (!args) {
-      throw new Error('getPerpsPredictedFundings: Missing required parameters');
-    }
-    return await getPerpsPredictedFundingsMcp(
-      grixSdkInstance,
-      args as unknown as GetPredictedFundingsRequest
     );
   } else if (name === 'getPerpsOpenInterestCaps') {
     if (!args) {
@@ -142,31 +136,31 @@ export const handleOperation = async (
       grixSdkInstance,
       args as unknown as GetCurrentFundingRateParams
     );
-  } else if (name === 'getPowerTradeTradableEntities') {
+  } else if (name === 'getAltcoinsOptionsTradableEntities') {
     if (!args) {
-      throw new Error('getPowerTradeTradableEntities: Missing required parameters');
+      throw new Error('getAltcoinsOptionsTradableEntities: Missing required parameters');
     }
-    return await getPowerTradeTradableEntitiesMcp(grixSdkInstance);
-  } else if (name === 'getPowerTradeCurrenciesTradingStatistics') {
+    return await getAltcoinsOptionsTradableEntitiesMcp(grixSdkInstance);
+  } else if (name === 'getAltcoinsOptionsCurrenciesTradingStatistics') {
     if (!args) {
-      throw new Error('getPowerTradeCurrenciesTradingStatistics: Missing required parameters');
+      throw new Error('getAltcoinsOptionsCurrenciesTradingStatistics: Missing required parameters');
     }
-    return await getPowerTradeCurrenciesTradingStatisticsMcp(grixSdkInstance);
-  } else if (name === 'getPowerTradeExpiriesPerSymbol') {
+    return await getAltcoinsOptionsCurrenciesTradingStatisticsMcp(grixSdkInstance);
+  } else if (name === 'getAltcoinsOptionsExpiriesPerSymbol') {
     if (!args) {
-      throw new Error('getPowerTradeExpiriesPerSymbol: Missing required parameters');
+      throw new Error('getAltcoinsOptionsExpiriesPerSymbol: Missing required parameters');
     }
-    return await getPowerTradeExpiriesPerSymbolMcp(
+    return await getAltcoinsOptionsExpiriesPerSymbolMcp(
       grixSdkInstance,
-      args as unknown as GetPowerTradeExpiriesPerSymbolMcpArgs
+      args as unknown as GetAltcoinsOptionsExpiriesPerSymbolMcpArgs
     );
-  } else if (name === 'getPowerTradeStrikesPerSymbol') {
+  } else if (name === 'getAltcoinsOptionsStrikesPerSymbol') {
     if (!args) {
-      throw new Error('getPowerTradeStrikesPerSymbol: Missing required parameters');
+      throw new Error('getAltcoinsOptionsStrikesPerSymbol: Missing required parameters');
     }
-    return await getPowerTradeStrikesPerSymbolMcp(
+    return await getAltcoinsOptionsStrikesPerSymbolMcp(
       grixSdkInstance,
-      args as unknown as GetPowerTradeStrikesPerSymbolMcpArgs
+      args as unknown as GetAltcoinsOptionsStrikesPerSymbolMcpArgs
     );
   }
 

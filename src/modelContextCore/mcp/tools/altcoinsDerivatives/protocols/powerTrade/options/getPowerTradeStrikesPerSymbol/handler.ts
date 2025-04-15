@@ -1,12 +1,12 @@
 import { GrixSDK } from 'src/index.js';
 import { StrikePrice } from 'src/methods/altcoinsDerivatives/protocols/powerTrade/options/getStrikesPerSymbol/types.js';
-export interface GetPowerTradeStrikesPerSymbolMcpArgs {
+export interface GetAltcoinsOptionsStrikesPerSymbolMcpArgs {
   symbol: string;
 }
 
-export const getPowerTradeStrikesPerSymbolMcp = async (
+export const getAltcoinsOptionsStrikesPerSymbolMcp = async (
   grixSdkInstance: GrixSDK,
-  args: GetPowerTradeStrikesPerSymbolMcpArgs
+  args: GetAltcoinsOptionsStrikesPerSymbolMcpArgs
 ) => {
   try {
     const response = await grixSdkInstance.getPowerTradeStrikesPerSymbol(args);

@@ -20,13 +20,17 @@ export const getAssetPricePredictionsSchemaMcp = {
       asset: {
         type: 'string',
         enum: Object.values(PriceInferenceToken),
-        description: 'The asset to get the price prediction for',
+        description:
+          'The asset to get the price prediction for. Valid assets are: ' +
+          Object.values(PriceInferenceToken).join(', '),
         default: PriceInferenceToken.BTC,
       },
       timeframe: {
         type: 'string',
         enum: Object.values(PriceInferenceTimeframe),
-        description: 'The timeframe to get the price prediction for',
+        description:
+          'The timeframe to get the price prediction for. Valid timeframes are: ' +
+          Object.values(PriceInferenceTimeframe).join(', '),
         default: PriceInferenceTimeframe.EIGHT_HOURS,
       },
     },

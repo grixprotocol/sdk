@@ -4,7 +4,7 @@ export enum PerpsTradingFeeProtocol {
 
 export const perpsTradingFeeSchemaMcp = {
   name: 'getPerpsTradingFee',
-  description: 'Get perps trading fee based on protocol',
+  description: 'Get perpetual (perps) trading fee based on protocol',
   inputSchema: {
     type: 'object',
     properties: {

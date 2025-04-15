@@ -25,7 +25,8 @@ export enum TradingIndicatorsInterval {
 
 export const getTradingIndicatorsSchemaMcp = {
   name: 'getTradingIndicators',
-  description: 'Get trading indicators for a given protocol',
+  description:
+    'Get trading indicators for a given symbol and exchange, such as RSI, EMA, MACD, and more',
   inputSchema: {
     type: 'object',
     properties: {

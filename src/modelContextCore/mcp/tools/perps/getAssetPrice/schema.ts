@@ -4,7 +4,7 @@ export enum PerpsAssetPriceProtocol {
 
 export const perpsAssetPriceSchemaMcp = {
   name: 'getPerpsAssetPrice',
-  description: 'Get perps asset price based on protocol and symbol',
+  description: 'Get perpetual (perps) trading asset price based on protocol and symbol',
   inputSchema: {
     type: 'object',
     properties: {

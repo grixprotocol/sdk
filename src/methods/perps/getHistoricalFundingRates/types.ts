@@ -1,6 +1,6 @@
 export interface GetHistoricalFundingRatesRequest {
   protocol?: string;
-  pair?: string;
+  symbol?: string;
   daysBack?: number;
 }
 

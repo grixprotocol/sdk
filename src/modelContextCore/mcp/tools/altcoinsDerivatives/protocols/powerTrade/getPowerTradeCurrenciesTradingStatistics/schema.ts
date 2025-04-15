@@ -1,6 +1,6 @@
-export const getPowerTradeCurrenciesTradingStatisticsSchemaMcp = {
-  name: 'getPowerTradeCurrenciesTradingStatistics',
-  description: 'Get power trade altcoins derivatives currencies trading statistics',
+export const getAltcoinsOptionsCurrenciesTradingStatisticsSchemaMcp = {
+  name: 'getAltcoinsOptionsCurrenciesTradingStatistics',
+  description: 'Get altcoins options currencies trading statistics',
   inputSchema: {
     type: 'object',
   },

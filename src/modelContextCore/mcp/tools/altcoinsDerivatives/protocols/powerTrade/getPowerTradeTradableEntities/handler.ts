@@ -1,12 +1,12 @@
 import { GrixSDK } from 'src/index.js';
 import { TradableEntity } from 'src/methods/altcoinsDerivatives/protocols/powerTrade/getTradableEntities/types.js';
-export const getPowerTradeTradableEntitiesMcp = async (grixSdkInstance: GrixSDK) => {
+export const getAltcoinsOptionsTradableEntitiesMcp = async (grixSdkInstance: GrixSDK) => {
   try {
     const response = await grixSdkInstance.getPowerTradeTradableEntities();
 
     if (!response) {
       return {
-        content: [{ type: 'text', text: 'No power trade tradable entities available' }],
+        content: [{ type: 'text', text: 'No altcoins options tradable entities available' }],
       };
     }
 
@@ -36,7 +36,7 @@ export const getPowerTradeTradableEntitiesMcp = async (grixSdkInstance: GrixSDK)
       content: [{ type: 'text', text: formattedOutput }],
     };
   } catch (error) {
-    console.error('Error fetching power trade tradable entities:', error);
+    console.error('Error fetching altcoins options tradable entities:', error);
     throw error;
   }
 };
