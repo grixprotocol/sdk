@@ -1,3 +1,7 @@
+export enum PerpsTradingFeeProtocol {
+  LODE = 'lode',
+}
+
 export const perpsTradingFeeSchemaMcp = {
   name: 'getPerpsTradingFee',
   description: 'Get perps trading fee based on protocol',
@@ -7,8 +11,8 @@ export const perpsTradingFeeSchemaMcp = {
       protocol: {
         type: 'string',
         description: 'The protocol to get trading fee for',
-        default: 'lode',
-        enum: ['lode'],
+        default: PerpsTradingFeeProtocol.LODE,
+        enum: Object.values(PerpsTradingFeeProtocol),
       },
     },
     required: ['protocol'],
