@@ -15,3 +15,7 @@ export interface TradableEntity {
 }
 
 export type TradableEntitiesGetResponse = TradableEntity[];
+
+export interface TradableEntitiesApiResponse {
+  data: TradableEntity[];
+}

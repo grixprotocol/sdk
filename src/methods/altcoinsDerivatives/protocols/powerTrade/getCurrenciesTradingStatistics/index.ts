@@ -6,7 +6,7 @@ export async function getCurrenciesTradingStatistics(config: {
   baseUrl: string;
 }): Promise<CurrenciesTradingStatisticsGetResponse> {
   try {
-    const response = await axios.get(
+    const response = await axios.get<CurrenciesTradingStatisticsGetResponse>(
       `${config.baseUrl}/powerTrade/getCurrenciesTradingStatistics`,
       {
         headers: {
@@ -18,11 +18,6 @@ export async function getCurrenciesTradingStatistics(config: {
 
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Failed to get currencies trading statistics: ${error.response?.status} ${error.response?.data || error.message}`
-      );
-    }
-    throw error;
+    throw new Error(`Failed to get currencies trading statistics: ${error}`);
   }
 }
