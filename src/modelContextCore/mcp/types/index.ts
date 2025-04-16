@@ -3,9 +3,12 @@ import { GetAssetPriceParams } from 'src/modelContextCore/mcp/tools/perps/getAss
 import { GetTradingFeeParams } from 'src/modelContextCore/mcp/tools/perps/getTradingFee/handler.js';
 import { GetNextFundingRateParams } from 'src/modelContextCore/mcp/tools/perps/getNextFundingRate/handler.js';
 import { GetTradingFeeResponse } from 'src/methods/perps/getTradingFee/types.js';
-import { GetNextFundingRateResponse } from 'src/methods/perps/getNextFundingRate/types.js';
 import { GetCurrentFundingRateParams } from '../tools/perps/getCurrentFundingRate/handler.js';
 import { GetCurrentFundingRateResponse } from 'src/methods/perps/getCurrentFundingRate/types.js';
+import {
+  LodeGetNextFundingRateResponse,
+  HyperliquidGetNextFundingRateResponse,
+} from 'src/methods/perps/getNextFundingRate/types.js';
 export interface MCPSchema {
   name: string;
   schema: Record<string, unknown>;
@@ -42,11 +45,14 @@ export interface MCPService {
     | { content: { type: string; text: string }[] }
     | { content: { type: string; text: GetTradingFeeResponse[] }[] }
   >;
-  getPerpsNextFundingRateMcp: (
-    args: GetNextFundingRateParams
-  ) => Promise<
+  getPerpsNextFundingRateMcp: (args: GetNextFundingRateParams) => Promise<
     | { content: { type: string; text: string }[] }
-    | { content: { type: string; text: GetNextFundingRateResponse }[] }
+    | {
+        content: {
+          type: string;
+          text: LodeGetNextFundingRateResponse | HyperliquidGetNextFundingRateResponse;
+        }[];
+      }
   >;
   getPerpsCurrentFundingRateMcp: (
     args: GetCurrentFundingRateParams
