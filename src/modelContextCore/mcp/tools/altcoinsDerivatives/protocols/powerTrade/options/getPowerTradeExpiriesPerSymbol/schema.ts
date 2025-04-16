@@ -1,6 +1,6 @@
-export const getPowerTradeExpiriesPerSymbolSchemaMcp = {
-  name: 'getPowerTradeExpiriesPerSymbol',
-  description: 'Get power trade altcoins derivatives expiries per symbol',
+export const getAltcoinsOptionsExpiriesPerSymbolSchemaMcp = {
+  name: 'getAltcoinsOptionsExpiriesPerSymbol',
+  description: 'Get altcoins options expiries per symbol',
   inputSchema: {
     type: 'object',
     properties: {

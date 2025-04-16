@@ -1,4 +1,5 @@
 import { GrixSDK } from 'src/index.js';
+import { PerpsTradingFeeProtocol } from './schema.js';
 
 export interface GetTradingFeeParams {
   protocol: string;
@@ -8,9 +9,8 @@ export const getPerpsTradingFeeMcp = async (
   grixSdkInstance: GrixSDK,
   args: GetTradingFeeParams
 ) => {
-  console.log({ grixSdkInstance, args });
-
   try {
+    validatePerpsTradingFeeArgs(args);
     const response = await grixSdkInstance.getTradingFee(args);
 
     if (!response) {
@@ -42,5 +42,19 @@ export const getPerpsTradingFeeMcp = async (
         },
       ],
     };
+  }
+};
+
+const validatePerpsTradingFeeArgs = (args: GetTradingFeeParams) => {
+  const { protocol } = args;
+
+  if (!protocol) {
+    throw new Error('Protocol is required');
+  }
+
+  if (!Object.values(PerpsTradingFeeProtocol).includes(protocol as PerpsTradingFeeProtocol)) {
+    throw new Error(
+      'Invalid protocol. Valid protocols are: ' + Object.values(PerpsTradingFeeProtocol).join(', ')
+    );
   }
 };

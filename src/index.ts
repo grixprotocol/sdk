@@ -62,7 +62,6 @@ import { getPairs } from './methods/perps/getPairs/index.js';
 import { getOpenInterestCaps } from './methods/perps/getOpenInterestCaps/index.js';
 import { getAssetContexts } from './methods/perps/getAssetContexts/index.js';
 import { getHistoricalFundingRates } from './methods/perps/getHistoricalFundingRates/index.js';
-import { getPredictedFundings } from './methods/perps/getPredictedFundingRate/index.js';
 import { getTradingIndicators } from './methods/tradingIndicators/index.js';
 import { getAssetPricePrediction } from './methods/prediction/getAssetPricePrediction/alloraNetwork/index.js';
 
@@ -84,10 +83,6 @@ import {
   GetHistoricalFundingRatesResponse,
 } from './methods/perps/getHistoricalFundingRates/types.js';
 import {
-  GetPredictedFundingsRequest,
-  GetPredictedFundingsResponse,
-} from './methods/perps/getPredictedFundingRate/types.js';
-import {
   GetTradingIndicatorsRequest,
   GetTradingIndicatorsResponse,
 } from './methods/tradingIndicators/types.js';
@@ -95,8 +90,11 @@ import {
   GetAssetPricePredictionResponse,
   GetAssetPricePredictionParams,
 } from './methods/prediction/getAssetPricePrediction/alloraNetwork/types.js';
-import { GetNextFundingRateRequest } from './methods/perps/getNextFundingRate/types.js';
-import { GetNextFundingRateResponse } from './methods/perps/getNextFundingRate/types.js';
+import {
+  GetNextFundingRateRequest,
+  HyperliquidGetNextFundingRateResponse,
+  LodeGetNextFundingRateResponse,
+} from './methods/perps/getNextFundingRate/types.js';
 import { getNextFundingRate } from './methods/perps/getNextFundingRate/index.js';
 import { GetTradingFeeRequest } from './methods/perps/getTradingFee/types.js';
 import { GetTradingFeeResponse } from './methods/perps/getTradingFee/types.js';
@@ -151,14 +149,13 @@ export {
   GetAssetContextsResponse,
   GetHistoricalFundingRatesRequest,
   GetHistoricalFundingRatesResponse,
-  GetPredictedFundingsRequest,
-  GetPredictedFundingsResponse,
   GetTradingIndicatorsRequest,
   GetTradingIndicatorsResponse,
   GetAssetPricePredictionParams,
   GetAssetPricePredictionResponse,
   GetNextFundingRateRequest,
-  GetNextFundingRateResponse,
+  LodeGetNextFundingRateResponse,
+  HyperliquidGetNextFundingRateResponse,
   GetTradingFeeRequest,
   GetTradingFeeResponse,
   GetAssetPriceRequest,
@@ -352,12 +349,6 @@ export class GrixSDK {
     return getHistoricalFundingRates(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
-  async getPerpsPredictedFundings(
-    params: GetPredictedFundingsRequest
-  ): Promise<GetPredictedFundingsResponse> {
-    return getPredictedFundings(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
-  }
-
   async getTradingIndicators(
     params: GetTradingIndicatorsRequest
   ): Promise<GetTradingIndicatorsResponse> {
@@ -370,7 +361,9 @@ export class GrixSDK {
     return getAssetPricePrediction(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 
-  async getNextFundingRate(params: GetNextFundingRateRequest): Promise<GetNextFundingRateResponse> {
+  async getNextFundingRate(
+    params: GetNextFundingRateRequest
+  ): Promise<LodeGetNextFundingRateResponse | HyperliquidGetNextFundingRateResponse> {
     return getNextFundingRate(params, { apiKey: this.apiKey, baseUrl: this.baseUrl });
   }
 

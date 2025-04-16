@@ -1,12 +1,16 @@
 import { GrixSDK } from 'src/index.js';
 
-export const getPowerTradeCurrenciesTradingStatisticsMcp = async (grixSdkInstance: GrixSDK) => {
+export const getAltcoinsOptionsCurrenciesTradingStatisticsMcp = async (
+  grixSdkInstance: GrixSDK
+) => {
   try {
     const response = await grixSdkInstance.getPowerTradeCurrenciesTradingStatistics();
 
     if (!response) {
       return {
-        content: [{ type: 'text', text: 'No power trade currencies trading statistics available' }],
+        content: [
+          { type: 'text', text: 'No altcoins options currencies trading statistics available' },
+        ],
       };
     }
 
@@ -33,7 +37,7 @@ export const getPowerTradeCurrenciesTradingStatisticsMcp = async (grixSdkInstanc
       content: [{ type: 'text', text: formattedOutput }],
     };
   } catch (error) {
-    console.error('Error fetching power trade currencies trading statistics:', error);
+    console.error('Error fetching altcoins options currencies trading statistics:', error);
     throw error;
   }
 };

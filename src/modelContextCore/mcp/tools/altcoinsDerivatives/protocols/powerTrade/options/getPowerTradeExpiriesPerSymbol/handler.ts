@@ -1,19 +1,19 @@
 import { GrixSDK } from 'src/index.js';
 import { ExpiryDate } from 'src/methods/altcoinsDerivatives/protocols/powerTrade/options/getExpiriesPerSymbol/types.js';
-export interface GetPowerTradeExpiriesPerSymbolMcpArgs {
+export interface GetAltcoinsOptionsExpiriesPerSymbolMcpArgs {
   symbol: string;
 }
 
-export const getPowerTradeExpiriesPerSymbolMcp = async (
+export const getAltcoinsOptionsExpiriesPerSymbolMcp = async (
   grixSdkInstance: GrixSDK,
-  args: GetPowerTradeExpiriesPerSymbolMcpArgs
+  args: GetAltcoinsOptionsExpiriesPerSymbolMcpArgs
 ) => {
   try {
     const response = await grixSdkInstance.getPowerTradeExpiriesPerSymbol(args);
 
     if (!response) {
       return {
-        content: [{ type: 'text', text: 'No power trade expiries per symbol available' }],
+        content: [{ type: 'text', text: 'No altcoins options expiries per symbol available' }],
       };
     }
 
@@ -34,7 +34,7 @@ export const getPowerTradeExpiriesPerSymbolMcp = async (
       content: [{ type: 'text', text: formattedOutput }],
     };
   } catch (error) {
-    console.error('Error fetching power trade expiries per symbol:', error);
+    console.error('Error fetching altcoins options expiries per symbol:', error);
     throw error;
   }
 };

@@ -1,6 +1,6 @@
-export const getPowerTradeStrikesPerSymbolSchemaMcp = {
-  name: 'getPowerTradeStrikesPerSymbol',
-  description: 'Get power trade altcoins derivatives strikes per symbol',
+export const getAltcoinsOptionsStrikesPerSymbolSchemaMcp = {
+  name: 'getAltcoinsOptionsStrikesPerSymbol',
+  description: 'Get altcoins options strikes per symbol',
   inputSchema: {
     type: 'object',
     properties: {

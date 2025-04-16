@@ -4,9 +4,8 @@ export const getPerpsHistoricalFundingRateMcp = async (
   grixSdkInstance: GrixSDK,
   args: GetHistoricalFundingRatesRequest
 ) => {
-  console.log({ grixSdkInstance, args });
-
   try {
+    validatePerpsHistoricalFundingRateArgs(args);
     const response = await grixSdkInstance.getPerpsHistoricalFundingRates(args);
 
     if (!response || response.historicalRates.length === 0) {
@@ -48,5 +47,17 @@ export const getPerpsHistoricalFundingRateMcp = async (
         },
       ],
     };
+  }
+};
+
+const validatePerpsHistoricalFundingRateArgs = (args: GetHistoricalFundingRatesRequest) => {
+  const { protocol, symbol, daysBack } = args;
+
+  if (!protocol || !symbol || !daysBack) {
+    throw new Error('Protocol, symbol and daysBack are required');
+  }
+
+  if (daysBack < 1 || daysBack > 365) {
+    throw new Error('daysBack must be between 1 and 365');
   }
 };

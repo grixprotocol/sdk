@@ -1,3 +1,8 @@
+export enum PerpsNextFundingRateProtocol {
+  HYPERLIQUID = 'hyperliquid',
+  LODE = 'lode',
+}
+
 export const perpsNextFundingRateSchemaMcp = {
   name: 'getPerpsNextFundingRate',
   description: 'Get perps next funding rate based on protocol',
@@ -7,8 +12,8 @@ export const perpsNextFundingRateSchemaMcp = {
       protocol: {
         type: 'string',
         description: 'The protocol to get next funding rate for',
-        default: 'hyperliquid',
-        enum: ['hyperliquid', 'lode'],
+        default: PerpsNextFundingRateProtocol.HYPERLIQUID,
+        enum: Object.values(PerpsNextFundingRateProtocol),
       },
     },
     required: ['protocol'],

@@ -6,7 +6,7 @@ export default {
     '^@src/(.*)$': '<rootDir>/src/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@config$': '<rootDir>/src/config.ts',
-    '^@general/(.*)$': '<rootDir>/src/general/$1'
+    '^@general/(.*)$': '<rootDir>/src/general/$1',
   },
   extensionsToTreatAsEsm: ['.ts'],
   transform: {
@@ -17,4 +17,5 @@ export default {
       },
     ],
   },
+  setupFiles: ['<rootDir>/.jest/setEnvVars.js'], // Add environment setup
 };
