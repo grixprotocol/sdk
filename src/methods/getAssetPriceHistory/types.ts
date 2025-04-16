@@ -9,7 +9,7 @@ export type AssetPriceHistoryGetParams = {
 export type AssetPriceHistoryGetResponse = {
   assetPriceHistory: {
     [asset: string]: {
-      timestamp: number;
+      date: string;
       price: number;
     }[];
   };

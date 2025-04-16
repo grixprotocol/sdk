@@ -1,9 +1,13 @@
 import axios from 'axios';
-import { GetNextFundingRateRequest, GetNextFundingRateResponse } from './types.js';
+import {
+  GetNextFundingRateRequest,
+  LodeGetNextFundingRateResponse,
+  HyperliquidGetNextFundingRateResponse,
+} from './types.js';
 export async function getNextFundingRate(
   params: GetNextFundingRateRequest,
   config: { apiKey: string; baseUrl: string }
-): Promise<GetNextFundingRateResponse> {
+): Promise<LodeGetNextFundingRateResponse | HyperliquidGetNextFundingRateResponse> {
   const { protocol } = params;
 
   // Build query parameters
@@ -12,16 +16,15 @@ export async function getNextFundingRate(
   queryParams.append('protocol', protocol);
 
   try {
-    const response = await axios.get<GetNextFundingRateResponse>(
-      `${config.baseUrl}/perps/getNextFundingRate`,
-      {
-        params: queryParams,
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': config.apiKey,
-        },
-      }
-    );
+    const response = await axios.get<
+      LodeGetNextFundingRateResponse | HyperliquidGetNextFundingRateResponse
+    >(`${config.baseUrl}/perps/getNextFundingRate`, {
+      params: queryParams,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': config.apiKey,
+      },
+    });
 
     return response.data;
   } catch (error) {
