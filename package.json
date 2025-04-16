@@ -1,6 +1,6 @@
 {
   "name": "@grixprotocol/sdk",
-  "version": "1.2.44",
+  "version": "1.2.45",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
