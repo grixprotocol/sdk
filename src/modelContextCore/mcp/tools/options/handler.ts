@@ -11,11 +11,13 @@ export const getOptionsDataMcp = async (
     const asset = (args.asset as string) || 'BTC';
     const optionType = (args.optionType as string) || 'call';
     const positionType = (args.positionType as string) || 'long';
+    const protocols = (args.protocols as string[]) || [];
 
     const response = await grixSdkInstance.getOptionsMarketBoard({
       asset: asset as UnderlyingAsset,
       optionType: optionType as OptionType,
       positionType: positionType as PositionType,
+      protocols: protocols,
     });
 
     if (!response || response.length === 0) {
