@@ -26,7 +26,6 @@ export const getOptionsDataMcp = async (
           {
             type: 'text',
             text: 'No options data available for the specified parameters.',
-            p,
           },
         ],
       };
