@@ -47,8 +47,8 @@ export const getSignalsDataMcp = async (
 
     // Wait for signals with retry logic
     let retries = 0;
-    const maxRetries = 10;
-    const retryDelay = 2000; // 2 seconds
+    const maxRetries = 12;
+    const retryDelay = 4000; // 2 seconds
 
     while (retries < maxRetries) {
       const result = await grixSdkInstance.getTradeSignals({ agentId: agentId.agentId });
