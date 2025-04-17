@@ -8,8 +8,12 @@ export const getSignalsDataMcp = async (
     const budget = (args?.budget as string) || '5000';
     const assets = (args?.assets as string[]) || ['BTC'];
     const userPrompt = (args?.userPrompt as string) || 'Generate moderate growth strategies';
+    const allProtocols = ['derive', 'aevo', 'premia', 'moby', 'ithaca', 'zomma', 'deribit'];
+    const protocols = (args?.protocols as string[]) || allProtocols;
 
-    console.log(`Generating trading signals with budget: $${budget}, assets: ${assets.join(', ')}`);
+    console.log(
+      `Generating trading signals with budget: $${budget}, assets: ${assets.join(', ')}, protocols: ${protocols.join(', ')}`
+    );
 
     // Create a trade agent and get signals
     const agentId = await grixSdkInstance.createTradeAgent({
@@ -22,7 +26,7 @@ export const getSignalsDataMcp = async (
           assets: assets,
           context_window_ms: 1200000, // 20 minutes
           input_data: ['marketData', 'assetPrices'],
-          protocols: ['derive', 'aevo', 'premia', 'moby', 'ithaca', 'zomma', 'deribit'],
+          protocols: protocols,
           trade_window_ms: 7 * 24 * 60 * 60 * 1000, // 7 days
         },
       },
@@ -36,15 +40,15 @@ export const getSignalsDataMcp = async (
         trade_window_ms: 7 * 24 * 60 * 60 * 1000,
         context_window_ms: 1200000,
         input_data: ['marketData', 'assetPrices'],
-        protocols: ['derive', 'aevo', 'premia', 'moby', 'ithaca', 'zomma', 'deribit'],
+        protocols: protocols,
         user_prompt: userPrompt,
       },
     });
 
     // Wait for signals with retry logic
     let retries = 0;
-    const maxRetries = 10;
-    const retryDelay = 2000; // 2 seconds
+    const maxRetries = 12;
+    const retryDelay = 4000; // 2 seconds
 
     while (retries < maxRetries) {
       const result = await grixSdkInstance.getTradeSignals({ agentId: agentId.agentId });
