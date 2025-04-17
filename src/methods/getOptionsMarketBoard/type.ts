@@ -4,6 +4,7 @@ export type TradeBoardGetParams = {
   asset: UnderlyingAsset;
   optionType: OptionType;
   positionType: PositionType;
+  protocols?: string[];
 };
 
 export type TradeBoardData = {
