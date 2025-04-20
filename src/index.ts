@@ -173,6 +173,8 @@ export {
 export type InitializeConfig = {
   apiKey: string;
   baseUrl?: string;
+  isMcpServerNeeded?: boolean;
+  isElizaServerNeeded?: boolean;
 };
 
 export class GrixSDK {
@@ -188,8 +190,12 @@ export class GrixSDK {
     this.apiKey = config.apiKey;
     this.baseUrl = config.baseUrl || 'https://internal-api-dev.grix.finance';
     // Initialize services
-    this._mcp = createMCPService(this);
-    this._eliza = createElizaService(this);
+    if (config.isMcpServerNeeded) {
+      this._mcp = createMCPService(this);
+    }
+    if (config.isElizaServerNeeded) {
+      this._eliza = createElizaService(this);
+    }
   }
 
   /**
@@ -198,6 +204,8 @@ export class GrixSDK {
    * @param config - Configuration options for the SDK
    * @param config.apiKey - API key for Grix APIs (required)
    * @param config.baseUrl - Base URL for Grix APIs
+   * @param config.isMcpServerNeeded - Whether to initialize the MCP service
+   * @param config.isElizaServerNeeded - Whether to initialize the Eliza service
    * @returns A new instance of the GrixSDK
    * @throws Error if API key is not provided
    */
