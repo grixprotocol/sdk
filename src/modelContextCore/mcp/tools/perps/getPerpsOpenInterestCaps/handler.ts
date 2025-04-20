@@ -4,7 +4,7 @@ export const getPerpsOpenInterestCapsMcp = async (
   grixSdkInstance: GrixSDK,
   args: GetOpenInterestCapsRequest
 ) => {
-  console.log({ grixSdkInstance, args });
+  console.error({ grixSdkInstance, args });
 
   try {
     const response = await grixSdkInstance.getPerpsOpenInterestCaps(args);
