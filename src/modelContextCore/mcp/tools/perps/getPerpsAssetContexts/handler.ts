@@ -4,7 +4,7 @@ export const getPerpsAssetContextsMcp = async (
   grixSdkInstance: GrixSDK,
   args: GetAssetContextsRequest
 ) => {
-  console.log({ grixSdkInstance, args });
+  console.error({ grixSdkInstance, args });
 
   const { protocol, pair } = args;
 

@@ -5,7 +5,7 @@ export const getOptionsDataMcp = async (
   grixSdkInstance: GrixSDK,
   args: Record<string, unknown>
 ) => {
-  console.log({ grixSdkInstance, args });
+  console.error({ grixSdkInstance, args });
 
   try {
     const asset = (args.asset as string) || 'BTC';

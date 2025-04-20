@@ -11,7 +11,7 @@ export const getSignalsDataMcp = async (
     const allProtocols = ['derive', 'aevo', 'premia', 'moby', 'ithaca', 'zomma', 'deribit'];
     const protocols = (args?.protocols as string[]) || allProtocols;
 
-    console.log(
+    console.error(
       `Generating trading signals with budget: $${budget}, assets: ${assets.join(', ')}, protocols: ${protocols.join(', ')}`
     );
 
@@ -55,7 +55,7 @@ export const getSignalsDataMcp = async (
       const signalRequest = result.personalAgents[0]?.signal_requests[0];
 
       if (signalRequest?.progress === 'completed' && signalRequest?.signals?.length > 0) {
-        console.log('✅ Signals generated successfully');
+        console.error('✅ Signals generated successfully');
 
         const formattedOutput = signalRequest.signals
           .map(
@@ -83,7 +83,7 @@ export const getSignalsDataMcp = async (
         };
       }
 
-      console.log(`⏳ Waiting for signals... (attempt ${retries + 1}/${maxRetries})`);
+      console.error(`⏳ Waiting for signals... (attempt ${retries + 1}/${maxRetries})`);
       await new Promise((resolve) => setTimeout(resolve, retryDelay));
       retries++;
     }
