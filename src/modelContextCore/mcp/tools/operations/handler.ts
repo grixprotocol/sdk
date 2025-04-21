@@ -35,7 +35,7 @@ import {
   getAltcoinsOptionsStrikesPerSymbolMcp,
   GetAltcoinsOptionsStrikesPerSymbolMcpArgs,
 } from '../altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/handler.js';
-
+import { usageGuideToolHandler, GuidanceParamsType } from '../usageGuideTool/handler.js';
 export const handleOperation = async (
   grixSdkInstance: GrixSDK,
   name: string,
@@ -162,6 +162,11 @@ export const handleOperation = async (
       grixSdkInstance,
       args as unknown as GetAltcoinsOptionsStrikesPerSymbolMcpArgs
     );
+  } else if (name === 'getToolGuidance') {
+    if (!args) {
+      throw new Error('getToolGuidance: Missing required parameters');
+    }
+    return await usageGuideToolHandler(args as unknown as GuidanceParamsType);
   }
 
   throw new Error(`Unknown tool: ${name}`);
