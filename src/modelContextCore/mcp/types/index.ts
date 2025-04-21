@@ -9,6 +9,7 @@ import {
   LodeGetNextFundingRateResponse,
   HyperliquidGetNextFundingRateResponse,
 } from 'src/methods/perps/getNextFundingRate/types.js';
+import { GuidanceParamsType } from '../tools/usageGuideTool/handler.js';
 export interface MCPSchema {
   name: string;
   schema: Record<string, unknown>;
@@ -73,6 +74,9 @@ export interface MCPService {
     args: Record<string, unknown>
   ) => Promise<{ content: { type: string; text: string }[] }>;
   schemas: MCPSchema[];
+  usageGuideToolHandler: (
+    args: GuidanceParamsType
+  ) => Promise<{ content: { type: string; text: string }[] }>;
 }
 
 export interface MCPResponse {

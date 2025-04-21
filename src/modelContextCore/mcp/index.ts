@@ -47,6 +47,8 @@ import { getAltcoinsOptionsTradableEntitiesSchemaMcp } from './tools/altcoinsDer
 import { getAltcoinsOptionsCurrenciesTradingStatisticsSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/getPowerTradeCurrenciesTradingStatistics/schema.js';
 import { getAltcoinsOptionsExpiriesPerSymbolSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeExpiriesPerSymbol/schema.js';
 import { getAltcoinsOptionsStrikesPerSymbolSchemaMcp } from './tools/altcoinsDerivatives/protocols/powerTrade/options/getPowerTradeStrikesPerSymbol/schema.js';
+import { GuidanceParamsType, usageGuideToolHandler } from './tools/usageGuideTool/handler.js';
+import { usageGuideSchemaMcp } from './tools/usageGuideTool/schema.js';
 
 export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
   handleOperation: (name, args) => handleOperation(grixSdkInstance, name, args),
@@ -87,6 +89,8 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
       grixSdkInstance,
       args as unknown as GetAltcoinsOptionsStrikesPerSymbolMcpArgs
     ),
+
+  usageGuideToolHandler: (args: GuidanceParamsType) => usageGuideToolHandler(args),
 
   schemas: [
     {
@@ -163,6 +167,11 @@ export const createMCPService = (grixSdkInstance: GrixSDK): MCPService => ({
       name: getAltcoinsOptionsStrikesPerSymbolSchemaMcp.name,
       schema: getAltcoinsOptionsStrikesPerSymbolSchemaMcp,
       description: getAltcoinsOptionsStrikesPerSymbolSchemaMcp.description,
+    },
+    {
+      name: usageGuideSchemaMcp.name,
+      schema: usageGuideSchemaMcp,
+      description: usageGuideSchemaMcp.description,
     },
   ],
 });
