@@ -12,12 +12,16 @@ export const getOptionsDataMcp = async (
     const optionType = (args.optionType as string) || 'call';
     const positionType = (args.positionType as string) || 'long';
     const protocols = (args.protocols as string[]) || [];
+    const limit = (args.limit as number) || 40;
+    const offset = (args.offset as number) || 0;
 
     const response = await grixSdkInstance.getOptionsMarketBoard({
       asset: asset as UnderlyingAsset,
       optionType: optionType as OptionType,
       positionType: positionType as PositionType,
       protocols: protocols,
+      limit,
+      offset,
     });
 
     if (!response || response.length === 0) {

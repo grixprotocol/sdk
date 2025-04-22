@@ -5,6 +5,8 @@ export type TradeBoardGetParams = {
   optionType: OptionType;
   positionType: PositionType;
   protocols?: string[];
+  limit?: number;
+  offset?: number;
 };
 
 export type TradeBoardData = {

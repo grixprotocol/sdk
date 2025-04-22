@@ -11,7 +11,7 @@ export async function getOptionsMarketBoard(
   params: TradeBoardGetParams,
   config: { apiKey: string; baseUrl: string }
 ): Promise<TradeBoardData[]> {
-  const { asset, optionType, positionType, protocols } = params;
+  const { asset, optionType, positionType, protocols, limit, offset } = params;
 
   // Build query parameters
   const queryParams = new URLSearchParams();
@@ -20,6 +20,12 @@ export async function getOptionsMarketBoard(
   queryParams.append('positionType', positionType);
   if (protocols && protocols.length > 0) {
     queryParams.append('protocols', protocols.join(','));
+  }
+  if (limit) {
+    queryParams.append('limit', limit.toString());
+  }
+  if (offset) {
+    queryParams.append('offset', offset.toString());
   }
   try {
     const response = await axios.get<TradeBoardData[]>(`${config.baseUrl}/elizatradeboard`, {
